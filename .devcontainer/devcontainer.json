@@ -1,9 +1,10 @@
 // ==========================================================
 // 🚨 注意: バージョン変更箇所 🚨
 // ==========================================================
+// - DEBIAN_VERSION: build.args.DEBIAN_VERSION
 // - NODEJS_VERSION: build.args.NODEJS_VERSION
 // - RUST_VERSION: build.args.RUST_VERSION
-// - ANGULAR_VERSION: build.args.RUST_VERSION
+// - ANGULAR_VERSION: build.args.ANGULAR_VERSION
 // ==========================================================
 {
     "name": "web",
@@ -14,6 +15,7 @@
             // ==================================================
             // 🚧 !!! バージョン変更 !!! 🚧
             // ==================================================
+            "DEBIAN_VERSION": "12.10", // ⚠️ debian のバージョンを変更する場合はここを編集
             "NODEJS_VERSION": "22.15.0", // ⚠️ Node.js のバージョンを変更する場合はここを編集
             "RUST_VERSION": "1.86.0", // ⚠️ Rust のバージョンを変更する場合はここを編集
             "ANGULAR_VERSION": "19.2.10", // ⚠️ Angular のバージョンを変更する場合はここを編集
@@ -23,21 +25,25 @@
             "WEB_WORKDIR_NAME": "app"
         }
     },
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    },
     "runArgs": [
         "--name",
         "raspberry-pi-web",
         "--hostname",
-        "pi"
+        "debian"
     ],
     "mounts": [
         {
             "type": "bind",
             "source": "${localWorkspaceFolder}",
-            "target": "/home/web/app"
+            "target": "/app"
         }
     ],
-    "containerUser": "web",
-    "workspaceFolder": "/home/web/app",
+    // "containerUser": "web",
+    // "workspaceFolder": "/home/web/app",
+    "workspaceFolder": "/app",
     "customizations": {
         "vscode": {
             "extensions": [

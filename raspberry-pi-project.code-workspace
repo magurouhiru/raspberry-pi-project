@@ -4,10 +4,10 @@
 			"path": "."
 		},
 		{
-			"path": "web/front"
+			"path": "web"
 		},
 		{
-			"path": "web/back"
+			"path": "web/front"
 		}
 	],
 	"settings": {

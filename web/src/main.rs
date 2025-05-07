@@ -1,18 +1,23 @@
+#[allow(unused)]
 use axum::{
     Json, Router,
-    http::StatusCode,
+    body::Body,
+    extract::Request,
+    http::{Response, StatusCode},
+    response::IntoResponse,
     routing::{get, post},
 };
+use include_dir::{Dir, include_dir};
+use mime_guess::from_path;
 use serde::{Deserialize, Serialize};
 use tower_http::services::{ServeDir, ServeFile};
+
+static DIST_DIR: include_dir::Dir<'_> = include_dir!("./front/dist/front/browser");
 
 #[tokio::main]
 async fn main() {
     // initialize tracing
     tracing_subscriber::fmt::init();
-
-    let service = ServeDir::new("../front/dist/front/browser")
-        .fallback(ServeFile::new("../front/dist/front/browser/index.html"));
 
     // build our application with a route
     let app = Router::new()
@@ -20,11 +25,34 @@ async fn main() {
         .route("/api", get(root))
         // `POST /users` goes to `create_user`
         .route("/users", post(create_user))
-        .fallback_service(service);
+        .fallback_service(get(distFile));
 
     // run our app with hyper, listening globally on port 3000
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     axum::serve(listener, app).await.unwrap();
+}
+
+async fn distFile(req: Request<Body>) -> impl IntoResponse {
+    let path = req.uri().path().trim_start_matches('/');
+
+    // ファイルが存在しない場合は index.html を返す（SPA 用）
+    let file = DIST_DIR
+        .get_file(path)
+        .or_else(|| DIST_DIR.get_file("index.html"));
+
+    match file {
+        Some(f) => {
+            let mime = from_path(f.path()).first_or_octet_stream();
+            Response::builder()
+                .header("Content-Type", mime.as_ref())
+                .body(Body::from(f.contents()))
+                .unwrap()
+        }
+        None => Response::builder()
+            .status(StatusCode::NOT_FOUND)
+            .body(Body::from("404 Not Found"))
+            .unwrap(),
+    }
 }
 
 // basic handler that responds with a static string
