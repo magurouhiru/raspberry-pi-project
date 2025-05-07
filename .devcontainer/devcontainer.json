@@ -23,12 +23,6 @@
             "WEB_WORKDIR_NAME": "app"
         }
     },
-    "forwardPorts": [
-        4200
-    ],
-    "appPort": [
-        4200
-    ],
     "runArgs": [
         "--name",
         "raspberry-pi-web",

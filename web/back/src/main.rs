@@ -28,8 +28,12 @@ async fn main() {
 }
 
 // basic handler that responds with a static string
-async fn root() -> &'static str {
-    "Hello, World!"
+async fn root() -> (StatusCode, Json<Message>) {
+    let message = Message {
+        message: "Hello, world!".to_string(),
+    };
+
+    (StatusCode::OK, Json(message))
 }
 
 async fn create_user(
@@ -59,4 +63,9 @@ struct CreateUser {
 struct User {
     id: u64,
     username: String,
+}
+
+#[derive(Serialize)]
+struct Message {
+    message: String,
 }
