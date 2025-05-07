@@ -1,6 +1,17 @@
 # Raspberry Pi Project
 Raspberry Pi でいろいろやる用のプロジェクト  
 
+## web
+Raspberry Pi で動かすweb サーバーのためのプロジェクト  
+
+### front
+Angular で作成  
+[詳細はこちら](./web/front/README.md)
+
+### back
+axum で作成  
+[詳細はこちら](./web/back/README.md)
+
 # 環境設定とか
 ## Raspberry Pi の設定
 ### Raspberry Pi のOS 取得

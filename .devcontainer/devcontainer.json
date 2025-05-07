@@ -1,0 +1,60 @@
+// ==========================================================
+// 🚨 注意: バージョン変更箇所 🚨
+// ==========================================================
+// - NODEJS_VERSION: build.args.NODEJS_VERSION
+// - RUST_VERSION: build.args.RUST_VERSION
+// - ANGULAR_VERSION: build.args.RUST_VERSION
+// ==========================================================
+{
+    "name": "web",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "..",
+        "args": {
+            // ==================================================
+            // 🚧 !!! バージョン変更 !!! 🚧
+            // ==================================================
+            "NODEJS_VERSION": "22.15.0", // ⚠️ Node.js のバージョンを変更する場合はここを編集
+            "RUST_VERSION": "1.86.0", // ⚠️ Rust のバージョンを変更する場合はここを編集
+            "ANGULAR_VERSION": "19.2.10", // ⚠️ Angular のバージョンを変更する場合はここを編集
+            "WEB_USERNAME": "web",
+            "WEB_USER_UID": "2000",
+            "WEB_USER_GID": "2000",
+            "WEB_WORKDIR_NAME": "app"
+        }
+    },
+    "forwardPorts": [
+        4200
+    ],
+    "appPort": [
+        4200
+    ],
+    "runArgs": [
+        "--name",
+        "raspberry-pi-web",
+        "--hostname",
+        "pi"
+    ],
+    "mounts": [
+        {
+            "type": "bind",
+            "source": "${localWorkspaceFolder}",
+            "target": "/home/web/app"
+        }
+    ],
+    "containerUser": "web",
+    "workspaceFolder": "/home/web/app",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "rust-lang.rust-analyzer",
+                "vadimcn.vscode-lldb",
+                "tamasfe.even-better-toml",
+                "Angular.ng-template"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            }
+        }
+    }
+}
