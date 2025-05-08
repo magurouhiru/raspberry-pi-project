@@ -1,7 +1,6 @@
 // ==========================================================
 // 🚨 注意: バージョン変更箇所 🚨
 // ==========================================================
-// - DEBIAN_VERSION: build.args.DEBIAN_VERSION
 // - NODEJS_VERSION: build.args.NODEJS_VERSION
 // - RUST_VERSION: build.args.RUST_VERSION
 // - ANGULAR_VERSION: build.args.ANGULAR_VERSION
@@ -15,14 +14,9 @@
             // ==================================================
             // 🚧 !!! バージョン変更 !!! 🚧
             // ==================================================
-            "DEBIAN_VERSION": "12.10", // ⚠️ debian のバージョンを変更する場合はここを編集
             "NODEJS_VERSION": "22.15.0", // ⚠️ Node.js のバージョンを変更する場合はここを編集
             "RUST_VERSION": "1.86.0", // ⚠️ Rust のバージョンを変更する場合はここを編集
-            "ANGULAR_VERSION": "19.2.10", // ⚠️ Angular のバージョンを変更する場合はここを編集
-            "WEB_USERNAME": "web",
-            "WEB_USER_UID": "2000",
-            "WEB_USER_GID": "2000",
-            "WEB_WORKDIR_NAME": "app"
+            "ANGULAR_VERSION": "19.2.10" // ⚠️ Angular のバージョンを変更する場合はここを編集
         }
     },
     "features": {
@@ -41,8 +35,6 @@
             "target": "/app"
         }
     ],
-    // "containerUser": "web",
-    // "workspaceFolder": "/home/web/app",
     "workspaceFolder": "/app",
     "customizations": {
         "vscode": {

@@ -7,6 +7,6 @@ import { inject, Injectable } from '@angular/core';
 export class HelloService {
   readonly #http = inject(HttpClient);
   getHello() {
-    return this.#http.get('/api');
+    return this.#http.get('/api/hello');
   }
 }
