@@ -7,12 +7,11 @@ use axum::{
     response::IntoResponse,
     routing::{get, post},
 };
-use include_dir::{Dir, include_dir};
+use include_dir::include_dir;
 use mime_guess::from_path;
 use serde::{Deserialize, Serialize};
-use tower_http::services::{ServeDir, ServeFile};
 
-static DIST_DIR: include_dir::Dir<'_> = include_dir!("./front/dist/front/browser");
+static DIST_DIR: include_dir::Dir<'_> = include_dir!("./frontend/dist/frontend/browser");
 
 #[tokio::main]
 async fn main() {
@@ -25,14 +24,14 @@ async fn main() {
         .route("/api", get(root))
         // `POST /users` goes to `create_user`
         .route("/users", post(create_user))
-        .fallback_service(get(distFile));
+        .fallback_service(get(dist_file));
 
     // run our app with hyper, listening globally on port 3000
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     axum::serve(listener, app).await.unwrap();
 }
 
-async fn distFile(req: Request<Body>) -> impl IntoResponse {
+async fn dist_file(req: Request<Body>) -> impl IntoResponse {
     let path = req.uri().path().trim_start_matches('/');
 
     // ファイルが存在しない場合は index.html を返す（SPA 用）
@@ -48,6 +47,7 @@ async fn distFile(req: Request<Body>) -> impl IntoResponse {
                 .body(Body::from(f.contents()))
                 .unwrap()
         }
+        // 多分ここまで来ることはない
         None => Response::builder()
             .status(StatusCode::NOT_FOUND)
             .body(Body::from("404 Not Found"))

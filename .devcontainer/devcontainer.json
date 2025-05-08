@@ -50,7 +50,8 @@
                 "rust-lang.rust-analyzer",
                 "vadimcn.vscode-lldb",
                 "tamasfe.even-better-toml",
-                "Angular.ng-template"
+                "Angular.ng-template",
+                "ms-vscode.makefile-tools"
             ],
             "settings": {
                 "terminal.integrated.defaultProfile.linux": "bash"

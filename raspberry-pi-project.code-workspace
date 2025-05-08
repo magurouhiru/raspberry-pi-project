@@ -7,7 +7,7 @@
 			"path": "web"
 		},
 		{
-			"path": "web/front"
+			"path": "web/frontend"
 		}
 	],
 	"settings": {
