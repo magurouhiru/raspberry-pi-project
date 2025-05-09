@@ -3,13 +3,12 @@ use std::time::Duration;
 use axum::{
     body::{Body, Bytes},
     extract::Request,
-    http::StatusCode,
+    http::{Method, StatusCode},
     middleware::Next,
     response::{IntoResponse, Response},
     routing::get,
 };
 use http_body_util::BodyExt;
-use hyper::Method;
 use sqlx::{Pool, Sqlite};
 use tower_http::{
     cors::{Any, CorsLayer},
@@ -18,6 +17,14 @@ use tower_http::{
 use tracing::Span;
 
 use crate::{errors::error_404, routes, state::AppState};
+
+fn create_api_router(db: Pool<Sqlite>) -> axum::Router {
+    axum::Router::new()
+        .route("/hello", get(routes::hello::get).post(routes::hello::post))
+        .with_state(AppState { db: db.clone() })
+        .layer(axum::middleware::from_fn(pring_request_body))
+        .fallback(error_404::handler)
+}
 
 pub fn create_app(db: Pool<Sqlite>) -> axum::Router {
     let cors = CorsLayer::new()
@@ -36,7 +43,6 @@ pub fn create_app(db: Pool<Sqlite>) -> axum::Router {
         .on_response(|response: &Response<Body>,latency:Duration, _span: &Span| {
             match response.status() {
                 StatusCode::OK => tracing::info!("Response: {} {}", response.status(), latency.as_millis()),
-                StatusCode::NOT_FOUND => tracing::warn!("Response: {} {}", response.status(),latency.as_millis()),
                 _ => tracing::error!("Response: {} {}", response.status(), latency.as_millis()),
             }
         }))
@@ -65,12 +71,4 @@ async fn buffer_request_body(request: Request) -> Result<Request, Response> {
 
 fn do_thing_with_request_body(bytes: Bytes) {
     tracing::info!(body = ?bytes);
-}
-
-fn create_api_router(db: Pool<Sqlite>) -> axum::Router {
-    axum::Router::new()
-        .route("/hello", get(routes::hello::get).post(routes::hello::post))
-        .with_state(AppState { db: db.clone() })
-        .layer(axum::middleware::from_fn(pring_request_body))
-        .fallback(error_404::handler)
 }
