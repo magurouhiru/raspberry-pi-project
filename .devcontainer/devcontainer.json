@@ -33,6 +33,11 @@
             "type": "bind",
             "source": "${localWorkspaceFolder}",
             "target": "/app"
+        },
+        {
+            "type": "volume",
+            "source": "${localWorkspaceFolderBasename}-node-modules",
+            "target": "/app/web/frontend/node_modules"
         }
     ],
     "workspaceFolder": "/app",

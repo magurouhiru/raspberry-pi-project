@@ -26,4 +26,15 @@ export class AppComponent {
       error: (err) => console.error(err),
     });
   }
+  subject = this.hello.wsHello();
+  conect() {
+    this.subject.subscribe({
+      next: (message: MessageEvent) => console.log(JSON.stringify(message)),
+      error: (e) => console.error(e),
+      complete: () => console.log('complete'),
+    });
+  }
+  send() {
+    this.subject.next(new MessageEvent<string>('hello'));
+  }
 }
