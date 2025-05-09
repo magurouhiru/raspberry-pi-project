@@ -3,6 +3,7 @@ mod db;
 mod errors;
 mod routes;
 mod state;
+mod validate_json;
 
 use std::net::SocketAddr;
 

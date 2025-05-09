@@ -1,9 +1,9 @@
 use axum::{Json, extract::State, http::StatusCode};
-use axum_valid::Valid;
 use serde::{Deserialize, Serialize};
 use validator::Validate;
 
 use crate::state::AppState;
+use crate::validate_json::VaridateJson;
 
 pub async fn get() -> (StatusCode, Json<HelloResponse>) {
     let message = HelloResponse {
@@ -15,7 +15,7 @@ pub async fn get() -> (StatusCode, Json<HelloResponse>) {
 
 pub async fn post(
     State(state): State<AppState>,
-    Valid(Json(req)): Valid<Json<HelloRequest>>,
+    VaridateJson(req): VaridateJson<HelloRequest>,
 ) -> (StatusCode, Json<HelloResponse>) {
     let message = HelloResponse {
         message: format!("Hello, {}", req.message),
