@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
@@ -31,10 +31,10 @@ export class AppComponent {
     this.subject.subscribe({
       next: (message: MessageEvent) => console.log(JSON.stringify(message)),
       error: (e) => console.error(e),
-      complete: () => console.log("complete"),
-    })
+      complete: () => console.log('complete'),
+    });
   }
   send() {
-    this.subject.next(new MessageEvent<string>("hello"))
+    this.subject.next(new MessageEvent<string>('hello'));
   }
 }

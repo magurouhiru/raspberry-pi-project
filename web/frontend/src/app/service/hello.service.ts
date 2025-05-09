@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+
 import { webSocket } from 'rxjs/webSocket';
 
 @Injectable({
@@ -15,7 +16,7 @@ export class HelloService {
   }
   wsHello() {
     return webSocket<MessageEvent<string>>({
-      url: "/api/hello/ws",
+      url: '/api/hello/ws',
       deserializer: (e) => e.data,
     });
   }
