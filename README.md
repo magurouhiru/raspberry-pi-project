@@ -4,7 +4,7 @@ Raspberry Pi でいろいろやる用のプロジェクト
 ## web
 Raspberry Pi で動かすweb サーバーのためのプロジェクト  
 
-### サーバー
+### server
 axum で作成  
 [詳細はこちら](./web/README.md)
 
