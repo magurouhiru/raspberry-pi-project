@@ -6,7 +6,7 @@ use axum::{
     http::{Method, StatusCode},
     middleware::Next,
     response::{IntoResponse, Response},
-    routing::get,
+    routing::{any, get},
 };
 use http_body_util::BodyExt;
 use sqlx::{Pool, Sqlite};
@@ -21,6 +21,7 @@ use crate::{errors::error_404, routes, state::AppState};
 fn create_api_router(db: Pool<Sqlite>) -> axum::Router {
     axum::Router::new()
         .route("/hello", get(routes::hello::get).post(routes::hello::post))
+        .route("/hello/ws", any(routes::hello::ws))
         .with_state(AppState { db: db.clone() })
         .layer(axum::middleware::from_fn(pring_request_body))
         .fallback(error_404::handler)
