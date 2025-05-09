@@ -1,2 +1,2 @@
-pub mod err404;
 pub mod hello;
+pub mod static_file;

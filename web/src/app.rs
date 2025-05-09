@@ -1,39 +1,76 @@
-use axum::{body::Body, extract::Request, http::Response, response::IntoResponse, routing::get};
-use include_dir::include_dir;
-use mime_guess::from_path;
+use std::time::Duration;
 
-use crate::routes;
+use axum::{
+    body::{Body, Bytes},
+    extract::Request,
+    http::StatusCode,
+    middleware::Next,
+    response::{IntoResponse, Response},
+    routing::get,
+};
+use http_body_util::BodyExt;
+use hyper::Method;
+use sqlx::{Pool, Sqlite};
+use tower_http::{
+    cors::{Any, CorsLayer},
+    trace::TraceLayer,
+};
+use tracing::Span;
 
-pub fn create_app() -> axum::Router {
+use crate::{errors::error_404, routes, state::AppState};
+
+pub fn create_app(db: Pool<Sqlite>) -> axum::Router {
+    let cors = CorsLayer::new()
+        .allow_origin(Any) // 必要に応じて特定のオリジンを指定
+        .allow_methods([Method::GET, Method::PUT, Method::OPTIONS]) // 許可するHTTPメソッド
+        .allow_headers(Any); // 必要に応じて特定のヘッダーを指定
+
     axum::Router::new()
-        .nest("/api", create_api_router())
-        .route("/", get(static_file))
-        .fallback(routes::err404::handler)
+        .nest("/api", create_api_router(db))
+        .fallback_service(get(routes::static_file::get))
+        .layer(cors) // カスタムCORS設定を適用
+        .layer(TraceLayer::new_for_http()
+        .make_span_with(|request: &Request<Body>| {
+            tracing::info_span!("request", method = ?request.method(), uri = ?request.uri().path())
+        })
+        .on_response(|response: &Response<Body>,latency:Duration, _span: &Span| {
+            match response.status() {
+                StatusCode::OK => tracing::info!("Response: {} {}", response.status(), latency.as_millis()),
+                StatusCode::NOT_FOUND => tracing::warn!("Response: {} {}", response.status(),latency.as_millis()),
+                _ => tracing::error!("Response: {} {}", response.status(), latency.as_millis()),
+            }
+        }))
 }
 
-fn create_api_router() -> axum::Router {
-    axum::Router::new().route("/hello", get(routes::hello::handler))
+async fn pring_request_body(request: Request, next: Next) -> Result<impl IntoResponse, Response> {
+    let request = buffer_request_body(request).await?;
+    Ok(next.run(request).await)
+}
+// the trick is to take the request apart, buffer the body, do what you need to do, then put
+// the request back together
+async fn buffer_request_body(request: Request) -> Result<Request, Response> {
+    let (parts, body) = request.into_parts();
+
+    // this won't work if the body is an long running stream
+    let bytes = body
+        .collect()
+        .await
+        .map_err(|err| (StatusCode::INTERNAL_SERVER_ERROR, err.to_string()).into_response())?
+        .to_bytes();
+
+    do_thing_with_request_body(bytes.clone());
+
+    Ok(Request::from_parts(parts, Body::from(bytes)))
 }
 
-// 静的ファイルを返す
-static DIST_DIR: include_dir::Dir<'_> = include_dir!("./frontend/dist/frontend/browser");
-async fn static_file(req: Request<Body>) -> impl IntoResponse {
-    let path = req.uri().path().trim_start_matches('/');
+fn do_thing_with_request_body(bytes: Bytes) {
+    tracing::info!(body = ?bytes);
+}
 
-    // ファイルが存在しない場合は index.html を返す（SPA 用）
-    let file = DIST_DIR
-        .get_file(path)
-        .or_else(|| DIST_DIR.get_file("index.html"));
-
-    match file {
-        Some(f) => {
-            let mime = from_path(f.path()).first_or_octet_stream();
-            Response::builder()
-                .header("Content-Type", mime.as_ref())
-                .body(Body::from(f.contents()))
-                .unwrap()
-        }
-        // 変なパスはindex.html を返すので、ここまで来ない想定
-        None => routes::err404::err_404(),
-    }
+fn create_api_router(db: Pool<Sqlite>) -> axum::Router {
+    axum::Router::new()
+        .route("/hello", get(routes::hello::get).post(routes::hello::post))
+        .with_state(AppState { db: db.clone() })
+        .layer(axum::middleware::from_fn(pring_request_body))
+        .fallback(error_404::handler)
 }

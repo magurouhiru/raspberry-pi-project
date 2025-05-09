@@ -5,8 +5,11 @@ import { inject, Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class HelloService {
-  readonly #http = inject(HttpClient);
+  client = inject(HttpClient);
   getHello() {
-    return this.#http.get('/api/hello');
+    return this.client.get('/api/hello');
+  }
+  postHello(message: string) {
+    return this.client.post('/api/hello', { message });
   }
 }
