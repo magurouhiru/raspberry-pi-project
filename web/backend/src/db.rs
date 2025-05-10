@@ -10,8 +10,12 @@ pub async fn init_db() -> Result<SqlitePool, sqlx::Error> {
     };
     let file_name = "sqlite.db";
 
-    fs::create_dir_all(dir_path)?;
-    File::create(format!("{dir_path}{file_name}"))?;
+    if !fs::exists(dir_path)? {
+        fs::create_dir_all(dir_path)?;
+    }
+    if !fs::exists(format!("{dir_path}{file_name}"))? {
+        File::create(format!("{dir_path}{file_name}"))?;
+    }
 
     let pool = SqlitePoolOptions::new()
         .max_connections(5)
