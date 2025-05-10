@@ -1,6 +1,6 @@
-front-build: front-init
-	@echo "Building front-end..."
+frontend-build: frontend-init
+	@echo "Building frontend-end..."
 	npm run build
-front-init:
-	@echo "init front-end..."
+frontend-init:
+	@echo "init frontend-end..."
 	npm ci

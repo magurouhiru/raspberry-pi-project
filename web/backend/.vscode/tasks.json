@@ -1,0 +1,12 @@
+{
+  // For more information, visit: https://go.microsoft.com/fwlink/?LinkId=733558
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "cargo watch",
+      "type": "shell",
+      "isBackground": true,
+      "command": "cargo watch --poll -x run",
+    },
+  ]
+}

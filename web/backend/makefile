@@ -1,10 +1,6 @@
-.PHONY: all frontend server-build server-init
-
-server-build: server-init
-	@echo "Building server..."
+backend-build: backend-init
+	@echo "Building backend..."
 	cross build --target armv7-unknown-linux-musleabihf --release
-server-init: frontend
-	@echo "init server..."
+backend-init:
+	@echo "init backend-init..."
 	rustup target add armv7-unknown-linux-musleabihf
-frontend:
-	$(MAKE) -C frontend front-build

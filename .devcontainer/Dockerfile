@@ -13,4 +13,5 @@ RUN apt-get update \
 RUN  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --target ${RUST_VERSION} --no-update-default-toolchain \
     && . "$HOME/.cargo/env" \
     && cargo install cross \
+    && cargo install cargo-watch \
     && npm install -g @angular/cli@${ANGULAR_VERSION}

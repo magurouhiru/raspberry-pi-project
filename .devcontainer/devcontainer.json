@@ -38,6 +38,11 @@
             "type": "volume",
             "source": "${localWorkspaceFolderBasename}-node-modules",
             "target": "/app/web/frontend/node_modules"
+        },
+        {
+            "type": "volume",
+            "source": "${localWorkspaceFolderBasename}-cargo-target",
+            "target": "/app/web/backend/target"
         }
     ],
     "workspaceFolder": "/app",
