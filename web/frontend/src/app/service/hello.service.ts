@@ -9,10 +9,10 @@ import { webSocket } from 'rxjs/webSocket';
 export class HelloService {
   client = inject(HttpClient);
   getHello() {
-    return this.client.get('/api/hello');
+    return this.client.get<Hello>('/api/hello');
   }
   postHello(message: string) {
-    return this.client.post('/api/hello', { message });
+    return this.client.post<Hello>('/api/hello', { message } satisfies Hello);
   }
   wsHello() {
     return webSocket<MessageEvent<string>>({
@@ -20,4 +20,8 @@ export class HelloService {
       deserializer: (e) => e.data,
     });
   }
+}
+
+interface Hello {
+  message: string;
 }

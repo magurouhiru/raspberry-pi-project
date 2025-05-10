@@ -1,0 +1,46 @@
+<h2>サーバーとの接続チェック</h2>
+
+<section>
+  <h3>GETリクエスト</h3>
+  <button mat-flat-button (click)="sendGetRequest()">
+    <mat-icon>send</mat-icon>send
+  </button>
+  <output>
+    <mat-list>
+      @for (req of getRequestList(); track $index) {
+        <mat-list-item>{{ req }}</mat-list-item>
+      }
+    </mat-list>
+  </output>
+</section>
+
+<section>
+  <h3>POSTリクエスト</h3>
+  <mat-form-field>
+    <input type="text" matInput [formControl]="postForm" />
+    <button mat-icon-button matSuffix (click)="sendPostRequest()">
+      <mat-icon>send</mat-icon>
+    </button>
+  </mat-form-field>
+  <output>
+    <mat-list>
+      @for (req of postRequestList(); track $index) {
+        <mat-list-item>{{ req }}</mat-list-item>
+      }
+    </mat-list>
+  </output>
+</section>
+
+<section>
+  <h3>WebSocketリクエスト</h3>
+  <button mat-flat-button (click)="sendwsRequest()">
+    <mat-icon>send</mat-icon>send
+  </button>
+  <output>
+    <mat-list>
+      @for (req of wsRequestList(); track $index) {
+        <mat-list-item>{{ req }}</mat-list-item>
+      }
+    </mat-list>
+  </output>
+</section>

@@ -6,7 +6,7 @@ Raspberry Pi で動かすweb サーバーのためのプロジェクト
 
 ### server
 axum で作成  
-[詳細はこちら](./web/README.md)
+[詳細はこちら](./web/backend/README.md)
 
 ### frontend
 Angular で作成  

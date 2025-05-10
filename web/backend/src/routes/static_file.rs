@@ -8,7 +8,7 @@ use mime_guess::from_path;
 
 use crate::errors::error_404;
 
-static DIST_DIR: include_dir::Dir<'_> = include_dir!("./frontend/dist/frontend/browser");
+static DIST_DIR: include_dir::Dir<'_> = include_dir!("./dist/frontend/browser");
 pub async fn get(req: Request<Body>) -> impl IntoResponse {
     tracing::info!("Static file request: {}", req.uri());
     let path = req.uri().path().trim_start_matches('/');

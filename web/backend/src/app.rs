@@ -44,6 +44,7 @@ pub fn create_app(db: Pool<Sqlite>) -> axum::Router {
         .on_response(|response: &Response<Body>,latency:Duration, _span: &Span| {
             match response.status() {
                 StatusCode::OK => tracing::info!("Response: {} {}", response.status(), latency.as_millis()),
+                StatusCode::SWITCHING_PROTOCOLS => tracing::info!("Response: {} {}", response.status(), latency.as_millis()),
                 _ => tracing::error!("Response: {} {}", response.status(), latency.as_millis()),
             }
         }))

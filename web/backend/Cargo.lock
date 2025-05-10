@@ -177,6 +177,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "backend"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "axum-extra",
+ "futures",
+ "futures-util",
+ "http-body-util",
+ "hyper",
+ "include_dir",
+ "mime_guess",
+ "serde",
+ "serde_json",
+ "sqlx",
+ "tokio",
+ "tower",
+ "tower-http",
+ "tower-service",
+ "tracing",
+ "tracing-subscriber",
+ "validator",
+]
+
+[[package]]
 name = "backtrace"
 version = "0.3.75"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2389,30 +2413,6 @@ name = "wasite"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b8dad83b4f25e74f184f64c43b150b91efe7647395b42289f38e50566d82855b"
-
-[[package]]
-name = "web"
-version = "0.1.0"
-dependencies = [
- "axum",
- "axum-extra",
- "futures",
- "futures-util",
- "http-body-util",
- "hyper",
- "include_dir",
- "mime_guess",
- "serde",
- "serde_json",
- "sqlx",
- "tokio",
- "tower",
- "tower-http",
- "tower-service",
- "tracing",
- "tracing-subscriber",
- "validator",
-]
 
 [[package]]
 name = "whoami"
