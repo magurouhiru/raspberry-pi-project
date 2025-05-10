@@ -11,7 +11,7 @@ REST API で構築。
 DB にはSQLite を使用。  
 
 ## 開発
-task のcargo watch を起動  
+task の`cargo watch`を起動  
 http://localhost:3000 に接続  
 動くのを確認したらごりごり開発  
 

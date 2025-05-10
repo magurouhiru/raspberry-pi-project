@@ -1,8 +1,22 @@
-/api/hello:{{ getHello() }} <br />
-
-<input type="text" [formControl]="form" />
-<button (click)="submit()">sousin</button><br />
-
-<button (click)="conect()">conect</button>
-<button (click)="send()">send</button><br /><br />
-<mat-slide-toggle>Toggle me!</mat-slide-toggle>
+<div class="wrapper">
+  <header>
+    <nav>
+      <h1>
+        <a
+          mat-button
+          routerLink="/"
+          routerLinkActive="highlite"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon>developer_board</mat-icon>
+          pi_server
+        </a>
+      </h1>
+      <a mat-button routerLink="/hello" routerLinkActive="highlite"
+        ><mat-icon>waving_hand</mat-icon>hello</a
+      >
+    </nav>
+  </header>
+  <main><router-outlet></router-outlet></main>
+  <footer>footer</footer>
+</div>
