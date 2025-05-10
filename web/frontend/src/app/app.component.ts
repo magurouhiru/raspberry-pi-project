@@ -5,10 +5,11 @@ import { RouterOutlet } from '@angular/router';
 import { map } from 'rxjs';
 
 import { HelloService } from './service/hello.service';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ReactiveFormsModule],
+  imports: [RouterOutlet, ReactiveFormsModule, MatSlideToggleModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
