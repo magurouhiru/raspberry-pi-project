@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 
-import { AnyDbComponent } from './component/any-db/any-db.component';
 import { HelloComponent } from './component/hello/hello.component';
 import { HomeComponent } from './component/home/home.component';
+import { ShowDbComponent } from './component/show-db/show-db.component';
 import { CustomData } from './routerData';
 
 export const routes: Routes = [
@@ -17,8 +17,8 @@ export const routes: Routes = [
     data: { title: 'Hello' } satisfies CustomData,
   },
   {
-    path: 'any-db',
-    component: AnyDbComponent,
-    data: { title: 'Any DB' } satisfies CustomData,
+    path: 'show-db',
+    component: ShowDbComponent,
+    data: { title: 'Show DB' } satisfies CustomData,
   },
 ];
