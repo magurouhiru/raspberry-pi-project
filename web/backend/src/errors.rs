@@ -13,3 +13,15 @@ pub mod error_404 {
             .unwrap()
     }
 }
+
+pub mod error_500 {
+    use axum::body::Body;
+    use axum::http::{Response, StatusCode};
+
+    pub fn create_response() -> Response<Body> {
+        Response::builder()
+            .status(StatusCode::INTERNAL_SERVER_ERROR)
+            .body(Body::from("500 DB"))
+            .unwrap()
+    }
+}
