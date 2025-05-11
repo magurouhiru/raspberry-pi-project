@@ -22,7 +22,7 @@ fn create_api_router(db: Pool<Sqlite>) -> axum::Router {
     axum::Router::new()
         .route("/hello", get(routes::hello::get).post(routes::hello::post))
         .route("/hello/ws", any(routes::hello::ws))
-        .route("/db", get(routes::db::get))
+        .route("/db", get(routes::any_db::get))
         .with_state(AppState { db: db.clone() })
         .layer(axum::middleware::from_fn(pring_request_body))
         .fallback(error_404::handler)
