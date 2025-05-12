@@ -2,12 +2,7 @@
   <header>
     <nav>
       <h1>
-        <a
-          mat-button
-          routerLink="/"
-          routerLinkActive="highlite"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
+        <a mat-button routerLink="/" routerLinkActive="highlite" [routerLinkActiveOptions]="{ exact: true }">
           <mat-icon>developer_board</mat-icon>
           pi_server
         </a>
@@ -15,9 +10,8 @@
       <a mat-button routerLink="/hello" routerLinkActive="highlite">
         <mat-icon>waving_hand</mat-icon>hello
       </a>
-      <a mat-button routerLink="/show-db" routerLinkActive="highlite"
-        ><mat-icon>table_view</mat-icon>Show DB</a
-      >
+      <a mat-button routerLink="/show-db" routerLinkActive="highlite"><mat-icon>table_view</mat-icon>Show DB</a>
+      <a mat-button routerLink="/device" routerLinkActive="highlite"><mat-icon>developer_board</mat-icon>Device</a>
     </nav>
   </header>
   <main><router-outlet></router-outlet></main>
