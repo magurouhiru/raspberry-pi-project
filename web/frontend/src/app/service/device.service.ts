@@ -12,9 +12,11 @@ export class DeviceService {
 }
 
 export interface Device {
+  timestamp: string;
   temp: number;
   freq: number;
   cpu: {
+    cpu: CpuDetail;
     cpu0: CpuDetail;
     cpu1: CpuDetail;
     cpu2: CpuDetail;

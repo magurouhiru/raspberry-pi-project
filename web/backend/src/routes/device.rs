@@ -1,4 +1,5 @@
 use axum::{Json, http::StatusCode, response::IntoResponse};
+use chrono::{DateTime, Utc};
 use device::{CpuDetailInfo, CpuInfo, MemInfo};
 use serde::Serialize;
 
@@ -104,9 +105,12 @@ pub async fn get() -> impl IntoResponse {
         inactive: mem.inactive,
     };
 
+    let utc_datetime: DateTime<Utc> = Utc::now();
+
     (
         StatusCode::OK,
         Json(DeviceResponse {
+            timestamp: utc_datetime.to_string(),
             temp,
             freq,
             cpu,
@@ -118,6 +122,7 @@ pub async fn get() -> impl IntoResponse {
 
 #[derive(Serialize)]
 pub struct DeviceResponse {
+    timestamp: String,
     temp: i32,
     freq: i32,
     cpu: CpuInfoResponse,

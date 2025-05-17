@@ -1,2 +1,15 @@
 <p>device works!</p>
-<canvas baseChart [data]="tempData()" type="line"></canvas>
+<canvas
+  baseChart
+  [data]="tempData()"
+  [options]="tempOption"
+  type="line"
+></canvas>
+<canvas
+  baseChart
+  [data]="freqData()"
+  [options]="freqOption"
+  type="line"
+></canvas>
+<canvas baseChart [data]="cpuData()" [options]="cpuOption" type="line"></canvas>
+<canvas baseChart [data]="memData()" [options]="memOption" type="line"></canvas>
