@@ -1,16 +1,18 @@
 use axum::{Json, http::StatusCode, response::IntoResponse};
 use chrono::{DateTime, Utc};
 use device::{CpuDetailInfo, CpuInfo, MemInfo};
-use serde::Serialize;
 
-use crate::errors::error_500;
+use crate::{
+    api::device::{CpuDetailInfoResponse, CpuInfoResponse, DeviceResponse, MemInfoResponse},
+    errors::error_500,
+};
 
 pub async fn get() -> impl IntoResponse {
     let temp = match device::get_temp() {
         Ok(v) => v,
         Err(_) => {
             if cfg!(debug_assertions) {
-                rand::random_range(60000..120000)
+                rand::random_range(60000..70000)
             } else {
                 return error_500::create_response();
             }
@@ -118,38 +120,4 @@ pub async fn get() -> impl IntoResponse {
         }),
     )
         .into_response()
-}
-
-#[derive(Serialize)]
-pub struct DeviceResponse {
-    timestamp: String,
-    temp: i32,
-    freq: i32,
-    cpu: CpuInfoResponse,
-    mem: MemInfoResponse,
-}
-
-#[derive(Serialize)]
-pub struct CpuInfoResponse {
-    cpu: CpuDetailInfoResponse,
-    cpu0: CpuDetailInfoResponse,
-    cpu1: CpuDetailInfoResponse,
-    cpu2: CpuDetailInfoResponse,
-    cpu3: CpuDetailInfoResponse,
-}
-
-#[derive(Serialize)]
-pub struct CpuDetailInfoResponse {
-    pub total: u32,
-    pub idle: u32,
-}
-
-#[derive(Serialize)]
-pub struct MemInfoResponse {
-    mem_total: u32,
-    mem_free: u32,
-    buffers: u32,
-    cached: u32,
-    active: u32,
-    inactive: u32,
 }

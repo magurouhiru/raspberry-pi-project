@@ -53,6 +53,10 @@ export class DeviceComponent extends BaseComponent {
       y: {
         max: 100,
         min: 0,
+        title: {
+          text: '℃',
+          display: true,
+        },
       },
     },
     plugins: {
@@ -102,6 +106,10 @@ export class DeviceComponent extends BaseComponent {
       y: {
         max: 1500,
         min: 500,
+        title: {
+          text: 'MHz',
+          display: true,
+        },
       },
     },
     plugins: {
@@ -160,6 +168,10 @@ export class DeviceComponent extends BaseComponent {
       y: {
         max: 100,
         min: 0,
+        title: {
+          text: '%',
+          display: true,
+        },
       },
     },
   };
@@ -181,6 +193,10 @@ export class DeviceComponent extends BaseComponent {
       y: {
         max: 100,
         min: 0,
+        title: {
+          text: '%',
+          display: true,
+        },
       },
     },
   };
@@ -298,7 +314,10 @@ export class DeviceComponent extends BaseComponent {
             switch (dataset.label) {
               case 'mem': {
                 const m =
-                  ((lastItem.mem.active + lastItem.mem.inactive) /
+                  ((lastItem.mem.mem_total -
+                    lastItem.mem.mem_free -
+                    lastItem.mem.buffers -
+                    lastItem.mem.cached) /
                     lastItem.mem.mem_total) *
                   100;
                 dataset.data.push(m);
