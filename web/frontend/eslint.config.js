@@ -59,11 +59,11 @@ module.exports = tseslint.config(
             position: "after",
           },
           {
-            pattern: "primeng/**",
+            pattern: "chart.js",
             group: "sibling",
           },
           {
-            pattern: "ngx-markdown",
+            pattern: "ng2-charts",
             group: "sibling",
             position: "after",
           },

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+import { DeviceComponent } from './component/device/device.component';
 import { HelloComponent } from './component/hello/hello.component';
 import { HomeComponent } from './component/home/home.component';
 import { ShowDbComponent } from './component/show-db/show-db.component';
@@ -20,5 +21,10 @@ export const routes: Routes = [
     path: 'show-db',
     component: ShowDbComponent,
     data: { title: 'Show DB' } satisfies CustomData,
+  },
+  {
+    path: 'device',
+    component: DeviceComponent,
+    data: { title: 'Device' } satisfies CustomData,
   },
 ];

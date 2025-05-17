@@ -1,0 +1,39 @@
+<h2>DB 一覧表示</h2>
+<div class="wrapper">
+  <div class="item">
+    <h3>温度(℃)</h3>
+    <canvas
+      baseChart
+      [data]="tempData()"
+      [options]="tempOption"
+      type="line"
+    ></canvas>
+  </div>
+  <div class="item">
+    <h3>クロック(MHz)</h3>
+    <canvas
+      baseChart
+      [data]="freqData()"
+      [options]="freqOption"
+      type="line"
+    ></canvas>
+  </div>
+  <div class="item">
+    <h3>CPU使用率(%)</h3>
+    <canvas
+      baseChart
+      [data]="cpuData()"
+      [options]="cpuOption"
+      type="line"
+    ></canvas>
+  </div>
+  <div class="item">
+    <h3>メモリ使用率(%)</h3>
+    <canvas
+      baseChart
+      [data]="memData()"
+      [options]="memOption"
+      type="line"
+    ></canvas>
+  </div>
+</div>
