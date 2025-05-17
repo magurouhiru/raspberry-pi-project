@@ -15,10 +15,10 @@ export interface Device {
   temp: number;
   freq: number;
   cpu: {
-    cpu0: number;
-    cpu1: number;
-    cpu2: number;
-    cpu3: number;
+    cpu0: CpuDetail;
+    cpu1: CpuDetail;
+    cpu2: CpuDetail;
+    cpu3: CpuDetail;
   };
   mem: {
     mem_total: number;
@@ -28,4 +28,9 @@ export interface Device {
     active: number;
     inactive: number;
   };
+}
+
+export interface CpuDetail {
+  total: number;
+  idle: number;
 }

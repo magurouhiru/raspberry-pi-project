@@ -1,4 +1,4 @@
-use std::{fs, thread, time::Duration};
+use std::fs;
 
 // 温度
 const TEMP: &str = "温度";
@@ -25,48 +25,44 @@ pub fn get_freq() -> Result<i32, String> {
 // cpu
 #[derive(Debug)]
 pub struct CpuInfo {
-    pub cpu: f64,
-    pub cpu0: f64,
-    pub cpu1: f64,
-    pub cpu2: f64,
-    pub cpu3: f64,
+    pub cpu: CpuDetailInfo,
+    pub cpu0: CpuDetailInfo,
+    pub cpu1: CpuDetailInfo,
+    pub cpu2: CpuDetailInfo,
+    pub cpu3: CpuDetailInfo,
+}
+
+#[derive(Debug)]
+pub struct CpuDetailInfo {
+    pub total: u32,
+    pub idle: u32,
 }
 const CPU: &str = "CPU";
 const FILE_PATH_CPU: &str = "/proc/stat";
 pub fn get_cpu() -> Result<CpuInfo, String> {
     let data = fs::read_to_string(FILE_PATH_CPU)
         .map_err(|err| format!("{}取得に失敗しました。{}", CPU, err))?;
-    let pre_cpu = get_cpu_value(&data, "cpu")?;
-    let pre_cpu0 = get_cpu_value(&data, "cpu0")?;
-    let pre_cpu1 = get_cpu_value(&data, "cpu1")?;
-    let pre_cpu2 = get_cpu_value(&data, "cpu2")?;
-    let pre_cpu3 = get_cpu_value(&data, "cpu3")?;
-
-    thread::sleep(Duration::from_secs(1));
-
-    let data = fs::read_to_string(FILE_PATH_CPU)
-        .map_err(|err| format!("{}取得に失敗しました。{}", CPU, err))?;
-    let post_cpu = get_cpu_value(&data, "cpu")?;
-    let post_cpu0 = get_cpu_value(&data, "cpu0")?;
-    let post_cpu1 = get_cpu_value(&data, "cpu1")?;
-    let post_cpu2 = get_cpu_value(&data, "cpu2")?;
-    let post_cpu3 = get_cpu_value(&data, "cpu3")?;
+    let cpu = get_cpu_value(&data, "cpu")?;
+    let cpu0 = get_cpu_value(&data, "cpu0")?;
+    let cpu1 = get_cpu_value(&data, "cpu1")?;
+    let cpu2 = get_cpu_value(&data, "cpu2")?;
+    let cpu3 = get_cpu_value(&data, "cpu3")?;
 
     Ok(CpuInfo {
-        cpu: calc_cpu(pre_cpu, post_cpu),
-        cpu0: calc_cpu(pre_cpu0, post_cpu0),
-        cpu1: calc_cpu(pre_cpu1, post_cpu1),
-        cpu2: calc_cpu(pre_cpu2, post_cpu2),
-        cpu3: calc_cpu(pre_cpu3, post_cpu3),
+        cpu,
+        cpu0,
+        cpu1,
+        cpu2,
+        cpu3,
     })
 }
-pub fn calc_cpu((pre_idle, pre_total): (u32, u32), (post_idle, post_total): (u32, u32)) -> f64 {
-    let delta_idle = post_idle - pre_idle;
-    let delta_total = post_total - pre_total;
+// pub fn calc_cpu((pre_idle, pre_total): (u32, u32), (post_idle, post_total): (u32, u32)) -> f64 {
+//     let delta_idle = post_idle - pre_idle;
+//     let delta_total = post_total - pre_total;
 
-    100.0 * (delta_total - delta_idle) as f64 / delta_total as f64
-}
-pub fn get_cpu_value(data: &str, target: &str) -> Result<(u32, u32), String> {
+//     100.0 * (delta_total - delta_idle) as f64 / delta_total as f64
+// }
+pub fn get_cpu_value(data: &str, target: &str) -> Result<CpuDetailInfo, String> {
     let data = get_line(data, target)?;
     let data: Vec<u32> = data
         .split_whitespace()
@@ -74,7 +70,7 @@ pub fn get_cpu_value(data: &str, target: &str) -> Result<(u32, u32), String> {
         .collect();
     let idle = data[3] + data[4];
     let total = data.iter().sum();
-    Ok((idle, total))
+    Ok(CpuDetailInfo { idle, total })
 }
 
 // メモリ

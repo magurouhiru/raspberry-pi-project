@@ -1,5 +1,5 @@
 use axum::{Json, http::StatusCode, response::IntoResponse};
-use device::{CpuInfo, MemInfo};
+use device::{CpuDetailInfo, CpuInfo, MemInfo};
 use serde::Serialize;
 
 use crate::errors::error_500;
@@ -30,11 +30,26 @@ pub async fn get() -> impl IntoResponse {
         Err(_) => {
             if cfg!(debug_assertions) {
                 CpuInfo {
-                    cpu: 60.0,
-                    cpu0: 60.0,
-                    cpu1: 60.0,
-                    cpu2: 60.0,
-                    cpu3: 60.0,
+                    cpu: CpuDetailInfo {
+                        idle: 50,
+                        total: 100,
+                    },
+                    cpu0: CpuDetailInfo {
+                        idle: 10,
+                        total: 110,
+                    },
+                    cpu1: CpuDetailInfo {
+                        idle: 20,
+                        total: 120,
+                    },
+                    cpu2: CpuDetailInfo {
+                        idle: 30,
+                        total: 130,
+                    },
+                    cpu3: CpuDetailInfo {
+                        idle: 40,
+                        total: 140,
+                    },
                 }
             } else {
                 return error_500::create_response();
@@ -42,11 +57,26 @@ pub async fn get() -> impl IntoResponse {
         }
     };
     let cpu = CpuInfoResponse {
-        cpu: cpu.cpu,
-        cpu0: cpu.cpu0,
-        cpu1: cpu.cpu1,
-        cpu2: cpu.cpu2,
-        cpu3: cpu.cpu3,
+        cpu: CpuDetailInfoResponse {
+            total: cpu.cpu.total,
+            idle: cpu.cpu.idle,
+        },
+        cpu0: CpuDetailInfoResponse {
+            total: cpu.cpu0.total,
+            idle: cpu.cpu0.idle,
+        },
+        cpu1: CpuDetailInfoResponse {
+            total: cpu.cpu1.total,
+            idle: cpu.cpu1.idle,
+        },
+        cpu2: CpuDetailInfoResponse {
+            total: cpu.cpu2.total,
+            idle: cpu.cpu2.idle,
+        },
+        cpu3: CpuDetailInfoResponse {
+            total: cpu.cpu3.total,
+            idle: cpu.cpu3.idle,
+        },
     };
     let mem = match device::get_mem() {
         Ok(v) => v,
@@ -96,11 +126,17 @@ pub struct DeviceResponse {
 
 #[derive(Serialize)]
 pub struct CpuInfoResponse {
-    cpu: f64,
-    cpu0: f64,
-    cpu1: f64,
-    cpu2: f64,
-    cpu3: f64,
+    cpu: CpuDetailInfoResponse,
+    cpu0: CpuDetailInfoResponse,
+    cpu1: CpuDetailInfoResponse,
+    cpu2: CpuDetailInfoResponse,
+    cpu3: CpuDetailInfoResponse,
+}
+
+#[derive(Serialize)]
+pub struct CpuDetailInfoResponse {
+    pub total: u32,
+    pub idle: u32,
 }
 
 #[derive(Serialize)]
