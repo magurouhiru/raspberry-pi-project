@@ -1,9 +1,9 @@
 {
-    "name": "web-backend",
+    "name": "pi-web-backend",
     "image":"sbtscala/scala-sbt:amazoncorretto-al2023-21.0.7_1.11.3_2.13.16",
     "runArgs": [
         "--name",
-        "web-backend",
+        "pi-web-backend",
         "--hostname",
         "sbtscala"
     ],
