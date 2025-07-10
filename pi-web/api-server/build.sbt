@@ -2,7 +2,7 @@ lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
   .settings(
-    name := """backend""",
+    name := """api-server""",
     organization := "com.example",
     version := "1.0-SNAPSHOT",
     crossScalaVersions := Seq("2.13.16", "3.3.6"),

@@ -1,9 +1,0 @@
-{
-  "name": "pi-web-backend",
-  "dockerComposeFile": "../../docker-compose.yaml",
-  "service": "backend",
-  "forwardPorts": [
-    9000
-  ],
-  "workspaceFolder": "/backend"
-}

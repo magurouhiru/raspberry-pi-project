@@ -1,14 +1,14 @@
 services:
   frontend:
     image: node:22.15.0-bookworm
-    container_name: frontend-dev
+    container_name: frontend_dev
     networks:
       - devnet
     ports:
       - "4200:4200"
-  backend:
+  api-server:
     image: sbtscala/scala-sbt:amazoncorretto-al2023-21.0.7_1.11.3_2.13.16
-    container_name: backend-dev
+    container_name: api-server_dev
     networks:
       - devnet
     ports:

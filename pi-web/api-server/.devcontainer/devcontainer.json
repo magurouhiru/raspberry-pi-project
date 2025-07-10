@@ -1,0 +1,9 @@
+{
+  "name": "pi-web_api-server_dev",
+  "dockerComposeFile": "../../pi-web_dev/docker-compose.yaml",
+  "service": "api-server",
+  "forwardPorts": [
+    9000
+  ],
+  "workspaceFolder": "/api-server"
+}
