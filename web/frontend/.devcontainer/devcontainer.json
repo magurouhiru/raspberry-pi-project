@@ -1,12 +1,9 @@
 {
-    "name": "pi-web-frontend",
-    "image": "node:22.15.0-bookworm",
-    "runArgs": [
-        "--name",
-        "pi-web-frontend",
-        "--hostname",
-        "node"
-    ],
-    "forwardPorts": [4200],
-    "workspaceFolder": "/frontend"
+  "name": "pi-web-frontend",
+  "dockerComposeFile": "../../docker-compose.yaml",
+  "service": "frontend",
+  "forwardPorts": [
+    4200
+  ],
+  "workspaceFolder": "/frontend"
 }

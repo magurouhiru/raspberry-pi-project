@@ -1,12 +1,9 @@
 {
-    "name": "pi-web-backend",
-    "image":"sbtscala/scala-sbt:amazoncorretto-al2023-21.0.7_1.11.3_2.13.16",
-    "runArgs": [
-        "--name",
-        "pi-web-backend",
-        "--hostname",
-        "sbtscala"
-    ],
-    "forwardPorts": [9000],
-    "workspaceFolder": "/backend"
+  "name": "pi-web-backend",
+  "dockerComposeFile": "../../docker-compose.yaml",
+  "service": "backend",
+  "forwardPorts": [
+    9000
+  ],
+  "workspaceFolder": "/backend"
 }

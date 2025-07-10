@@ -1,1 +1,2 @@
-GET        /        controllers.HomeController.index()
+GET         /api/hello        controllers.HelloController.get()
+POST        /api/hello        controllers.HelloController.echo()
