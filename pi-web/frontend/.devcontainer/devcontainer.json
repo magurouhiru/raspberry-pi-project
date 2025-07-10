@@ -1,0 +1,9 @@
+{
+  "name": "pi-web_frontend_dev",
+  "dockerComposeFile": "../../pi-web_dev/docker-compose.yaml",
+  "service": "frontend",
+  "forwardPorts": [
+    4200
+  ],
+  "workspaceFolder": "/frontend"
+}
