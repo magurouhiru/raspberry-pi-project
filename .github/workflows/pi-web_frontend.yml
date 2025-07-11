@@ -1,4 +1,4 @@
-name: Build & Push pi-web/frontend
+name: Push pi-web/frontend
 
 on:
   push:
