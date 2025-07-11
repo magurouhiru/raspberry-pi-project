@@ -20,7 +20,12 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
-          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -q '^pi-web/api-server/'; then
+          BASE_REF=${{ github.event.pull_request.base.ref }}
+          TARGET_BRANCH=${BASE_REF:-main}
+      
+          git fetch origin $TARGET_BRANCH
+          
+          if git diff --name-only origin/$TARGET_BRANCH...HEAD | grep -q '^pi-web/api-server/'; then
             echo "changed=true" >> $GITHUB_OUTPUT
           else
             echo "changed=false" >> $GITHUB_OUTPUT
