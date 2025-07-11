@@ -1,22 +1,22 @@
-name: Build & Push frontend
+name: Build & Push pi-web/frontend
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'frontend/**'
+      - 'pi-web/frontend/**'
   pull_request:
     paths:
-      - 'frontend/**'
+      - 'pi-web/frontend/**'
 
 jobs:
   build:
-    name: Build & (optionally) Push frontend
+    name: Build & (optionally) Push pi-web/frontend
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: frontend
+        working-directory: pi-web/frontend
 
     steps:
       - uses: actions/checkout@v4
