@@ -25,11 +25,14 @@ jobs:
       
           git fetch origin $TARGET_BRANCH
           
-          if git diff --name-only origin/$TARGET_BRANCH...HEAD | grep -q '^pi-web/api-server/'; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-          else
-            echo "changed=false" >> $GITHUB_OUTPUT
-          fi
+#          if git diff --name-only origin/$TARGET_BRANCH...HEAD | grep -q '^pi-web/api-server/'; then
+#            echo "changed=true" >> $GITHUB_OUTPUT
+#          else
+#            echo "changed=false" >> $GITHUB_OUTPUT
+#          fi
+          diff=$(git diff --name-only origin/$TARGET_BRANCH...HEAD | grep -q '^pi-web/api-server/')
+          echo "::notice diff: $diff"
+          echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: Set up Docker Buildx
         if: steps.changes.outputs.changed == 'true'
