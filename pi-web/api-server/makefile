@@ -10,9 +10,9 @@ build_local:
 		--load .
 
 build:
-	docker buildx build --platform linux/amd64,linux/arm64 \
+	docker build \
 		-t $(IMAGE_NAME_REMOTE):$(VERSION) \
-        --output=type=docker .
+        --load .
 
 push:
 	docker buildx build --platform linux/amd64,linux/arm64 \
