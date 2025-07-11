@@ -9,7 +9,7 @@ build_local:
 		-t $(IMAGE_NAME_LOCAL):latest \
 		--load .
 
-build_remote:
+build:
 	docker buildx build --platform linux/amd64,linux/arm64 \
 		-t $(IMAGE_NAME_REMOTE):$(VERSION) \
 		--push .
