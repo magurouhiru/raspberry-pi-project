@@ -5,12 +5,22 @@ Raspberry Pi でいろいろやる用のプロジェクト
 Raspberry Pi で動かすweb サーバーのためのプロジェクト  
 
 ### api-server
-axum で作成  
+play framework で作成  
 [詳細はこちら](./pi-web/api-server/README.md)
 
 ### frontend
 Angular で作成  
 [詳細はこちら](./pi-web/frontend/README.md)
+
+### pi-web_dev
+pi-web 開発時に共通的に使用するものが入っている
+
+### local-test
+作成したdocker image の確認用  
+start.bat で実行できる
+
+## 開発
+makefile でdocker build したいときは[devcontainer](./.devcontainer/devcontainer.json)を使ってください。
 
 # 環境設定とか
 ## Raspberry Pi の設定
@@ -25,6 +35,7 @@ https://www.raspberrypi.com/software/
 `sudo ufw default deny`デフォルトで拒否  
 `sudo nano /etc/default/ufw`で`IPV6=no`に変更しIPV6を使用しない(なんか色々面倒らしい)  
 `sudo ufw limit from 192.168.xx.0/24 to any port 22`でローカル環境からのssh接続のみ許可  
+`sudo ufw enable`で有効  
 `sudo ufw status`を実行して確認  
 ```
 Status: active
