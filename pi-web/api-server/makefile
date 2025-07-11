@@ -14,6 +14,11 @@ build:
 		-t $(IMAGE_NAME_REMOTE):$(VERSION) \
         --load .
 
+push_wip:
+	docker buildx build --platform linux/amd64,linux/arm64 \
+		-t $(IMAGE_NAME_REMOTE):$(VERSION)-wip \
+		--push .
+
 push:
 	docker buildx build --platform linux/amd64,linux/arm64 \
 		-t $(IMAGE_NAME_REMOTE):$(VERSION) \
