@@ -1,6 +1,6 @@
-# package.json の "version": "1.2.3", からバージョン取得
-VERSION := $(shell jq -r .version package.json)
-IMAGE_NAME := ghcr.io/magurouhiru/pi-web_frontend
+# build.sbt の version := "1.2.3" からバージョン取得
+VERSION := $(shell awk -F'"' '/version *:=/ {print $$2}' build.sbt)
+IMAGE_NAME := ghcr.io/magurouhiru/pi-web_api-server
 
 build:
 	docker build \
