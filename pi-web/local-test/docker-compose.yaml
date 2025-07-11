@@ -9,14 +9,14 @@ services:
     ports:
       - "8080:80"
   frontend:
-    image: ghcr.io/magurouhiru/pi-web_frontend:latest
+    image: pi-web_frontend:latest
     container_name: frontend_local-test
     networks:
       - local-test_net
     ports:
       - "8081:80"
   api-server:
-    image: ghcr.io/magurouhiru/pi-web_api-server:latest
+    image: pi-web_api-server:latest
     container_name: api-server_local-test
     networks:
       - local-test_net

@@ -5,7 +5,7 @@ IMAGE_NAME_REMOTE := ghcr.io/magurouhiru/raspberry-pi-project/pi-web_frontend
 
 build_local:
 	docker build \
-		-t $(IMAGE_NAME):$(VERSION) \
+		-t $(IMAGE_NAME_LOCAL):$(VERSION) \
 		-t $(IMAGE_NAME_LOCAL):latest \
 		--load .
 
