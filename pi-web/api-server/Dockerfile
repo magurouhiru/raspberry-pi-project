@@ -20,7 +20,7 @@ RUN sbt Universal/packageZipTarball
 RUN tar -xzf target/universal/api-server-*.tgz
 
 # --- Stage 2: Run on Amazon Corretto ---
-FROM eclipse-temurin:21.0.7_6-jre-alpine-3.21
+FROM eclipse-temurin:21.0.7_6-jre
 
 RUN apk add --no-cache bash
 
