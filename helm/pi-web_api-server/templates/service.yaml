@@ -11,6 +11,5 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
-      nodePort: 30080
   selector:
     {{- include "pi-web_api-server.selectorLabels" . | nindent 4 }}
