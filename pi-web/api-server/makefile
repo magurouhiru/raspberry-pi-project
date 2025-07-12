@@ -4,7 +4,7 @@ IMAGE_NAME_LOCAL := pi-web_api-server
 IMAGE_NAME_REMOTE := ghcr.io/magurouhiru/raspberry-pi-project/pi-web_api-server
 
 build_local:
-	docker build \
+	docker build --platform linux/arm64 \
 		-t $(IMAGE_NAME_LOCAL):$(VERSION) \
 		-t $(IMAGE_NAME_LOCAL):latest \
 		--load .

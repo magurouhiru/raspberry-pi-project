@@ -4,9 +4,10 @@ IMAGE_NAME_LOCAL := pi-web_frontend
 IMAGE_NAME_REMOTE := ghcr.io/magurouhiru/raspberry-pi-project/pi-web_frontend
 
 build_local:
-	docker build \
+	docker build --platform linux/arm64 \
 		-t $(IMAGE_NAME_LOCAL):$(VERSION) \
 		-t $(IMAGE_NAME_LOCAL):latest \
+		--build-arg API_SERVER_URL=api-server:9000 \
 		--load .
 
 build:
