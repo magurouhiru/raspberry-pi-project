@@ -11,16 +11,16 @@ build_local:
 		--load .
 
 build:
-	docker build --platform linux/arm64 \
+	docker buildx build --platform linux/arm64 \
 		-t $(IMAGE_NAME_REMOTE):$(VERSION) \
         --load .
 
 push_wip:
-	docker build --platform linux/arm64 \
+	docker buildx build --platform linux/arm64 \
 		-t $(IMAGE_NAME_REMOTE):$(VERSION)-wip \
 		--push .
 
 push:
-	docker build --platform linux/arm64 \
+	docker buildx build --platform linux/arm64 \
 		-t $(IMAGE_NAME_REMOTE):$(VERSION) \
 		--push .
