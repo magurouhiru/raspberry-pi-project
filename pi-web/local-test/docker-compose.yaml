@@ -9,8 +9,8 @@ services:
       - "8080:80"
   api-server:
     container_name: api-server_local-test
-#    image: pi-web_api-server:latest
-    image: ghcr.io/magurouhiru/raspberry-pi-project/pi-web_api-server:0.0.0-wip@sha256:38b11f8d8295e757d00f4d80e55c28c1d8d9744f01345fd863d6dda507c21d93
+    image: pi-web_api-server:latest
+#    image: ghcr.io/magurouhiru/raspberry-pi-project/pi-web_api-server:0.0.0-wip@sha256:9a796fb4cc220f26842c9b337449e41d1d8dbb0819213afc4417fa7bdca044de
     platform: linux/arm64
     networks:
       - local-test_net
