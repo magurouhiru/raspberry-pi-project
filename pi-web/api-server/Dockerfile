@@ -13,22 +13,22 @@ RUN sbt update
 # ソースコード全コピー
 COPY . .
 
-## アプリをビルドしてディストリビューションtgz作成
-#RUN sbt Universal/packageZipTarball
-#
-## 解凍
-#RUN tar -xzf target/universal/api-server-*.tgz
-#
-## --- Stage 2: Run on Amazon Corretto ---
-#FROM eclipse-temurin:21.0.7_6-jre
-#
-#WORKDIR /opt
-#
-## ディストリビューションをコピー
-#COPY --from=builder /app/api-server-* /opt/api-server
+# アプリをビルドしてディストリビューションtgz作成
+RUN sbt Universal/packageZipTarball
+
+# 解凍
+RUN tar -xzf target/universal/api-server-*.tgz
+
+# --- Stage 2: Run on Amazon Corretto ---
+FROM eclipse-temurin:17.0.15_6-jre
+
+WORKDIR /opt
+
+# ディストリビューションをコピー
+COPY --from=builder /app/api-server-* /opt/api-server
 
 # ポート公開
 EXPOSE 9000
 
 # アプリ起動
-CMD ["sbt","run"]
+CMD ["/opt/api-server/bin/api-server"]
