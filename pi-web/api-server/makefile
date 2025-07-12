@@ -1,16 +1,33 @@
 # build.sbt の version := "1.2.3" からバージョン取得
 VERSION := $(shell awk -F'"' '/version *:=/ {print $$2}' build.sbt)
-IMAGE_NAME := ghcr.io/magurouhiru/pi-web_api-server
+IMAGE_NAME_LOCAL := pi-web_api-server
+IMAGE_NAME_REMOTE := ghcr.io/magurouhiru/raspberry-pi-project/pi-web_api-server
+
+build_local:
+	docker build \
+        --platform linux/arm64 \
+        -t $(IMAGE_NAME_LOCAL):$(VERSION) \
+        -t $(IMAGE_NAME_LOCAL):latest \
+        --build-arg API_SERVER_URL=api-server:9000 \
+        --load .
 
 build:
-	docker build \
-		-t $(IMAGE_NAME):$(VERSION) \
-		-t $(IMAGE_NAME):latest \
-		--load .
+	docker buildx build \
+        --platform linux/arm64 \
+        --builder $(BUILDER) \
+        -t $(IMAGE_NAME_REMOTE):$(VERSION) \
+        --load .
+
+push_wip:
+	docker buildx build \
+        --platform linux/arm64 \
+        --builder $(BUILDER) \
+        -t $(IMAGE_NAME_REMOTE):$(VERSION)-wip \
+        --push .
 
 push:
-	docker buildx build --platform linux/amd64,linux/arm64 \
-		-t $(IMAGE_NAME):$(VERSION) \
-		--push .
-
-release: push
+	docker buildx build \
+        --platform linux/arm64 \
+        --builder $(BUILDER) \
+        -t $(IMAGE_NAME_REMOTE):$(VERSION) \
+        --push .

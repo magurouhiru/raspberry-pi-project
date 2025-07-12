@@ -16,14 +16,20 @@ COPY . .
 # ビルド
 RUN npm run build
 
+# ビルド引数で環境指定
+ARG API_SERVER_URL=pi-web-api-server:9000
+
+# ビルド時に置換して nginx.conf を作成
+RUN sed "s|__API_SERVER_URL__|${API_SERVER_URL}|g" nginx.template.conf > nginx.conf
+
 # --- Production Stage ---
 FROM nginx:alpine
 
-# Nginxのデフォルト設定を置き換え
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
 # ビルド成果物をnginxにコピー
 COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
+
+# Nginxのデフォルト設定を置き換え
+COPY --from=build /app/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose Port 80
 EXPOSE 80
