@@ -1,5 +1,5 @@
 # --- Stage 1: Build Play app ---
-FROM sbtscala/scala-sbt:eclipse-temurin-21.0.7_6_1.11.3_2.13.16 AS builder
+FROM sbtscala/scala-sbt:eclipse-temurin-17.0.15_6_1.11.3_2.13.16 AS builder
 
 WORKDIR /app
 
