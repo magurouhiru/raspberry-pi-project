@@ -10,7 +10,6 @@ services:
   api-server:
     container_name: api-server_local-test
     image: pi-web_api-server:latest
-#    image: ghcr.io/magurouhiru/raspberry-pi-project/pi-web_api-server:0.0.0-wip@sha256:9a796fb4cc220f26842c9b337449e41d1d8dbb0819213afc4417fa7bdca044de
     platform: linux/arm64
     networks:
       - local-test_net
