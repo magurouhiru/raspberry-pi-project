@@ -26,4 +26,7 @@ sudo crictl rmi ghcr.io/magurouhiru/raspberry-pi-project/pi-web_api-server:0.0.0
 sudo systemctl start containerd
 sudo systemctl stop containerd
 sudo nerdctl run --rm -it -p 30080:9000 ghcr.io/magurouhiru/raspberry-pi-project/pi-web_api-server:0.0.0-wip
+
+git restore .
+
 ```
