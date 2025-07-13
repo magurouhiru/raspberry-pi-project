@@ -92,12 +92,16 @@ livenessProbe:
     port: 9000
   initialDelaySeconds: 30
   periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6      # 失敗6回でNG
 readinessProbe:
   httpGet:
     path: /ready
     port: 9000
   initialDelaySeconds: 30
   periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6      # 失敗6回でNG
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
