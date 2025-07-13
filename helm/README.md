@@ -8,6 +8,8 @@ sudo systemctl stop k3s
 # 状態取得・削除
 kubectl get all
 kubectl delete all --all
+kubectl logs pod/
+kubectl describe pod/
 
 # 色々追加
 helm upgrade --install frontend ./helm/pi-web_frontend/ --namespace default
