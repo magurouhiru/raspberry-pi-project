@@ -8,6 +8,7 @@ build_local:
         --platform linux/arm64 \
         -t $(IMAGE_NAME_LOCAL):$(VERSION) \
         -t $(IMAGE_NAME_LOCAL):latest \
+        --build-arg API_SERVER_URL=api-server:9000 \
         --load .
 
 build:
