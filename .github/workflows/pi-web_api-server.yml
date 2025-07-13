@@ -21,6 +21,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: get commit message
+        id: get_commit
+        run: echo "msg=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -41,7 +45,7 @@ jobs:
           password: ${{ secrets.CR_PAT }}
 
       - name: Push wip
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && contains(steps.get_commit.outputs.msg, '-wip')
         run: make push_wip BUILDER=${{ steps.buildx.outputs.name }}
 
       - name: Push
