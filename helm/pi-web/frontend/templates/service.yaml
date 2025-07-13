@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "pi-web_api-server.fullname" . }}
+  name: {{ include "frontend.fullname" . }}
   labels:
-    {{- include "pi-web_api-server.labels" . | nindent 4 }}
+    {{- include "frontend.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -11,5 +11,6 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+      nodePort: 30080
   selector:
-    {{- include "pi-web_api-server.selectorLabels" . | nindent 4 }}
+    {{- include "frontend.selectorLabels" . | nindent 4 }}

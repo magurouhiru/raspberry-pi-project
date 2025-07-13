@@ -12,8 +12,10 @@ kubectl logs pod/
 kubectl describe pod/
 
 # 色々追加
-helm upgrade --install frontend ./helm/pi-web_frontend/ --namespace default
-helm upgrade --install api-server ./helm/pi-web_api-server/ --namespace default
+helm dependency update ./helm/pi-web/
+helm upgrade --install pi-web ./helm/pi-web -n default
+#helm upgrade --install frontend ./helm/pi-web_frontend/ --namespace default
+#helm upgrade --install api-server ./helm/pi-web_api-server/ --namespace default
 
 # image取得・削除
 sudo crictl images

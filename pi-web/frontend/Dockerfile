@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # ビルド引数で環境指定
-ARG API_SERVER_URL=api-server-pi-web-api-server:9000
+ARG API_SERVER_URL=pi-web-api-server:9000
 
 # ビルド時に置換して nginx.conf を作成
 RUN sed "s|__API_SERVER_URL__|${API_SERVER_URL}|g" nginx.template.conf > nginx.conf

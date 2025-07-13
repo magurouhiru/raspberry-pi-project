@@ -1,0 +1,15 @@
+api-server:
+  service:
+    type: ClusterIP
+    port: 9000
+  image:
+    # Overrides the image tag whose default is the chart appVersion.
+#    tag: "0.0.0-wip"
+
+frontend:
+  service:
+    type: NodePort
+    port: 80
+  image:
+    # Overrides the image tag whose default is the chart appVersion.
+#    tag: "0.0.0-wip"
