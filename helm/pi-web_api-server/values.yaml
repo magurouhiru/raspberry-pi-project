@@ -90,13 +90,13 @@ livenessProbe:
   httpGet:
     path: /health
     port: 9000
-  initialDelaySeconds: 300
+  initialDelaySeconds: 30
   periodSeconds: 10
 readinessProbe:
   httpGet:
     path: /ready
     port: 9000
-  initialDelaySeconds: 300
+  initialDelaySeconds: 30
   periodSeconds: 10
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
