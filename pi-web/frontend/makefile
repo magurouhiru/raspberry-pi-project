@@ -1,16 +1,34 @@
 # package.json の "version": "1.2.3", からバージョン取得
 VERSION := $(shell jq -r .version package.json)
-IMAGE_NAME := ghcr.io/magurouhiru/pi-web_frontend
+IMAGE_NAME_LOCAL := pi-web_frontend
+IMAGE_NAME := ghcr.io/magurouhiru/raspberry-pi-project/pi-web_frontend
 
-build:
+build: build_local_k8s
+
+build_local:
 	docker build \
-		-t $(IMAGE_NAME):$(VERSION) \
-		-t $(IMAGE_NAME):latest \
+		--platform linux/arm64 \
+		-t $(IMAGE_NAME_LOCAL):$(VERSION) \
+		-t $(IMAGE_NAME_LOCAL):latest \
+		--build-arg API_SERVER_URL=api-server:9000 \
 		--load .
 
-push:
-	docker buildx build --platform linux/amd64,linux/arm64 \
+build_local_k8s: build_local
+	docker build \
+		--platform linux/arm64 \
 		-t $(IMAGE_NAME):$(VERSION) \
+		--load .
+
+push_wip:
+	docker buildx build \
+		--platform linux/arm64 \
+		--builder $(BUILDER) \
+		-t $(IMAGE_NAME):$(VERSION)-wip \
 		--push .
 
-release: push
+push:
+	docker buildx build \
+		--platform linux/arm64 \
+		--builder $(BUILDER) \
+		-t $(IMAGE_NAME):$(VERSION) \
+		--push .

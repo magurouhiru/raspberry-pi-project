@@ -1,5 +1,5 @@
 # --- Stage 1: Build Play app ---
-FROM sbtscala/scala-sbt:amazoncorretto-al2023-21.0.7_1.11.3_2.13.16 AS builder
+FROM sbtscala/scala-sbt:eclipse-temurin-17.0.15_6_1.11.3_2.13.16 AS builder
 
 WORKDIR /app
 
@@ -20,7 +20,7 @@ RUN sbt Universal/packageZipTarball
 RUN tar -xzf target/universal/api-server-*.tgz
 
 # --- Stage 2: Run on Amazon Corretto ---
-FROM amazoncorretto:21.0.7-al2023-headless
+FROM eclipse-temurin:17.0.15_6-jre
 
 WORKDIR /opt
 

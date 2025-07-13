@@ -1,0 +1,11 @@
+apiVersion: v2
+name: pi-web
+description: Parent chart for pi-web
+version: 0.1.0
+dependencies:
+  - name: api-server
+    version: 0.1.0
+    repository: file://./api-server
+  - name: frontend
+    version: 0.1.0
+    repository: file://./frontend
