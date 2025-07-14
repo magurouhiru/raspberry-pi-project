@@ -71,7 +71,7 @@ console=serial0,115200 console=tty1 root=PARTUUID=xxxxxx-02 rootfstype=ext4 elev
 `ls /sys/fs/cgroup`でmemoryディレクトリがあればOKらしい
 
 インストール  
-`curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable servicelb --disable metrics-server" sh -`  
+`curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --disable servicelb --disable metrics-server" sh -`  
 デフォルトだと（ラズパイ3bでは）とても重いので重要(内蔵Service LoadBalancer（klipper-lb）を無効化,Metrics Serverを無効化（Pod/Nodeのリソース監視をしない）)  
 `journalctl -fu k3s.service`リアルタイムでログ出力  
 `sudo kubectl get nodes`↓のようになればOK
