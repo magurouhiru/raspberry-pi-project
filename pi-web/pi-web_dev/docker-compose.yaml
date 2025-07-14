@@ -13,7 +13,31 @@ services:
       - devnet
     ports:
       - "9000:9000"
+    depends_on:
+      - db
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/mydb
+      DB_USER: myuser
+      DB_PASSWORD: mypass
+      DB_NAME: mydb
+  db:
+    image: postgres:17.5-alpine3.22
+    container_name: db_dev
+    networks:
+      - devnet
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypass
+      POSTGRES_DB: mydb
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
 
 networks:
   devnet:
     driver: bridge
+
+volumes:
+  db-data:
