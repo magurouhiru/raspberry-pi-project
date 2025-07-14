@@ -6,9 +6,9 @@ on:
       - main
     paths:
       - 'pi-web/frontend/**'
-  pull_request:
-    paths:
-      - 'pi-web/frontend/**'
+#  pull_request:
+#    paths:
+#      - 'pi-web/frontend/**'
 
 jobs:
   build:
