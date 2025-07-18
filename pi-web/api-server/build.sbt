@@ -13,6 +13,9 @@ lazy val root = (project in file("."))
       play.dev.filewatch.FileWatchService.polling(500),
     libraryDependencies ++= Seq(
       guice,
+      "org.postgresql" % "postgresql" % "42.7.7",
+      evolutions,
+      jdbc,
       "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test
     ),
     scalacOptions ++= Seq(

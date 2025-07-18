@@ -9,7 +9,6 @@ class HelloController @Inject() (cc: ControllerComponents)
     extends AbstractController(cc) {
 
   case class Hello(message: String)
-
   implicit val helloFormat: OFormat[Hello] = Json.format[Hello]
 
   def get(): Action[AnyContent] = Action {
