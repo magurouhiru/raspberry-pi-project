@@ -1,7 +1,6 @@
 package repositories
 
-import javax.inject.Inject
-import javax.inject.Singleton
+import javax.inject._
 
 import models.Hello
 import models.QuillContext
@@ -10,8 +9,8 @@ import models.QuillContext
 class HelloRepository @Inject() (quillCtx: QuillContext) {
   import quillCtx.ctx._
 
-  def q() = run(query[Hello])
+  def q(): Seq[Hello] = run(query[Hello])
 
-  def i(hello: Hello) = run(query[Hello].insertValue(lift(hello)))
+  def i(hello: Hello): Long = run(query[Hello].insertValue(lift(hello)))
 
 }
