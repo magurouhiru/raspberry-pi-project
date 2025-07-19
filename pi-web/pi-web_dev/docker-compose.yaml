@@ -19,7 +19,6 @@ services:
       DB_URL: jdbc:postgresql://db:5432/playdb
       DB_USER: playuser
       DB_PASSWORD: playpass
-      DB_NAME: playdb
   db:
     image: postgres:17.5-alpine3.22
     container_name: db_dev

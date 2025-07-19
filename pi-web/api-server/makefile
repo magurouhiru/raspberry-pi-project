@@ -5,7 +5,6 @@ IMAGE_NAME := ghcr.io/magurouhiru/raspberry-pi-project/pi-web_api-server
 DB_URL ?= jdbc:postgresql://db:5432/playdb
 DB_USER ?= playuser
 DB_PASSWORD ?= playpass
-DB_NAME ?= playdb
 
 build: build_local_k8s
 
@@ -17,7 +16,6 @@ build_local:
 		--build-arg DB_URL=$(DB_URL) \
 		--build-arg DB_USER=$(DB_USER) \
 		--build-arg DB_PASSWORD=$(DB_PASSWORD) \
-		--build-arg DB_NAME=$(DB_NAME) \
 		--load .
 
 build_local_k8s: build_local
@@ -27,7 +25,6 @@ build_local_k8s: build_local
 		--build-arg DB_URL=$(DB_URL) \
 		--build-arg DB_USER=$(DB_USER) \
 		--build-arg DB_PASSWORD=$(DB_PASSWORD) \
-		--build-arg DB_NAME=$(DB_NAME) \
 		--load .
 
 push_wip:
@@ -38,7 +35,6 @@ push_wip:
 		--build-arg DB_URL=$(DB_URL) \
 		--build-arg DB_USER=$(DB_USER) \
 		--build-arg DB_PASSWORD=$(DB_PASSWORD) \
-		--build-arg DB_NAME=$(DB_NAME) \
 		--push .
 
 push:
@@ -49,5 +45,4 @@ push:
 		--build-arg DB_URL=$(DB_URL) \
 		--build-arg DB_USER=$(DB_USER) \
 		--build-arg DB_PASSWORD=$(DB_PASSWORD) \
-		--build-arg DB_NAME=$(DB_NAME) \
 		--push .
