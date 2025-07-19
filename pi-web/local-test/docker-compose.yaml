@@ -1,15 +1,15 @@
 services:
   frontend:
-    container_name: frontend_local-test
     image: pi-web_frontend:latest
+    container_name: frontend_local-test
     platform: linux/arm64
     networks:
       - local-test_net
     ports:
       - "8080:80"
   api-server:
-    container_name: api-server_local-test
     image: pi-web_api-server:latest
+    container_name: api-server_local-test
     platform: linux/arm64
     networks:
       - local-test_net
@@ -18,18 +18,19 @@ services:
     depends_on:
       - db
   db:
+    image: mariadb:lts
     container_name: db_local-test
-    image: postgres:17.5-alpine3.22
     networks:
       - local-test_net
     ports:
-      - "25432:5432"
+      - "23306:3306"
     environment:
-      POSTGRES_USER: playuser
-      POSTGRES_PASSWORD: playpass
-      POSTGRES_DB: playdb
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_USER: playuser
+      MYSQL_PASSWORD: playpass
+      MYSQL_DATABASE: playdb
     volumes:
-      - db-data_local-test:/var/lib/postgresql/data
+      - db-data_local-test:/var/lib/mysql
     restart: unless-stopped
 
 networks:

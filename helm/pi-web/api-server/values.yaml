@@ -16,7 +16,7 @@ image:
 # 環境変数を設定
 env:
   - name: DB_URL
-    value: "jdbc:postgresql://pi-web-db:5432/playdb"
+    value: "jdbc:mysql://db:3306/playdb"
   - name: DB_USER
     value: "playuser"
   - name: DB_PASSWORD
