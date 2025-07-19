@@ -16,7 +16,7 @@ services:
     depends_on:
       - db
     environment:
-      DB_URL: jdbc:postgresql://db:15432/playdb
+      DB_URL: jdbc:postgresql://db:5432/playdb
       DB_USER: playuser
       DB_PASSWORD: playpass
       DB_NAME: playdb
