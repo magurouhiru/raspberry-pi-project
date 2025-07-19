@@ -15,7 +15,24 @@ services:
       - local-test_net
     ports:
       - "9090:9000"
+  db:
+    container_name: db_local-test
+    image: postgres:17.5-alpine3.22
+    networks:
+      - local-test_net
+    ports:
+      - "25432:5432"
+    environment:
+      POSTGRES_USER: playuser
+      POSTGRES_PASSWORD: playpass
+      POSTGRES_DB: playdb
+    volumes:
+      - db-data_local-test:/var/lib/postgresql/data
+    restart: unless-stopped
 
 networks:
   local-test_net:
     driver: bridge
+
+volumes:
+  db-data_local-test:

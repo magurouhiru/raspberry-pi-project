@@ -10,6 +10,17 @@ COPY project/ ./project
 # sbt依存ダウンロード（これで後のソース変更はここに影響しない）
 RUN sbt update
 
+# 環境変数を設定
+ARG DB_URL
+ARG DB_USER
+ARG DB_PASSWORD
+ARG DB_NAME
+
+ENV DB_URL=${DB_URL}
+ENV DB_USER=${DB_USER}
+ENV DB_PASSWORD=${DB_PASSWORD}
+ENV DB_NAME=${DB_NAME}
+
 # ソースコード全コピー
 COPY . .
 
@@ -19,7 +30,7 @@ RUN sbt Universal/packageZipTarball
 # 解凍
 RUN tar -xzf target/universal/api-server-*.tgz
 
-# --- Stage 2: Run on Amazon Corretto ---
+# --- Stage 2: Run on eclipse temurin ---
 FROM eclipse-temurin:17.0.15_6-jre
 
 WORKDIR /opt
