@@ -110,8 +110,10 @@ livenessProbe:
       - postgres
       - -h
       - localhost
-  initialDelaySeconds: 5
+  initialDelaySeconds: 60
   periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6      # 失敗6回でNG
 readinessProbe:
   exec:
     command:
@@ -122,8 +124,10 @@ readinessProbe:
       - postgres
       - -h
       - localhost
-  initialDelaySeconds: 5
+  initialDelaySeconds: 60
   periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6      # 失敗6回でNG
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
