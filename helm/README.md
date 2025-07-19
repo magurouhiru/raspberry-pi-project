@@ -9,6 +9,7 @@ sudo systemctl stop k3s
 kubectl get all
 kubectl delete all --all
 kubectl logs pod/
+kubectl logs --previous pod/
 kubectl describe pod/
 
 # secret設定

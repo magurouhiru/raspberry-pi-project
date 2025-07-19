@@ -16,7 +16,7 @@ services:
     depends_on:
       - db
     environment:
-      DB_URL: jdbc:mysql://db:3306/playdb
+      DB_URL: jdbc:mariadb://db:3306/playdb
       DB_USER: playuser
       DB_PASSWORD: playpass
   db:

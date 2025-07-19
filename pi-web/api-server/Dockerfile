@@ -34,7 +34,7 @@ COPY --from=builder /app/api-server-* /opt/api-server
 EXPOSE 9000
 
 # 環境変数を設定
-ENV DB_URL=jdbc:mysql://db:3306/playdb
+ENV DB_URL=jdbc:mariadb://db:3306/playdb
 ENV DB_USER=playuser
 ENV DB_PASSWORD=playpass
 

@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
       guice,
       jdbc,
       evolutions,
-      "mysql" % "mysql-connector-java" % "8.0.33",
+      "org.mariadb.jdbc" % "mariadb-java-client" % "3.5.4",
       "io.getquill" %% "quill-jdbc" % "4.8.5",
       "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test,
     ),
