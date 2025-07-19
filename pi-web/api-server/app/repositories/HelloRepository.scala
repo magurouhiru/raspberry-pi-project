@@ -9,8 +9,10 @@ import models.QuillContext
 class HelloRepository @Inject() (quillCtx: QuillContext) {
   import quillCtx.ctx._
 
-  def q(): Seq[Hello] = run(query[Hello])
+  def ready(): Long = run(query[Hello].size)
 
-  def i(hello: Hello): Long = run(query[Hello].insertValue(lift(hello)))
+  def readAll(): Seq[Hello] = run(query[Hello])
+
+  def create(hello: Hello): Long = run(query[Hello].insertValue(lift(hello)))
 
 }

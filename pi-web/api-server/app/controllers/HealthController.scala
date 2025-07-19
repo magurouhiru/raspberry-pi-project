@@ -5,9 +5,13 @@ import javax.inject._
 import play.api.libs.json._
 import play.api.mvc._
 
+import repositories.HelloRepository
+
 @Singleton
-class HealthController @Inject() (cc: ControllerComponents)
-    extends AbstractController(cc) {
+class HealthController @Inject() (
+    cc: ControllerComponents,
+    helloRepository: HelloRepository,
+) extends AbstractController(cc) {
 
   case class Hello(message: String)
 
@@ -15,6 +19,9 @@ class HealthController @Inject() (cc: ControllerComponents)
 
   def health(): Action[AnyContent] = Action(Ok(""))
 
-  def ready(): Action[AnyContent] = Action(Ok(""))
+  def ready(): Action[AnyContent] = Action {
+    val hello = helloRepository.ready()
+    Ok(hello.toString)
+  }
 
 }

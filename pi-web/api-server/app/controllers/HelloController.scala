@@ -13,7 +13,7 @@ class HelloController @Inject() (cc: ControllerComponents, repo: HelloRepository
     extends AbstractController(cc) {
 
   def get(): Action[AnyContent] = Action {
-    repo.i(Hello("hello"))
+    repo.create(Hello("hello"))
     Ok(Json.toJson(Hello("hello")))
   }
 
@@ -22,7 +22,7 @@ class HelloController @Inject() (cc: ControllerComponents, repo: HelloRepository
     request.body.validate[Hello] match {
       case JsSuccess(hello, _) =>
         // 成功: HelloをそのままJSONで返す
-        repo.i(hello)
+        repo.create(hello)
         Ok(Json.toJson(hello))
       case JsError(errors) =>
         // 失敗: 400 Bad Request
