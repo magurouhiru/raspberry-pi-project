@@ -10,17 +10,11 @@ COPY project/ ./project
 # sbt依存ダウンロード（これで後のソース変更はここに影響しない）
 RUN sbt update
 
-# 環境変数を設定
-ARG DB_URL
-ARG DB_USER
-ARG DB_PASSWORD
-
-ENV DB_URL=${DB_URL}
-ENV DB_USER=${DB_USER}
-ENV DB_PASSWORD=${DB_PASSWORD}
-
 # ソースコード全コピー
 COPY . .
+
+# ローカルにビルド成果物があれば削除
+RUN rm -rf target/universal
 
 # アプリをビルドしてディストリビューションtgz作成
 RUN sbt Universal/packageZipTarball
@@ -38,6 +32,11 @@ COPY --from=builder /app/api-server-* /opt/api-server
 
 # ポート公開
 EXPOSE 9000
+
+# 環境変数を設定
+ENV DB_URL=jdbc:postgresql://db:5432/playdb
+ENV DB_USER=playuser
+ENV DB_PASSWORD=playpass
 
 # アプリ起動
 CMD ["/opt/api-server/bin/api-server"]
