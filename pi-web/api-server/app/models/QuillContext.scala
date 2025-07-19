@@ -16,5 +16,5 @@ class QuillContext @Inject() (dbApi: DBApi) {
     .dataSource
     .asInstanceOf[DataSource with Closeable]
 
-  val ctx = new PostgresJdbcContext(SnakeCase, ds)
+  val ctx = new MysqlJdbcContext(SnakeCase, ds)
 }
