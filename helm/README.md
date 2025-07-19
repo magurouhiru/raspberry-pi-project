@@ -9,7 +9,11 @@ sudo systemctl stop k3s
 kubectl get all
 kubectl delete all --all
 kubectl logs pod/
+kubectl logs --previous pod/
 kubectl describe pod/
+
+# secret設定
+kubectl create secret generic db-secrets --from-literal=db-password='super-secret-password'
 
 # 色々追加
 helm dependency update ./helm/pi-web/
@@ -18,6 +22,9 @@ helm upgrade --install pi-web ./helm/pi-web -n default
 #helm upgrade --install api-server ./helm/pi-web_api-server/ --namespace default
 
 # image取得・削除
+sudo k3s ctr images ls
+sudo k3s ctr images pull ghcr.io/magurouhiru/raspberry-pi-project/pi-web_api-server:0.0.0-wip
+sudo k3s ctr images rm ghcr.io/magurouhiru/raspberry-pi-project/pi-web_api-server:0.0.0-wip
 sudo crictl images
 sudo crictl rmi ghcr.io/magurouhiru/raspberry-pi-project/pi-web_frontend:0.0.0-wip
 sudo crictl rmi ghcr.io/magurouhiru/raspberry-pi-project/pi-web_api-server:0.0.0-wip

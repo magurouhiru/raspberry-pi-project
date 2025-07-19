@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
-<!-- https://www.playframework.com/documentation/latest/SettingsLogger -->
+<!--
+   Copyright (C) from 2022 The Play Framework Contributors <https://github.com/playframework>, 2011-2021 Lightbend Inc. <https://www.lightbend.com>
+-->
 
 <!DOCTYPE configuration>
 
@@ -32,16 +33,12 @@
   </appender>
 
   <logger name="play" level="INFO"/>
-  <logger name="application" level="DEBUG"/>
+  <logger name="org.jdbcdslog.ConnectionLogger" level="OFF"/> <!-- Won' log connections -->
+  <logger name="org.jdbcdslog.StatementLogger" level="INFO"/> <!-- Will log all statements -->
+  <logger name="org.jdbcdslog.ResultSetLogger" level="OFF"/>  <!-- Won' log result sets -->
 
-  <!-- Off these ones as they are annoying, and anyway we manage configuration ourselves -->
-  <logger name="com.avaje.ebean.config.PropertyMapLoader" level="OFF"/>
-  <logger name="com.avaje.ebeaninternal.server.core.XmlConfigLoader" level="OFF"/>
-  <logger name="com.avaje.ebeaninternal.server.lib.BackgroundThread" level="OFF"/>
-  <logger name="com.gargoylesoftware.htmlunit.javascript" level="OFF"/>
-
-  <root level="WARN">
-    <!--<appender-ref ref="ASYNCFILE"/>-->
+  <root level="INFO">
+    <appender-ref ref="ASYNCFILE"/>
     <appender-ref ref="ASYNCSTDOUT"/>
   </root>
 
