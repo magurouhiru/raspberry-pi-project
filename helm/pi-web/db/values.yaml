@@ -11,21 +11,21 @@ image:
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "lts"
+#  tag: "12.0.1-ubi9-rc"
 
 # 環境変数を設定
 env:
   - name: MYSQL_ROOT_PASSWORD
-    value: "rootpass"
+    value: rootpass
   - name: MYSQL_USER
-    value: "playuser"
+    value: playuser
   - name: MYSQL_PASSWORD
     valueFrom:
       secretKeyRef:
         name: db-secrets
         key: db-password
   - name: MYSQL_DATABASE
-    value: "playdb"
+    value: playdb
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -105,12 +105,8 @@ livenessProbe:
     command:
       - sh
       - -c
-      - mysqladmin
-      - ping
-      - -u
-      - root
-      - -p$MYSQL_ROOT_PASSWORD
-  initialDelaySeconds: 60
+      - mariadb-admin ping -u root -p$MYSQL_ROOT_PASSWORD
+  initialDelaySeconds: 10
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 6      # 失敗6回でNG
@@ -119,12 +115,8 @@ readinessProbe:
     command:
       - sh
       - -c
-      - mysqladmin
-      - ping
-      - -u
-      - root
-      - -p$MYSQL_ROOT_PASSWORD
-  initialDelaySeconds: 60
+      - mariadb-admin ping -u root -p$MYSQL_ROOT_PASSWORD
+  initialDelaySeconds: 10
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 6      # 失敗6回でNG

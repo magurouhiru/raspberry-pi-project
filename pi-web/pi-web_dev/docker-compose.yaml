@@ -20,7 +20,7 @@ services:
       DB_USER: playuser
       DB_PASSWORD: playpass
   db:
-    image: mariadb:lts
+    image: mariadb:12.0.1-ubi9-rc
     container_name: db_dev
     networks:
       - devnet
