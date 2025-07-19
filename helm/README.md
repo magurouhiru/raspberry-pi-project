@@ -11,6 +11,9 @@ kubectl delete all --all
 kubectl logs pod/
 kubectl describe pod/
 
+# secret設定
+kubectl create secret generic db-secrets --from-literal=db-password='super-secret-password'
+
 # 色々追加
 helm dependency update ./helm/pi-web/
 helm upgrade --install pi-web ./helm/pi-web -n default
