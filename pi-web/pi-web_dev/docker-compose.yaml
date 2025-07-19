@@ -5,32 +5,32 @@ services:
     networks:
       - devnet
     ports:
-      - "4200:4200"
+      - "14200:4200"
   api-server:
     image: sbtscala/scala-sbt:eclipse-temurin-17.0.15_6_1.11.3_2.13.16
     container_name: api-server_dev
     networks:
       - devnet
     ports:
-      - "9000:9000"
+      - "19000:9000"
     depends_on:
       - db
     environment:
-      DB_URL: jdbc:postgresql://db:5432/play-db
-      DB_USER: play-user
-      DB_PASSWORD: play-pass
-      DB_NAME: play-db
+      DB_URL: jdbc:postgresql://db:15432/playdb
+      DB_USER: playuser
+      DB_PASSWORD: playpass
+      DB_NAME: playdb
   db:
     image: postgres:17.5-alpine3.22
     container_name: db_dev
     networks:
       - devnet
     ports:
-      - "5432:5432"
+      - "15432:5432"
     environment:
-      POSTGRES_USER: play-user
-      POSTGRES_PASSWORD: play-pass
-      POSTGRES_DB: play-db
+      POSTGRES_USER: playuser
+      POSTGRES_PASSWORD: playpass
+      POSTGRES_DB: playdb
     volumes:
       - db-data:/var/lib/postgresql/data
     restart: unless-stopped
