@@ -16,22 +16,23 @@ services:
     depends_on:
       - db
     environment:
-      DB_URL: jdbc:postgresql://db:5432/playdb
+      DB_URL: jdbc:mysql://db:3306/playdb
       DB_USER: playuser
       DB_PASSWORD: playpass
   db:
-    image: postgres:17.5-alpine3.22
+    image: mariadb:lts
     container_name: db_dev
     networks:
       - devnet
     ports:
-      - "15432:5432"
+      - "13306:3306"
     environment:
-      POSTGRES_USER: playuser
-      POSTGRES_PASSWORD: playpass
-      POSTGRES_DB: playdb
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_USER: playuser
+      MYSQL_PASSWORD: playpass
+      MYSQL_DATABASE: playdb
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/mysql
     restart: unless-stopped
 
 networks:
