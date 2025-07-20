@@ -91,7 +91,7 @@ livenessProbe:
     path: /health
     port: http
   initialDelaySeconds: 60
-  periodSeconds: 10
+  periodSeconds: 30
   timeoutSeconds: 5
   failureThreshold: 6      # 失敗6回でNG
 readinessProbe:
@@ -99,7 +99,7 @@ readinessProbe:
     path: /ready
     port: http
   initialDelaySeconds: 60
-  periodSeconds: 10
+  periodSeconds: 30
   timeoutSeconds: 5
   failureThreshold: 6      # 失敗6回でNG
 
