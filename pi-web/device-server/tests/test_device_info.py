@@ -113,7 +113,7 @@ CmaFree:          256744 kB
                     buffers=19072,
                     cached=101068,
                     active=112968,
-                    inactive=32764
+                    inactive=32764,
                 ))
             m.assert_called_once_with("/proc/meminfo", "r")
 

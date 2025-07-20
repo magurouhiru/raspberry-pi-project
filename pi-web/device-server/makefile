@@ -1,5 +1,5 @@
-# app/__init__.py の __version__ = "1.2.3" からバージョン取得
-VERSION = $(shell awk -F'"' '/__version__/ {print $$2}' app/__init__.py)
+# server/__init__.py の __version__ = "1.2.3" からバージョン取得
+VERSION = $(shell awk -F'"' '/__version__/ {print $$2}' server/__init__.py)
 IMAGE_NAME_LOCAL := pi-web_device-server
 IMAGE_NAME := ghcr.io/magurouhiru/raspberry-pi-project/pi-web_device-server
 

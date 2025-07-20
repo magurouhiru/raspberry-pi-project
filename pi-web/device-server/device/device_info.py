@@ -84,28 +84,37 @@ class RealDeviceInfo(DeviceInfoBase):
 class MockDeviceInfo(DeviceInfoBase):
 
     def get_temp(self) -> TempInfo:
-        return TempInfo(datetime.now().isoformat(), random.randint(60000, 100000))
+        return TempInfo(datetime.now().isoformat(), random.randint(60000, 80000))
 
     def get_freq(self) -> FreqInfo:
         return FreqInfo(datetime.now().isoformat(), random.randint(600000, 1200000))
 
+    cnt = 1
+    idle_buf = [0, 0, 0, 0, 0]
+
     def get_cpu(self) -> CpuInfo:
-        cpu = CpuDetailInfo(total=100, idle=random.randint(0, 10))
-        cpu0 = CpuDetailInfo(total=100, idle=random.randint(0, 10))
-        cpu1 = CpuDetailInfo(total=100, idle=random.randint(0, 10))
-        cpu2 = CpuDetailInfo(total=100, idle=random.randint(0, 10))
-        cpu3 = CpuDetailInfo(total=100, idle=random.randint(0, 10))
+        self.cnt += 1
+        self.idle_buf[0] += random.randint(0, 100)
+        self.idle_buf[1] += random.randint(0, 100)
+        self.idle_buf[2] += random.randint(0, 100)
+        self.idle_buf[3] += random.randint(0, 100)
+        self.idle_buf[4] += random.randint(0, 100)
+        cpu = CpuDetailInfo(total=100 * self.cnt, idle=self.idle_buf[0])
+        cpu0 = CpuDetailInfo(total=100 * self.cnt, idle=self.idle_buf[1])
+        cpu1 = CpuDetailInfo(total=100 * self.cnt, idle=self.idle_buf[2])
+        cpu2 = CpuDetailInfo(total=100 * self.cnt, idle=self.idle_buf[3])
+        cpu3 = CpuDetailInfo(total=100 * self.cnt, idle=self.idle_buf[4])
         return CpuInfo(datetime.now().isoformat(), cpu, cpu0, cpu1, cpu2, cpu3)
 
     def get_mem(self) -> MemInfo:
         return MemInfo(
             datetime.now().isoformat(),
             mem_total=927976,
-            mem_free=900000,
-            buffers=800000,
-            cached=700000,
-            active=600000,
-            inactive=500000
+            mem_free=703692 + random.randint(-200000, 100000),
+            buffers=19072,
+            cached=101068,
+            active=112968,
+            inactive=32764,
         )
 
 

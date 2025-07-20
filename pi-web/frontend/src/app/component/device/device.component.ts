@@ -263,15 +263,11 @@ export class DeviceComponent extends BaseComponent {
           const beforeItem = c[c.length - 2];
 
           this.cpuData.update((t) => {
-            console.log(t.datasets.length);
             t.datasets.forEach((dataset) => {
-              console.log(dataset.label);
               switch (dataset.label) {
                 case 'cpu': {
-                  console.log(lastItem.cpu.cpu);
                   const dt = lastItem.cpu.cpu.total - beforeItem.cpu.cpu.total;
                   const di = lastItem.cpu.cpu.idle - beforeItem.cpu.cpu.idle;
-                  console.log(dt, di);
                   dataset.data.push(((dt - di) / dt) * 100);
                   dataset.data.shift();
                   break;

@@ -17,6 +17,8 @@ image:
 env:
   - name: DB_URL
     value: jdbc:sqlite://var/lib/sqlite3/playdb
+  - name: DEVICE_SERVER_URL
+    value: http://pi-web-device-server:8080
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
