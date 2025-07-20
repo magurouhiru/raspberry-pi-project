@@ -11,10 +11,3 @@
 #    port: 80
 #  image:
 #    tag: "0.0.0-wip"
-
-#db:
-#  service:
-#    type: ClusterIP
-#    port: 3306
-#  image:
-#    tag: "0.0.0-wip"

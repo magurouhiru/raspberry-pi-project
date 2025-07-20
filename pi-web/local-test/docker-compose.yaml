@@ -15,23 +15,10 @@ services:
       - local-test_net
     ports:
       - "9090:9000"
-    depends_on:
-      - db
-  db:
-    image: mariadb:12.0.1-ubi9-rc
-    container_name: db_local-test
-    networks:
-      - local-test_net
-    ports:
-      - "23306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_USER: playuser
-      MYSQL_PASSWORD: playpass
-      MYSQL_DATABASE: playdb
+      DB_URL: jdbc:sqlite://var/lib/sqlite3/playdb
     volumes:
-      - db-data_local-test:/var/lib/mysql
-    restart: unless-stopped
+      - db-data_local-test:/var/lib/sqlite3
 
 networks:
   local-test_net:

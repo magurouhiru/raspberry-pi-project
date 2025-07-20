@@ -7,33 +7,17 @@ services:
     ports:
       - "14200:4200"
   api-server:
-    image: sbtscala/scala-sbt:eclipse-temurin-17.0.15_6_1.11.3_2.13.16
+    build: ./api-server
+    image: pi-web_api-server_dev:latest
     container_name: api-server_dev
     networks:
       - devnet
     ports:
       - "19000:9000"
-    depends_on:
-      - db
     environment:
-      DB_URL: jdbc:mariadb://db:3306/playdb
-      DB_USER: playuser
-      DB_PASSWORD: playpass
-  db:
-    image: mariadb:12.0.1-ubi9-rc
-    container_name: db_dev
-    networks:
-      - devnet
-    ports:
-      - "13306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_USER: playuser
-      MYSQL_PASSWORD: playpass
-      MYSQL_DATABASE: playdb
+      DB_URL: jdbc:sqlite://var/lib/sqlite3/playdb
     volumes:
-      - db-data:/var/lib/mysql
-    restart: unless-stopped
+      - db-data:/var/lib/sqlite3
 
 networks:
   devnet:

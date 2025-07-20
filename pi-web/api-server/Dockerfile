@@ -25,6 +25,12 @@ RUN tar -xzf target/universal/api-server-*.tgz
 # --- Stage 2: Run on eclipse temurin ---
 FROM eclipse-temurin:17.0.15_6-jre
 
+RUN apt update \
+    && apt upgrade -y \
+    && apt install sqlite3 -y \
+    && mkdir -p /var/lib/sqlite3 \
+    && echo > /var/lib/sqlite3/playdb
+
 WORKDIR /opt
 
 # ディストリビューションをコピー
@@ -34,9 +40,7 @@ COPY --from=builder /app/api-server-* /opt/api-server
 EXPOSE 9000
 
 # 環境変数を設定
-ENV DB_URL=jdbc:mariadb://db:3306/playdb
-ENV DB_USER=playuser
-ENV DB_PASSWORD=playpass
+ENV DB_URL=jdbc:sqlite://var/lib/sqlite3/playdb
 
 # アプリ起動
 CMD ["/opt/api-server/bin/api-server"]

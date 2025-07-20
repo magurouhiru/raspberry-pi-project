@@ -5,7 +5,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """api-server""",
     organization := "com.example",
-    version := "0.1.0",
+    version := "0.2.0",
     crossScalaVersions := Seq("2.13.16", "3.3.6"),
     scalaVersion := crossScalaVersions.value.head,
     // ファイル変更検知できないためポーリング
@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
       guice,
       jdbc,
       evolutions,
-      "org.mariadb.jdbc" % "mariadb-java-client" % "3.5.4",
+      "org.xerial" % "sqlite-jdbc" % "3.50.2.0",
       "io.getquill" %% "quill-jdbc" % "4.8.5",
       "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test,
     ),

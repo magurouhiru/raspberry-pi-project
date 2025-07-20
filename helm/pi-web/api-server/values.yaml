@@ -16,16 +16,7 @@ image:
 # 環境変数を設定
 env:
   - name: DB_URL
-    value: jdbc:mariadb://pi-web-db:3306/playdb
-  - name: DB_USER
-    value: playuser
-  - name: DB_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: db-secrets
-        key: db-password
-  - name: JAVA_OPTS
-    value: -Xms64m -Xmx384m
+    value: jdbc:sqlite://var/lib/sqlite3/playdb
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
