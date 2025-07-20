@@ -19,6 +19,14 @@ services:
       DB_URL: jdbc:sqlite://var/lib/sqlite3/playdb
     volumes:
       - db-data_local-test:/var/lib/sqlite3
+  device-server:
+    image: pi-web_device-server:latest
+    container_name: device-server_local-test
+    platform: linux/arm64
+    networks:
+      - local-test_net
+    ports:
+      - "8888:8080"
 
 networks:
   local-test_net:

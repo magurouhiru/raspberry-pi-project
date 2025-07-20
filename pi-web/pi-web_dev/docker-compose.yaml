@@ -18,6 +18,13 @@ services:
       DB_URL: jdbc:sqlite://var/lib/sqlite3/playdb
     volumes:
       - db-data:/var/lib/sqlite3
+  device-server:
+    image: python:3.13.5-slim-bullseye
+    container_name: device-server_dev
+    networks:
+      - devnet
+    ports:
+      - "18080:8080"
 
 networks:
   devnet:
