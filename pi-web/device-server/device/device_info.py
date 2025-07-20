@@ -24,7 +24,7 @@ class DeviceInfoBase(ABC):
         pass
 
 
-def get_cpu_detail(target: str, data: {str: [str]}) -> CpuDetailInfo:
+def get_cpu_detail(target: str, data: {str: [int]}) -> CpuDetailInfo:
     for k, v in data.items():
         if k == target:
             idle = v[2] + v[3]
@@ -52,8 +52,8 @@ class RealDeviceInfo(DeviceInfoBase):
         buf: {str: [str]} = {}
         for line in cpu_str.split("\n"):
             tmp = line.split()
-            if len(tmp) > 3:
-                buf.update({tmp[0]: tmp[1:]})
+            if len(tmp) > 4:
+                buf.update({tmp[0]: [int(x) for x in tmp[1:]]})
 
         cpu = get_cpu_detail("cpu", buf)
         cpu0 = get_cpu_detail("cpu0", buf)
@@ -97,7 +97,14 @@ class MockDeviceInfo(DeviceInfoBase):
         return CpuInfo(cpu, cpu0, cpu1, cpu2, cpu3)
 
     def get_mem(self) -> MemInfo:
-        return MemInfo(mem_total=927976, mem_free=900000, buffers=800000, cached=700000, active=600000, inactive=500000)
+        return MemInfo(
+            mem_total=927976,
+            mem_free=900000,
+            buffers=800000,
+            cached=700000,
+            active=600000,
+            inactive=500000
+        )
 
 
 def provide_device_info(mock_mode: bool) -> DeviceInfoBase:
