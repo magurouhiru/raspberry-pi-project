@@ -28,25 +28,21 @@ export interface CpuDetail {
 
 export interface DeviceCpuInfoResponse {
   timestamp: string;
-  cpu: {
-    cpu: CpuDetail;
-    cpu0: CpuDetail;
-    cpu1: CpuDetail;
-    cpu2: CpuDetail;
-    cpu3: CpuDetail;
-  };
+  cpu: CpuDetail;
+  cpu0: CpuDetail;
+  cpu1: CpuDetail;
+  cpu2: CpuDetail;
+  cpu3: CpuDetail;
 }
 
 export interface DeviceMemInfoResponse {
   timestamp: string;
-  mem: {
-    mem_total: number;
-    mem_free: number;
-    buffers: number;
-    cached: number;
-    active: number;
-    inactive: number;
-  };
+  mem_total: number;
+  mem_free: number;
+  buffers: number;
+  cached: number;
+  active: number;
+  inactive: number;
 }
 
 export interface DeviceAllInfoResponse {

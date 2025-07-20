@@ -87,14 +87,14 @@ class MockDeviceInfo(DeviceInfoBase):
         return TempInfo(datetime.now().isoformat(), random.randint(60000, 100000))
 
     def get_freq(self) -> FreqInfo:
-        return FreqInfo(datetime.now().isoformat(), random.randint(600000000, 1200000000))
+        return FreqInfo(datetime.now().isoformat(), random.randint(600000, 1200000))
 
     def get_cpu(self) -> CpuInfo:
-        cpu = CpuDetailInfo(total=100, idle=50)
-        cpu0 = CpuDetailInfo(total=100, idle=0)
-        cpu1 = CpuDetailInfo(total=100, idle=10)
-        cpu2 = CpuDetailInfo(total=100, idle=20)
-        cpu3 = CpuDetailInfo(total=100, idle=30)
+        cpu = CpuDetailInfo(total=100, idle=random.randint(0, 10))
+        cpu0 = CpuDetailInfo(total=100, idle=random.randint(0, 10))
+        cpu1 = CpuDetailInfo(total=100, idle=random.randint(0, 10))
+        cpu2 = CpuDetailInfo(total=100, idle=random.randint(0, 10))
+        cpu3 = CpuDetailInfo(total=100, idle=random.randint(0, 10))
         return CpuInfo(datetime.now().isoformat(), cpu, cpu0, cpu1, cpu2, cpu3)
 
     def get_mem(self) -> MemInfo:

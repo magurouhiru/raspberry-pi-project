@@ -6,7 +6,10 @@ import { concatMap, timer } from 'rxjs';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
-import { DeviceAllInfoResponse, DeviceService } from '../../service/device.service';
+import {
+  DeviceAllInfoResponse,
+  DeviceService,
+} from '../../service/device.service';
 import { BaseComponent } from '../base/base.component';
 
 @Component({
@@ -260,43 +263,47 @@ export class DeviceComponent extends BaseComponent {
           const beforeItem = c[c.length - 2];
 
           this.cpuData.update((t) => {
+            console.log(t.datasets.length);
             t.datasets.forEach((dataset) => {
+              console.log(dataset.label);
               switch (dataset.label) {
                 case 'cpu': {
-                  const dt = lastItem.cpu.cpu.cpu.total - beforeItem.cpu.cpu.cpu.total;
-                  const di = lastItem.cpu.cpu.cpu.idle - beforeItem.cpu.cpu.cpu.idle;
+                  console.log(lastItem.cpu.cpu);
+                  const dt = lastItem.cpu.cpu.total - beforeItem.cpu.cpu.total;
+                  const di = lastItem.cpu.cpu.idle - beforeItem.cpu.cpu.idle;
+                  console.log(dt, di);
                   dataset.data.push(((dt - di) / dt) * 100);
                   dataset.data.shift();
                   break;
                 }
                 case 'cpu0': {
                   const dt =
-                    lastItem.cpu.cpu.cpu0.total - beforeItem.cpu.cpu.cpu0.total;
-                  const di = lastItem.cpu.cpu.cpu0.idle - beforeItem.cpu.cpu.cpu0.idle;
+                    lastItem.cpu.cpu0.total - beforeItem.cpu.cpu0.total;
+                  const di = lastItem.cpu.cpu0.idle - beforeItem.cpu.cpu0.idle;
                   dataset.data.push(((dt - di) / dt) * 100);
                   dataset.data.shift();
                   break;
                 }
                 case 'cpu1': {
                   const dt =
-                    lastItem.cpu.cpu.cpu1.total - beforeItem.cpu.cpu.cpu1.total;
-                  const di = lastItem.cpu.cpu.cpu1.idle - beforeItem.cpu.cpu.cpu1.idle;
+                    lastItem.cpu.cpu1.total - beforeItem.cpu.cpu1.total;
+                  const di = lastItem.cpu.cpu1.idle - beforeItem.cpu.cpu1.idle;
                   dataset.data.push(((dt - di) / dt) * 100);
                   dataset.data.shift();
                   break;
                 }
                 case 'cpu2': {
                   const dt =
-                    lastItem.cpu.cpu.cpu2.total - beforeItem.cpu.cpu.cpu2.total;
-                  const di = lastItem.cpu.cpu.cpu2.idle - beforeItem.cpu.cpu.cpu2.idle;
+                    lastItem.cpu.cpu2.total - beforeItem.cpu.cpu2.total;
+                  const di = lastItem.cpu.cpu2.idle - beforeItem.cpu.cpu2.idle;
                   dataset.data.push(((dt - di) / dt) * 100);
                   dataset.data.shift();
                   break;
                 }
                 case 'cpu3': {
                   const dt =
-                    lastItem.cpu.cpu.cpu3.total - beforeItem.cpu.cpu.cpu3.total;
-                  const di = lastItem.cpu.cpu.cpu3.idle - beforeItem.cpu.cpu.cpu3.idle;
+                    lastItem.cpu.cpu3.total - beforeItem.cpu.cpu3.total;
+                  const di = lastItem.cpu.cpu3.idle - beforeItem.cpu.cpu3.idle;
                   dataset.data.push(((dt - di) / dt) * 100);
                   dataset.data.shift();
                   break;
@@ -314,11 +321,11 @@ export class DeviceComponent extends BaseComponent {
             switch (dataset.label) {
               case 'mem': {
                 const m =
-                  ((lastItem.mem.mem.mem_total -
-                    lastItem.mem.mem.mem_free -
-                    lastItem.mem.mem.buffers -
-                    lastItem.mem.mem.cached) /
-                    lastItem.mem.mem.mem_total) *
+                  ((lastItem.mem.mem_total -
+                    lastItem.mem.mem_free -
+                    lastItem.mem.buffers -
+                    lastItem.mem.cached) /
+                    lastItem.mem.mem_total) *
                   100;
                 dataset.data.push(m);
                 dataset.data.shift();
