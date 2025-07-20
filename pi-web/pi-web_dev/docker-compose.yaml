@@ -5,15 +5,23 @@ services:
     networks:
       - devnet
     ports:
-      - "4200:4200"
+      - "14200:4200"
   api-server:
-    image: sbtscala/scala-sbt:eclipse-temurin-17.0.15_6_1.11.3_2.13.16
+    build: ./api-server
+    image: pi-web_api-server_dev:latest
     container_name: api-server_dev
     networks:
       - devnet
     ports:
-      - "9000:9000"
+      - "19000:9000"
+    environment:
+      DB_URL: jdbc:sqlite://var/lib/sqlite3/playdb
+    volumes:
+      - db-data:/var/lib/sqlite3
 
 networks:
   devnet:
     driver: bridge
+
+volumes:
+  db-data:

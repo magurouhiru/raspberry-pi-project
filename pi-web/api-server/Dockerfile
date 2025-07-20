@@ -13,14 +13,23 @@ RUN sbt update
 # ソースコード全コピー
 COPY . .
 
+# ローカルにビルド成果物があれば削除
+RUN rm -rf target/universal
+
 # アプリをビルドしてディストリビューションtgz作成
 RUN sbt Universal/packageZipTarball
 
 # 解凍
 RUN tar -xzf target/universal/api-server-*.tgz
 
-# --- Stage 2: Run on Amazon Corretto ---
+# --- Stage 2: Run on eclipse temurin ---
 FROM eclipse-temurin:17.0.15_6-jre
+
+RUN apt update \
+    && apt upgrade -y \
+    && apt install sqlite3 -y \
+    && mkdir -p /var/lib/sqlite3 \
+    && echo > /var/lib/sqlite3/playdb
 
 WORKDIR /opt
 
@@ -29,6 +38,9 @@ COPY --from=builder /app/api-server-* /opt/api-server
 
 # ポート公開
 EXPOSE 9000
+
+# 環境変数を設定
+ENV DB_URL=jdbc:sqlite://var/lib/sqlite3/playdb
 
 # アプリ起動
 CMD ["/opt/api-server/bin/api-server"]

@@ -1,21 +1,28 @@
 services:
   frontend:
-    container_name: frontend_local-test
     image: pi-web_frontend:latest
+    container_name: frontend_local-test
     platform: linux/arm64
     networks:
       - local-test_net
     ports:
       - "8080:80"
   api-server:
-    container_name: api-server_local-test
     image: pi-web_api-server:latest
+    container_name: api-server_local-test
     platform: linux/arm64
     networks:
       - local-test_net
     ports:
       - "9090:9000"
+    environment:
+      DB_URL: jdbc:sqlite://var/lib/sqlite3/playdb
+    volumes:
+      - db-data_local-test:/var/lib/sqlite3
 
 networks:
   local-test_net:
     driver: bridge
+
+volumes:
+  db-data_local-test:
