@@ -12,12 +12,12 @@
 #  image:
 #    tag: "0.1.0-wip"
 
-#device-server:
+device-server:
 #  service:
 #    type: ClusterIP
 #    port: 8080
 #  image:
 #    tag: "0.1.0-wip"
-#  env:
-#    - name: MOCK_MODE
-#      value: true
+  env:
+    - name: MOCK_MODE
+      value: true
