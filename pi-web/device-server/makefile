@@ -10,12 +10,14 @@ build_local:
 		--platform linux/arm64 \
 		-t $(IMAGE_NAME_LOCAL):$(VERSION) \
 		-t $(IMAGE_NAME_LOCAL):latest \
+		--build-arg MOCK_MODE=true \
 		--load .
 
 build_local_k8s: build_local
 	docker build \
 		--platform linux/arm64 \
 		-t $(IMAGE_NAME):$(VERSION) \
+		--build-arg MOCK_MODE=true \
 		--load .
 
 push_wip:
