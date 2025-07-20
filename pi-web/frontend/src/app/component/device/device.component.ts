@@ -6,7 +6,7 @@ import { concatMap, timer } from 'rxjs';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
-import { Device, DeviceService } from '../../service/device.service';
+import { DeviceAllInfoResponse, DeviceService } from '../../service/device.service';
 import { BaseComponent } from '../base/base.component';
 
 @Component({
@@ -21,8 +21,8 @@ export class DeviceComponent extends BaseComponent {
 
   readonly #interval = 3000;
   readonly #xScale = 60;
-  readonly #lengh = (this.#xScale * 1000) / this.#interval;
-  readonly cash = signal<Device[]>([]);
+  readonly #length = (this.#xScale * 1000) / this.#interval;
+  readonly cash = signal<DeviceAllInfoResponse[]>([]);
   defaultScalesX = {
     x: {
       ticks: {
@@ -40,12 +40,12 @@ export class DeviceComponent extends BaseComponent {
   tempData = signal<ChartConfiguration['data']>({
     datasets: [
       {
-        data: createArray(this.#lengh),
+        data: createArray(this.#length),
         label: 'temp',
         borderColor: BORDER_COLORS[4],
       },
     ],
-    labels: createArray(this.#lengh),
+    labels: createArray(this.#length),
   });
   tempOption: ChartConfiguration['options'] = {
     scales: {
@@ -93,12 +93,12 @@ export class DeviceComponent extends BaseComponent {
   freqData = signal<ChartConfiguration['data']>({
     datasets: [
       {
-        data: createArray(this.#lengh),
+        data: createArray(this.#length),
         label: 'freq',
         borderColor: BORDER_COLORS[4],
       },
     ],
-    labels: createArray(this.#lengh),
+    labels: createArray(this.#length),
   });
   freqOption: ChartConfiguration['options'] = {
     scales: {
@@ -135,32 +135,32 @@ export class DeviceComponent extends BaseComponent {
   cpuData = signal<ChartConfiguration['data']>({
     datasets: [
       {
-        data: createArray(this.#lengh),
+        data: createArray(this.#length),
         label: 'cpu',
         borderColor: BORDER_COLORS[4],
       },
       {
-        data: createArray(this.#lengh),
+        data: createArray(this.#length),
         label: 'cpu0',
         borderColor: BORDER_COLORS[0],
       },
       {
-        data: createArray(this.#lengh),
+        data: createArray(this.#length),
         label: 'cpu1',
         borderColor: BORDER_COLORS[1],
       },
       {
-        data: createArray(this.#lengh),
+        data: createArray(this.#length),
         label: 'cpu2',
         borderColor: BORDER_COLORS[3],
       },
       {
-        data: createArray(this.#lengh),
+        data: createArray(this.#length),
         label: 'cpu3',
         borderColor: BORDER_COLORS[5],
       },
     ],
-    labels: createArray(this.#lengh),
+    labels: createArray(this.#length),
   });
   cpuOption: ChartConfiguration['options'] = {
     scales: {
@@ -180,12 +180,12 @@ export class DeviceComponent extends BaseComponent {
   memData = signal<ChartConfiguration['data']>({
     datasets: [
       {
-        data: createArray(this.#lengh),
+        data: createArray(this.#length),
         label: 'mem',
         borderColor: BORDER_COLORS[4],
       },
     ],
-    labels: createArray(this.#lengh),
+    labels: createArray(this.#length),
   });
   memOption: ChartConfiguration['options'] = {
     scales: {
@@ -221,7 +221,7 @@ export class DeviceComponent extends BaseComponent {
       if (c.length !== 0) {
         const lastItem = c[c.length - 1];
         const timestamp = formatDate(
-          lastItem.timestamp,
+          lastItem.temp.timestamp,
           'mediumTime',
           this.#locale,
         );
@@ -230,7 +230,7 @@ export class DeviceComponent extends BaseComponent {
           t.datasets.forEach((dataset) => {
             switch (dataset.label) {
               case 'temp': {
-                dataset.data.push(lastItem.temp / 1000);
+                dataset.data.push(lastItem.temp.temp / 1000);
                 dataset.data.shift();
                 break;
               }
@@ -245,7 +245,7 @@ export class DeviceComponent extends BaseComponent {
           t.datasets.forEach((dataset) => {
             switch (dataset.label) {
               case 'freq': {
-                dataset.data.push(lastItem.freq / 1000);
+                dataset.data.push(lastItem.freq.freq / 1000);
                 dataset.data.shift();
                 break;
               }
@@ -263,40 +263,40 @@ export class DeviceComponent extends BaseComponent {
             t.datasets.forEach((dataset) => {
               switch (dataset.label) {
                 case 'cpu': {
-                  const dt = lastItem.cpu.cpu.total - beforeItem.cpu.cpu.total;
-                  const di = lastItem.cpu.cpu.idle - beforeItem.cpu.cpu.idle;
+                  const dt = lastItem.cpu.cpu.cpu.total - beforeItem.cpu.cpu.cpu.total;
+                  const di = lastItem.cpu.cpu.cpu.idle - beforeItem.cpu.cpu.cpu.idle;
                   dataset.data.push(((dt - di) / dt) * 100);
                   dataset.data.shift();
                   break;
                 }
                 case 'cpu0': {
                   const dt =
-                    lastItem.cpu.cpu0.total - beforeItem.cpu.cpu0.total;
-                  const di = lastItem.cpu.cpu0.idle - beforeItem.cpu.cpu0.idle;
+                    lastItem.cpu.cpu.cpu0.total - beforeItem.cpu.cpu.cpu0.total;
+                  const di = lastItem.cpu.cpu.cpu0.idle - beforeItem.cpu.cpu.cpu0.idle;
                   dataset.data.push(((dt - di) / dt) * 100);
                   dataset.data.shift();
                   break;
                 }
                 case 'cpu1': {
                   const dt =
-                    lastItem.cpu.cpu1.total - beforeItem.cpu.cpu1.total;
-                  const di = lastItem.cpu.cpu1.idle - beforeItem.cpu.cpu1.idle;
+                    lastItem.cpu.cpu.cpu1.total - beforeItem.cpu.cpu.cpu1.total;
+                  const di = lastItem.cpu.cpu.cpu1.idle - beforeItem.cpu.cpu.cpu1.idle;
                   dataset.data.push(((dt - di) / dt) * 100);
                   dataset.data.shift();
                   break;
                 }
                 case 'cpu2': {
                   const dt =
-                    lastItem.cpu.cpu2.total - beforeItem.cpu.cpu2.total;
-                  const di = lastItem.cpu.cpu2.idle - beforeItem.cpu.cpu2.idle;
+                    lastItem.cpu.cpu.cpu2.total - beforeItem.cpu.cpu.cpu2.total;
+                  const di = lastItem.cpu.cpu.cpu2.idle - beforeItem.cpu.cpu.cpu2.idle;
                   dataset.data.push(((dt - di) / dt) * 100);
                   dataset.data.shift();
                   break;
                 }
                 case 'cpu3': {
                   const dt =
-                    lastItem.cpu.cpu3.total - beforeItem.cpu.cpu3.total;
-                  const di = lastItem.cpu.cpu3.idle - beforeItem.cpu.cpu3.idle;
+                    lastItem.cpu.cpu.cpu3.total - beforeItem.cpu.cpu.cpu3.total;
+                  const di = lastItem.cpu.cpu.cpu3.idle - beforeItem.cpu.cpu.cpu3.idle;
                   dataset.data.push(((dt - di) / dt) * 100);
                   dataset.data.shift();
                   break;
@@ -314,11 +314,11 @@ export class DeviceComponent extends BaseComponent {
             switch (dataset.label) {
               case 'mem': {
                 const m =
-                  ((lastItem.mem.mem_total -
-                    lastItem.mem.mem_free -
-                    lastItem.mem.buffers -
-                    lastItem.mem.cached) /
-                    lastItem.mem.mem_total) *
+                  ((lastItem.mem.mem.mem_total -
+                    lastItem.mem.mem.mem_free -
+                    lastItem.mem.mem.buffers -
+                    lastItem.mem.mem.cached) /
+                    lastItem.mem.mem.mem_total) *
                   100;
                 dataset.data.push(m);
                 dataset.data.shift();

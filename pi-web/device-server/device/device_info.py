@@ -1,6 +1,7 @@
 import random
 import re
 from abc import abstractmethod, ABC
+from datetime import datetime
 
 from device.models import TempInfo, FreqInfo, mem_key_map, MemInfo, CpuDetailInfo, CpuInfo
 
@@ -38,12 +39,12 @@ class RealDeviceInfo(DeviceInfoBase):
     def get_temp(self) -> TempInfo:
         with open("/sys/class/thermal/thermal_zone0/temp", "r") as f:
             temp_str = f.read()
-        return TempInfo(temp=int(temp_str))
+        return TempInfo(datetime.now().isoformat(), int(temp_str))
 
     def get_freq(self) -> FreqInfo:
         with open("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", "r") as f:
             freq_str = f.read()
-        return FreqInfo(freq=int(freq_str))
+        return FreqInfo(datetime.now().isoformat(), int(freq_str))
 
     def get_cpu(self):
         with open("/proc/stat", "r") as f:
@@ -60,7 +61,7 @@ class RealDeviceInfo(DeviceInfoBase):
         cpu1 = get_cpu_detail("cpu1", buf)
         cpu2 = get_cpu_detail("cpu2", buf)
         cpu3 = get_cpu_detail("cpu3", buf)
-        return CpuInfo(cpu, cpu0, cpu1, cpu2, cpu3)
+        return CpuInfo(datetime.now().isoformat(), cpu, cpu0, cpu1, cpu2, cpu3)
 
     def get_mem(self) -> MemInfo:
         with open("/proc/meminfo", "r") as f:
@@ -77,16 +78,16 @@ class RealDeviceInfo(DeviceInfoBase):
                 buff[key] = value
 
         data = {field: buff[mem_key_map[field]] for field in mem_key_map}
-        return MemInfo(**data)
+        return MemInfo(datetime.now().isoformat(), **data)
 
 
 class MockDeviceInfo(DeviceInfoBase):
 
     def get_temp(self) -> TempInfo:
-        return TempInfo(temp=random.randint(60000, 100000))
+        return TempInfo(datetime.now().isoformat(), random.randint(60000, 100000))
 
     def get_freq(self) -> FreqInfo:
-        return FreqInfo(freq=random.randint(600000000, 1200000000))
+        return FreqInfo(datetime.now().isoformat(), random.randint(600000000, 1200000000))
 
     def get_cpu(self) -> CpuInfo:
         cpu = CpuDetailInfo(total=100, idle=50)
@@ -94,10 +95,11 @@ class MockDeviceInfo(DeviceInfoBase):
         cpu1 = CpuDetailInfo(total=100, idle=10)
         cpu2 = CpuDetailInfo(total=100, idle=20)
         cpu3 = CpuDetailInfo(total=100, idle=30)
-        return CpuInfo(cpu, cpu0, cpu1, cpu2, cpu3)
+        return CpuInfo(datetime.now().isoformat(), cpu, cpu0, cpu1, cpu2, cpu3)
 
     def get_mem(self) -> MemInfo:
         return MemInfo(
+            datetime.now().isoformat(),
             mem_total=927976,
             mem_free=900000,
             buffers=800000,

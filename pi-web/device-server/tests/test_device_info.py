@@ -1,4 +1,5 @@
 import unittest
+from datetime import datetime
 from unittest.mock import mock_open, patch
 
 from device.device_info import RealDeviceInfo
@@ -11,16 +12,20 @@ class MyTestCase(unittest.TestCase):
         d = RealDeviceInfo()
         m = mock_open(read_data="""55844""")
         with patch("builtins.open", m):
+            now = datetime.now().isoformat()
             result = d.get_temp()
-            self.assertEqual(result, TempInfo(55844))
+            result.timestamp = now
+            self.assertEqual(result, TempInfo(now, 55844))
             m.assert_called_once_with("/sys/class/thermal/thermal_zone0/temp", "r")
 
     def test_get_freq(self):
         d = RealDeviceInfo()
         m = mock_open(read_data="""600000""")
         with patch("builtins.open", m):
+            now = datetime.now().isoformat()
             result = d.get_freq()
-            self.assertEqual(result, FreqInfo(600000))
+            result.timestamp = now
+            self.assertEqual(result, FreqInfo(now, 600000))
             m.assert_called_once_with("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", "r")
 
     def test_get_cpu(self):
@@ -40,13 +45,15 @@ procs_blocked 0
 softirq 1451022 25789 657457 2 24354 0 0 35270 649216 0 58934
 """)
         with patch("builtins.open", m):
+            now = datetime.now().isoformat()
             result = d.get_cpu()
+            result.timestamp = now
             cpu = CpuDetailInfo(total=6795736, idle=6792918)
             cpu0 = CpuDetailInfo(total=1698956, idle=1698300)
             cpu1 = CpuDetailInfo(total=1698946, idle=1698126)
             cpu2 = CpuDetailInfo(total=1698886, idle=1698220)
             cpu3 = CpuDetailInfo(total=1698941, idle=1698270)
-            self.assertEqual(result, CpuInfo(cpu, cpu0, cpu1, cpu2, cpu3))
+            self.assertEqual(result, CpuInfo(now, cpu, cpu0, cpu1, cpu2, cpu3))
             m.assert_called_once_with("/proc/stat", "r")
 
     def test_get_mem(self):
@@ -94,16 +101,20 @@ CmaTotal:         262144 kB
 CmaFree:          256744 kB
 """)
         with patch("builtins.open", m):
+            now = datetime.now().isoformat()
             result = d.get_mem()
-            self.assertEqual(result,
-                             MemInfo(
-                                 mem_total=927976,
-                                 mem_free=703692,
-                                 buffers=19072,
-                                 cached=101068,
-                                 active=112968,
-                                 inactive=32764
-                             ))
+            result.timestamp = now
+            self.assertEqual(
+                result,
+                MemInfo(
+                    now,
+                    mem_total=927976,
+                    mem_free=703692,
+                    buffers=19072,
+                    cached=101068,
+                    active=112968,
+                    inactive=32764
+                ))
             m.assert_called_once_with("/proc/meminfo", "r")
 
 

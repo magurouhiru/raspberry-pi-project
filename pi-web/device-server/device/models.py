@@ -3,11 +3,13 @@ from dataclasses import dataclass
 
 @dataclass
 class TempInfo:
+    timestamp: str
     temp: int
 
 
 @dataclass
 class FreqInfo:
+    timestamp: str
     freq: int
 
 
@@ -19,6 +21,7 @@ class CpuDetailInfo:
 
 @dataclass
 class CpuInfo:
+    timestamp: str
     cpu: CpuDetailInfo
     cpu0: CpuDetailInfo
     cpu1: CpuDetailInfo
@@ -28,6 +31,7 @@ class CpuInfo:
 
 @dataclass
 class MemInfo:
+    timestamp: str
     mem_total: int
     mem_free: int
     buffers: int

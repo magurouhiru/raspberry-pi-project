@@ -1,7 +1,14 @@
 # health
-GET         /health           controllers.HealthController.health()
-GET         /ready            controllers.HealthController.ready()
+GET         /health                     controllers.HealthController.health()
+GET         /ready                      controllers.HealthController.ready()
 
 # API
-GET         /api/hello        controllers.HelloController.get()
-POST        /api/hello        controllers.HelloController.echo()
+GET         /api/hello                  controllers.HelloController.get()
+POST        /api/hello                  controllers.HelloController.echo()
+
+# device
+GET         /api/device/temp            controllers.DeviceController.getTemp()
+GET         /api/device/freq            controllers.DeviceController.getFreq()
+GET         /api/device/cpu             controllers.DeviceController.getCpu()
+GET         /api/device/mem             controllers.DeviceController.getMem()
+GET         /api/device/all             controllers.DeviceController.getAll()

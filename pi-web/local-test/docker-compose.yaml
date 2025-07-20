@@ -17,6 +17,7 @@ services:
       - "9090:9000"
     environment:
       DB_URL: jdbc:sqlite://var/lib/sqlite3/playdb
+      DEVICE_SERVER_URL: http://device-server:8080
     volumes:
       - db-data_local-test:/var/lib/sqlite3
   device-server:
@@ -27,6 +28,8 @@ services:
       - local-test_net
     ports:
       - "8888:8080"
+    environment:
+      MOCK_MODE: true
 
 networks:
   local-test_net:
