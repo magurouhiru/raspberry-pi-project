@@ -2,7 +2,7 @@ import random
 import re
 from abc import abstractmethod, ABC
 
-from app.models import TempInfo, FreqInfo, mem_key_map, MemInfo, CpuDetailInfo, CpuInfo
+from device.models import TempInfo, FreqInfo, mem_key_map, MemInfo, CpuDetailInfo, CpuInfo
 
 
 class DeviceInfoBase(ABC):
