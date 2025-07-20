@@ -52,7 +52,8 @@ class RealDeviceInfo(DeviceInfoBase):
         buf: {str: [str]} = {}
         for line in cpu_str.split("\n"):
             tmp = line.split()
-            buf.update({tmp[0]: tmp[1:]})
+            if len(tmp) > 3:
+                buf.update({tmp[0]: tmp[1:]})
 
         cpu = get_cpu_detail("cpu", buf)
         cpu0 = get_cpu_detail("cpu0", buf)
