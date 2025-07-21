@@ -6,6 +6,8 @@ services:
       - devnet
     ports:
       - "14200:4200"
+    volumes:
+      - frontend-node_modules:/frontend/node_modules
   api-server:
     build: ./api-server
     image: pi-web_api-server_dev:latest
@@ -36,4 +38,5 @@ networks:
     driver: bridge
 
 volumes:
+  frontend-node_modules:
   db-data:

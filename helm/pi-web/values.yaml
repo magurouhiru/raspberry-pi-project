@@ -7,6 +7,12 @@ api-server:
   env:
     - name: APP_ENV
       value: staging
+    - name: DB_URL
+      value: jdbc:sqlite://var/lib/sqlite3/playdb
+    - name: DEVICE_SERVER_URL
+      value: http://pi-web-device-server:8080
+    - name: JAVA_OPTS
+      value: -Xms64m -Xmx384m
 
 #frontend:
 #  service:
@@ -25,4 +31,4 @@ device-server:
     - name: APP_ENV
       value: staging
     - name: MOCK_MODE
-      value: true
+      value: "true"

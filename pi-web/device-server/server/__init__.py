@@ -9,6 +9,7 @@ __version__ = "0.1.0"
 
 app = Bottle()
 
+APP_ENV = os.getenv("APP_ENV", "prod").lower()
 MOCK_MODE = os.getenv("MOCK_MODE", "false").lower() == "true"
 deviceInfo = provide_device_info(MOCK_MODE)
 
@@ -21,6 +22,11 @@ with app:
     @route('/ready', method='GET')
     def ready():
         return "ready:OK"
+
+
+    @route('/device/app/env', method='GET')
+    def ready():
+        return {"APP_ENV": APP_ENV, "MOCK_MODE": MOCK_MODE}
 
 
     @route('/device/temp', method='GET')

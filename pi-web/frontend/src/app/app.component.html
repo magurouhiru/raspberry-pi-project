@@ -1,26 +1,58 @@
 <div class="wrapper">
   <header>
     <nav>
-      <h1>
-        <a
-          mat-button
-          routerLink="/"
-          routerLinkActive="highlite"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <mat-icon>developer_board</mat-icon>
-          pi_server
+      <div class="header__left-items">
+        <h1>
+          <a
+            mat-button
+            routerLink="/"
+            routerLinkActive="highlite"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <mat-icon>developer_board</mat-icon>
+            pi_server
+          </a>
+        </h1>
+        <a mat-button routerLink="/hello" routerLinkActive="highlite">
+          <mat-icon>waving_hand</mat-icon>hello
         </a>
-      </h1>
-      <a mat-button routerLink="/hello" routerLinkActive="highlite">
-        <mat-icon>waving_hand</mat-icon>hello
-      </a>
-      <a mat-button routerLink="/show-db" routerLinkActive="highlite"
-        ><mat-icon>table_view</mat-icon>Show DB</a
-      >
-      <a mat-button routerLink="/device" routerLinkActive="highlite"
-        ><mat-icon>developer_board</mat-icon>Device</a
-      >
+        <a mat-button routerLink="/show-db" routerLinkActive="highlite"
+          ><mat-icon>table_view</mat-icon>Show DB</a
+        >
+        <a mat-button routerLink="/device" routerLinkActive="highlite"
+          ><mat-icon>developer_board</mat-icon>Device</a
+        >
+      </div>
+
+      <div class="header__right-items">
+        <mat-chip>
+          API:
+          @if (appEnv() === null) {
+            sync🔄
+          } @else if (appEnv()?.api_server?.APP_ENV === "dev") {
+            dev🛠️
+          } @else if (appEnv()?.api_server?.APP_ENV === "staging") {
+            staging🧪
+          } @else {
+            OK🚀
+          }
+        </mat-chip>
+        <mat-chip>
+          Device:
+          @if (appEnv() === null) {
+            sync🔄
+          } @else if (appEnv()?.device_server?.APP_ENV === "dev") {
+            dev🛠️
+          } @else if (appEnv()?.device_server?.APP_ENV === "staging") {
+            staging🧪
+          } @else {
+            OK🚀
+          }
+          @if (appEnv()?.device_server?.MOCK_MODE) {
+            Mock: true🧪
+          }
+        </mat-chip>
+      </div>
     </nav>
   </header>
   <main><router-outlet></router-outlet></main>
