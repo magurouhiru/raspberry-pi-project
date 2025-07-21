@@ -10,7 +10,7 @@ __version__ = "0.1.0"
 app = Bottle()
 
 MOCK_MODE = os.getenv("MOCK_MODE", "false").lower() == "true"
-deviceInfo = provide_device_info(True)
+deviceInfo = provide_device_info(MOCK_MODE)
 
 with app:
     @route('/health', method='GET')
