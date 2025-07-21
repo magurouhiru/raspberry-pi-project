@@ -5,7 +5,7 @@ from bottle import Bottle, route, HTTPResponse, error, HTTPError
 
 from device.device_info import provide_device_info
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 app = Bottle()
 

@@ -3,7 +3,7 @@ api-server:
 #    type: ClusterIP
 #    port: 9000
 #  image:
-#    tag: "0.2.0-wip"
+#    tag: "0.3.0-wip"
   env:
     - name: APP_ENV
       value: staging
@@ -19,14 +19,14 @@ api-server:
 #    type: NodePort
 #    port: 80
 #  image:
-#    tag: "0.1.0-wip"
+#    tag: "0.2.0-wip"
 
 device-server:
 #  service:
 #    type: ClusterIP
 #    port: 8080
 #  image:
-#    tag: "0.1.0-wip"
+#    tag: "0.2.0-wip"
   env:
     - name: APP_ENV
       value: staging

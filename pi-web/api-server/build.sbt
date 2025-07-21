@@ -5,7 +5,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """api-server""",
     organization := "com.example",
-    version := "0.2.0",
+    version := "0.3.0",
     crossScalaVersions := Seq("2.13.16", "3.3.6"),
     scalaVersion := crossScalaVersions.value.head,
     // ファイル変更検知できないためポーリング
