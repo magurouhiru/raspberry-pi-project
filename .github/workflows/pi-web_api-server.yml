@@ -6,9 +6,9 @@ on:
       - main
     paths:
       - 'pi-web/api-server/**'
-  pull_request:
-    paths:
-      - 'pi-web/api-server/**'
+#  pull_request:
+#    paths:
+#      - 'pi-web/api-server/**'
 
 jobs:
   build:
