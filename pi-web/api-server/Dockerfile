@@ -40,7 +40,8 @@ COPY --from=builder /app/api-server-* /opt/api-server
 EXPOSE 9000
 
 # 環境変数を設定
-ENV DB_URL=jdbc:sqlite://var/lib/sqlite3/playdb
+ENV DB_URL=jdbc:sqlite://var/lib/sqlite3/playdb \
+    APP_ENV=prod
 
 # アプリ起動
 CMD ["/opt/api-server/bin/api-server"]

@@ -8,6 +8,7 @@ ARG MOCK_MODE=false
 # 環境変数
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
+    APP_ENV=prod \
     MOCK_MODE=${MOCK_MODE}
 
 # 依存関係コピー＆インストール

@@ -1,9 +1,12 @@
-#api-server:
+api-server:
 #  service:
 #    type: ClusterIP
 #    port: 9000
 #  image:
 #    tag: "0.2.0-wip"
+  env:
+    - name: APP_ENV
+      value: staging
 
 #frontend:
 #  service:
@@ -19,5 +22,7 @@ device-server:
 #  image:
 #    tag: "0.1.0-wip"
   env:
+    - name: APP_ENV
+      value: staging
     - name: MOCK_MODE
       value: true
