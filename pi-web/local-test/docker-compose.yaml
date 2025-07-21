@@ -16,9 +16,22 @@ services:
     ports:
       - "9090:9000"
     environment:
+      APP_ENV: staging
       DB_URL: jdbc:sqlite://var/lib/sqlite3/playdb
+      DEVICE_SERVER_URL: http://device-server:8080
     volumes:
       - db-data_local-test:/var/lib/sqlite3
+  device-server:
+    image: pi-web_device-server:latest
+    container_name: device-server_local-test
+    platform: linux/arm64
+    networks:
+      - local-test_net
+    ports:
+      - "8888:8080"
+    environment:
+      APP_ENV: staging
+      MOCK_MODE: true
 
 networks:
   local-test_net:

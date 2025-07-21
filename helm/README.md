@@ -10,6 +10,7 @@ kubectl get all
 kubectl delete all --all
 kubectl logs pod/
 kubectl logs --previous pod/
+kubectl exec -it pod/pi-web-api-server-XXXXXXX -- tail -n 100 /opt/api-server/logs/application.log
 kubectl describe pod/
 
 # secret設定

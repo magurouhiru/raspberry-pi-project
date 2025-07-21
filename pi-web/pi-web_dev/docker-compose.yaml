@@ -6,6 +6,8 @@ services:
       - devnet
     ports:
       - "14200:4200"
+    volumes:
+      - frontend-node_modules:/frontend/node_modules
   api-server:
     build: ./api-server
     image: pi-web_api-server_dev:latest
@@ -15,13 +17,26 @@ services:
     ports:
       - "19000:9000"
     environment:
+      APP_ENV: dev
       DB_URL: jdbc:sqlite://var/lib/sqlite3/playdb
+      DEVICE_SERVER_URL: http://device-server:8080
     volumes:
       - db-data:/var/lib/sqlite3
+  device-server:
+    image: python:3.13.5-slim-bullseye
+    container_name: device-server_dev
+    networks:
+      - devnet
+    ports:
+      - "18080:8080"
+    environment:
+      APP_ENV: dev
+      MOCK_MODE: true
 
 networks:
   devnet:
     driver: bridge
 
 volumes:
+  frontend-node_modules:
   db-data:

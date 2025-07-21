@@ -15,8 +15,14 @@ image:
 
 # 環境変数を設定
 env:
+  - name: APP_ENV
+    value: prod
   - name: DB_URL
     value: jdbc:sqlite://var/lib/sqlite3/playdb
+  - name: DEVICE_SERVER_URL
+    value: http://pi-web-device-server:8080
+  - name: JAVA_OPTS
+    value: -Xms64m -Xmx384m
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -96,7 +102,7 @@ livenessProbe:
     path: /health
     port: 9000
   initialDelaySeconds: 240
-  periodSeconds: 10
+  periodSeconds: 60
   timeoutSeconds: 5
   failureThreshold: 6      # 失敗6回でNG
 readinessProbe:
@@ -104,7 +110,7 @@ readinessProbe:
     path: /ready
     port: 9000
   initialDelaySeconds: 240
-  periodSeconds: 10
+  periodSeconds: 60
   timeoutSeconds: 5
   failureThreshold: 6      # 失敗6回でNG
 

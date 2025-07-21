@@ -5,5 +5,8 @@ dependencies:
 - name: frontend
   repository: file://./frontend
   version: 0.1.0
-digest: sha256:1d64c02e6c9294870704d4250a97ccc2e6d6ae9b7766b3ec675f9b1bb8bc3317
-generated: "2025-07-20T12:39:11.9564056+09:00"
+- name: device-server
+  repository: file://./device-server
+  version: 0.1.0
+digest: sha256:2ae3c49bd26837c43a42edd077f1bbb679cdd849d98ffc7a668725b2ff401e67
+generated: "2025-07-20T17:56:50.1785639+09:00"

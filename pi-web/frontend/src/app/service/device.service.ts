@@ -7,32 +7,47 @@ import { inject, Injectable } from '@angular/core';
 export class DeviceService {
   client = inject(HttpClient);
   getDevice() {
-    return this.client.get<Device>('/api/device');
+    return this.client.get<DeviceAllInfoResponse>('/api/device/all');
   }
 }
 
-export interface Device {
+export interface DeviceTempInfoResponse {
   timestamp: string;
   temp: number;
+}
+
+export interface DeviceFreqInfoResponse {
+  timestamp: string;
   freq: number;
-  cpu: {
-    cpu: CpuDetail;
-    cpu0: CpuDetail;
-    cpu1: CpuDetail;
-    cpu2: CpuDetail;
-    cpu3: CpuDetail;
-  };
-  mem: {
-    mem_total: number;
-    mem_free: number;
-    buffers: number;
-    cached: number;
-    active: number;
-    inactive: number;
-  };
 }
 
 export interface CpuDetail {
   total: number;
   idle: number;
+}
+
+export interface DeviceCpuInfoResponse {
+  timestamp: string;
+  cpu: CpuDetail;
+  cpu0: CpuDetail;
+  cpu1: CpuDetail;
+  cpu2: CpuDetail;
+  cpu3: CpuDetail;
+}
+
+export interface DeviceMemInfoResponse {
+  timestamp: string;
+  mem_total: number;
+  mem_free: number;
+  buffers: number;
+  cached: number;
+  active: number;
+  inactive: number;
+}
+
+export interface DeviceAllInfoResponse {
+  temp: DeviceTempInfoResponse;
+  freq: DeviceFreqInfoResponse;
+  cpu: DeviceCpuInfoResponse;
+  mem: DeviceMemInfoResponse;
 }

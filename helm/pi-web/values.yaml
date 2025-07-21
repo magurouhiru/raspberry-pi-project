@@ -1,13 +1,34 @@
-#api-server:
+api-server:
 #  service:
 #    type: ClusterIP
 #    port: 9000
 #  image:
-#    tag: "0.0.0-wip"
+#    tag: "0.3.0-wip"
+  env:
+    - name: APP_ENV
+      value: staging
+    - name: DB_URL
+      value: jdbc:sqlite://var/lib/sqlite3/playdb
+    - name: DEVICE_SERVER_URL
+      value: http://pi-web-device-server:8080
+    - name: JAVA_OPTS
+      value: -Xms64m -Xmx384m
 
 #frontend:
 #  service:
 #    type: NodePort
 #    port: 80
 #  image:
-#    tag: "0.0.0-wip"
+#    tag: "0.2.0-wip"
+
+device-server:
+#  service:
+#    type: ClusterIP
+#    port: 8080
+#  image:
+#    tag: "0.2.0-wip"
+  env:
+    - name: APP_ENV
+      value: staging
+    - name: MOCK_MODE
+      value: "true"

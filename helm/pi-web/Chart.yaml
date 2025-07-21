@@ -9,3 +9,6 @@ dependencies:
   - name: frontend
     version: 0.1.0
     repository: file://./frontend
+  - name: device-server
+    version: 0.1.0
+    repository: file://./device-server
