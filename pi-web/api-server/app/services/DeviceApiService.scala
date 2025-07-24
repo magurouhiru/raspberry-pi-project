@@ -15,6 +15,7 @@ import api._
 class DeviceApiService @Inject() (config: Configuration, ws: WSClient)(implicit
     ec: ExecutionContext,
 ) extends ApiServiceBase(ws) {
+
   private val deviceUrl: String = config.get[String]("device.server.url")
 
   def getAppEnv: Future[Either[ApiError, DeviceServerAppEnvResponse]] =
