@@ -1,10 +1,10 @@
 package api
 
-import java.time.LocalDateTime
+import java.time.Instant
 
 import play.api.libs.json._
 
-case class DeviceTempInfoResponse(timestamp: LocalDateTime, temp: Int)
+case class DeviceTempInfoResponse(timestamp: Instant, temp: Int)
 
 object DeviceTempInfoResponse {
   implicit val helloFormat: OFormat[DeviceTempInfoResponse] =

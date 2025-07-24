@@ -17,10 +17,13 @@ class HelloDBService @Inject() (repo: HelloRepository)(implicit
     quillCtx: QuillContext,
 ) extends DBServiceBase {
 
-  def ready(): Future[Try[Long]] = runAsyncTx(repo.ready())
+  def ready(): Future[Either[Exception, Long]] = runAsyncTx(repo.ready())
 
-  def readAll(): Future[Try[Seq[Hello]]] = runAsyncTx(repo.readAll())
+  def readAll(): Future[Either[Exception, Seq[Hello]]] = runAsyncTx(repo.readAll())
 
-  def create(hello: Hello): Future[Try[Hello]] = runAsyncTx(repo.create(hello))
+  def create(
+      hello: api.HelloRequest,
+  ): Future[Either[Exception, Option[Hello]]] =
+    runAsyncTx(repo.read(repo.create(hello)))
 
 }

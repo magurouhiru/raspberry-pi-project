@@ -11,12 +11,15 @@ class HelloRepository @Inject() (quillCtx: QuillContext) {
 
   def ready(): Long = run(query[Hello].size)
 
+  def read(id: Int): Option[Hello] = run(query[Hello].filter(_.id == lift(id)))
+    .headOption
+
   def readAll(): Seq[Hello] = run(query[Hello])
 
-  def create(hello: Hello): Hello = run(
+  def create(hello: api.HelloRequest): Int = run(
     query[Hello]
       .insert(_.message -> lift(hello.message))
-      .returningGenerated(r => Hello(r.message)),
+      .returningGenerated(_.id),
   )
 
 }

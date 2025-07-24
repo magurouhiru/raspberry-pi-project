@@ -1,7 +1,8 @@
 # --- !Ups
 CREATE TABLE hello(
-                       message text
+                      id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      message TEXT,
+                      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 );
-
 # --- !Downs
 DROP TABLE hello;
