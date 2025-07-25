@@ -41,6 +41,8 @@
           Device:
           @if (appEnv() === null) {
             sync🔄
+          } @else if (appEnv()?.device_server === undefined) {
+            disable🚫
           } @else if (appEnv()?.device_server?.APP_ENV === "dev") {
             dev🛠️
           } @else if (appEnv()?.device_server?.APP_ENV === "staging") {

@@ -4,7 +4,7 @@ import play.api.libs.json._
 
 case class AppEnvResponse(
     api_server: ApiServerAppEnvResponse,
-    device_server: DeviceServerAppEnvResponse,
+    device_server: Option[DeviceServerAppEnvResponse],
 )
 
 object AppEnvResponse {

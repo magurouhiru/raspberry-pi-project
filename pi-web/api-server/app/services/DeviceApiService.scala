@@ -32,4 +32,5 @@ class DeviceApiService @Inject() (config: Configuration, ws: WSClient)(implicit
 
   def getMemInfo: Future[Either[ApiError, DeviceMemInfoResponse]] =
     get[DeviceMemInfoResponse](s"$deviceUrl/device/mem")
+
 }

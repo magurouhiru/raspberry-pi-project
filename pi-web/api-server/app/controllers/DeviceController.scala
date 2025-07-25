@@ -7,8 +7,9 @@ import scala.concurrent.ExecutionContext
 import play.api.libs.json._
 import play.api.mvc._
 
-import api.DeviceAllInfoResponse
 import cats.data.EitherT
+
+import api.DeviceAllInfoResponse
 import services.DeviceApiService
 
 @Singleton

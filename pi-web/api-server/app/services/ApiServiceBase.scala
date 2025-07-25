@@ -19,5 +19,8 @@ class ApiServiceBase @Inject() (ws: WSClient)(implicit ec: ExecutionContext) {
         if (res.getStatus == Status.OK) Right(Json.parse(res.getBody).as[T])
         else Left(ApiError(res.getStatus, res.getBody)),
       )
+      .recover { case e: Exception =>
+        Left(ApiError(Status.INTERNAL_SERVER_ERROR, e.toString))
+      }
 
 }
