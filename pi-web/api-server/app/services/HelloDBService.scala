@@ -17,7 +17,10 @@ class HelloDBService @Inject() (repo: HelloRepository)(implicit
     quillCtx: QuillContext,
 ) extends DBServiceBase {
 
-  def ready(): Future[Either[Exception, Long]] = runAsyncTx(repo.ready())
+  def readSize(): Future[Either[Exception, Long]] = runAsyncTx(repo.readSize())
+
+  def read(offset: Int, limit: Int): Future[Either[Exception, Seq[Hello]]] =
+    runAsyncTx(repo.read(offset, limit))
 
   def readAll(): Future[Either[Exception, Seq[Hello]]] = runAsyncTx(repo.readAll())
 

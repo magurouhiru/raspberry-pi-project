@@ -6,11 +6,10 @@ GET         /ready                      controllers.HealthController.ready()
 ## APP_ENV
 GET         /api/app/env                controllers.AppEnvController.getAppEnv()
 
-GET         /api/tables                 controllers.DBController.anyTables()
-
 ## hello
-GET         /api/hello                  controllers.HelloController.get()
-POST        /api/hello                  controllers.HelloController.echo()
+GET         /api/hello                  controllers.HelloController.read(offset: Option[Int], limit: Option[Int])
+GET         /api/test/hello             controllers.HelloController.get()
+POST        /api/test/hello             controllers.HelloController.echo()
 
 ## device
 GET         /api/device/temp            controllers.DeviceController.getTemp()

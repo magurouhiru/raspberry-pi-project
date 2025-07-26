@@ -20,7 +20,7 @@ class HealthController @Inject() (
   def health(): Action[AnyContent] = Action(Ok(""))
 
   def ready(): Action[AnyContent] = Action {
-    val hello = helloRepository.ready()
+    val hello = helloRepository.readSize()
     Ok(hello.toString)
   }
 

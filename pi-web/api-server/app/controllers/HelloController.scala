@@ -4,12 +4,13 @@ import javax.inject._
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
-import scala.util.Failure
-import scala.util.Success
 
 import play.api.libs.json._
 import play.api.mvc._
 
+import cats.data.EitherT
+
+import models.Hello
 import services.HelloDBService
 
 @Singleton
@@ -45,5 +46,21 @@ class HelloController @Inject() (
         ))
     },
   )
+
+  def read(offset: Option[Int], limit: Option[Int]): Action[AnyContent] = Action
+    .async {
+      val res: EitherT[Future, Exception, (Seq[Hello], Long)] = for {
+        hellos <- EitherT(service.read(offset.getOrElse(0), limit.getOrElse(5)))
+        size <- EitherT(service.readSize())
+      } yield (hellos, size)
+
+      res
+        .value
+        .map {
+          case Left(e) => InternalServerError(e.getMessage)
+          case Right((hellos, size)) =>
+            Ok(Json.toJson(hellos)).withHeaders("X-Total-Count" -> size.toString)
+        }
+    }
 
 }

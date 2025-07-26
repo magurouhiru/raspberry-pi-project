@@ -31,7 +31,7 @@ export class HelloComponent extends BaseComponent {
 
   getRequestList = signal<string[]>([]);
   sendGetRequest() {
-    this.#hello.getHello().subscribe({
+    this.#hello.getTestHello().subscribe({
       next: (v) => {
         this.getRequestList.update((list) => {
           list.push(JSON.stringify(v));
@@ -45,7 +45,7 @@ export class HelloComponent extends BaseComponent {
   postForm = this.#fb.nonNullable.control('');
   postRequestList = signal<string[]>([]);
   sendPostRequest() {
-    this.#hello.postHello(this.postForm.getRawValue()).subscribe({
+    this.#hello.postTestHello(this.postForm.getRawValue()).subscribe({
       next: (v) => {
         this.postRequestList.update((list) => {
           list.push(JSON.stringify(v));
