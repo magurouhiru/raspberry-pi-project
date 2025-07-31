@@ -1,19 +1,28 @@
 # health
-GET         /health                     controllers.HealthController.health()
-GET         /ready                      controllers.HealthController.ready()
+GET         /health                                 controllers.HealthController.health()
+GET         /ready                                  controllers.HealthController.ready()
+
+# batch
+GET         /batch/device-all                       controllers.BatchController.deviceAll()
 
 # API
 ## APP_ENV
-GET         /api/app/env                controllers.AppEnvController.getAppEnv()
+GET         /api/app/env                            controllers.AppEnvController.getAppEnv()
 
 ## hello
-GET         /api/hello                  controllers.HelloController.read(offset: Option[Int], limit: Option[Int])
-GET         /api/test/hello             controllers.HelloController.get()
-POST        /api/test/hello             controllers.HelloController.echo()
+GET         /api/hello                              controllers.HelloController.read(offset: Option[Int], limit: Option[Int])
+GET         /api/test/hello                         controllers.HelloController.get()
+POST        /api/test/hello                         controllers.HelloController.echo()
 
 ## device
-GET         /api/device/temp            controllers.DeviceController.getTemp()
-GET         /api/device/freq            controllers.DeviceController.getFreq()
-GET         /api/device/cpu             controllers.DeviceController.getCpu()
-GET         /api/device/mem             controllers.DeviceController.getMem()
-GET         /api/device/all             controllers.DeviceController.getAll()
+GET         /api/device/temp                        controllers.DeviceController.getTemp()
+GET         /api/device/freq                        controllers.DeviceController.getFreq()
+GET         /api/device/cpu                         controllers.DeviceController.getCpu()
+GET         /api/device/mem                         controllers.DeviceController.getMem()
+GET         /api/device/all                         controllers.DeviceController.getAll()
+GET         /api/device/db/temp                     controllers.DeviceController.getDBTemp(offset: Option[Int], limit: Option[Int])
+GET         /api/device/db/freq                     controllers.DeviceController.getDBFreq(offset: Option[Int], limit: Option[Int])
+GET         /api/device/db/cpu/raw                  controllers.DeviceController.getDBCpuRaw(offset: Option[Int], limit: Option[Int])
+GET         /api/device/db/cpu-detail/raw           controllers.DeviceController.getDBCpuDetailRaw(offset: Option[Int], limit: Option[Int])
+GET         /api/device/db/cpu                      controllers.DeviceController.getDBCpu(offset: Option[Int], limit: Option[Int])
+GET         /api/device/db/mem                      controllers.DeviceController.getDBMem(offset: Option[Int], limit: Option[Int])

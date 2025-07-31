@@ -5,7 +5,7 @@ import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
-import cats.syntax.either._
+import play.api.http.Status
 
 import models.QuillContext
 
@@ -15,7 +15,9 @@ class DBServiceBase @Inject() (implicit
 ) {
   import quillCtx.ctx._
 
-  def runAsyncTx[R](f: => R): Future[Either[Exception, R]] =
-    Future(Either.catchOnly[Exception](transaction(f)))
+  def runAsyncTx[R](f: => R): Future[Either[ServiceError, R]] =
+    Future(Right(transaction(f))).recover { case e: Exception =>
+      Left(ServiceError(Status.INTERNAL_SERVER_ERROR, e.toString))
+    }
 
 }

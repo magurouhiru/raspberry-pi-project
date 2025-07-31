@@ -25,7 +25,7 @@ class HelloController @Inject() (
       .create(api.HelloRequest("hello"))
       .map {
         case Right(hello) => Ok(Json.toJson(hello))
-        case Left(exception) => InternalServerError(exception.getMessage)
+        case Left(error) => Status(error.status)(error.error)
       },
   )
 
@@ -37,7 +37,7 @@ class HelloController @Inject() (
           .create(req)
           .map {
             case Right(hello) => Ok(Json.toJson(hello))
-            case Left(exception) => InternalServerError(exception.getMessage)
+            case Left(error) => Status(error.status)(error.error)
           }
       case JsError(errors) =>
         // 失敗: 400 Bad Request
@@ -49,7 +49,7 @@ class HelloController @Inject() (
 
   def read(offset: Option[Int], limit: Option[Int]): Action[AnyContent] = Action
     .async {
-      val res: EitherT[Future, Exception, (Seq[Hello], Long)] = for {
+      val res = for {
         hellos <- EitherT(service.read(offset.getOrElse(0), limit.getOrElse(5)))
         size <- EitherT(service.readSize())
       } yield (hellos, size)
@@ -57,9 +57,9 @@ class HelloController @Inject() (
       res
         .value
         .map {
-          case Left(e) => InternalServerError(e.getMessage)
           case Right((hellos, size)) =>
             Ok(Json.toJson(hellos)).withHeaders("X-Total-Count" -> size.toString)
+          case Left(error) => Status(error.status)(error.error)
         }
     }
 

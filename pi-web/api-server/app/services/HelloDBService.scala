@@ -5,7 +5,6 @@ import javax.inject.Singleton
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
-import scala.util.Try
 
 import models.Hello
 import models.QuillContext
@@ -17,16 +16,17 @@ class HelloDBService @Inject() (repo: HelloRepository)(implicit
     quillCtx: QuillContext,
 ) extends DBServiceBase {
 
-  def readSize(): Future[Either[Exception, Long]] = runAsyncTx(repo.readSize())
+  def readSize(): Future[Either[ServiceError, Long]] = runAsyncTx(repo.readSize())
 
-  def read(offset: Int, limit: Int): Future[Either[Exception, Seq[Hello]]] =
+  def read(offset: Int, limit: Int): Future[Either[ServiceError, Seq[Hello]]] =
     runAsyncTx(repo.read(offset, limit))
 
-  def readAll(): Future[Either[Exception, Seq[Hello]]] = runAsyncTx(repo.readAll())
+  def readAll(): Future[Either[ServiceError, Seq[Hello]]] =
+    runAsyncTx(repo.readAll())
 
   def create(
       hello: api.HelloRequest,
-  ): Future[Either[Exception, Option[Hello]]] =
+  ): Future[Either[ServiceError, Option[Hello]]] =
     runAsyncTx(repo.read(repo.create(hello)))
 
 }

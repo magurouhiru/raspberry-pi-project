@@ -8,5 +8,8 @@ dependencies:
 - name: device-server
   repository: file://./device-server
   version: 0.1.0
-digest: sha256:2ae3c49bd26837c43a42edd077f1bbb679cdd849d98ffc7a668725b2ff401e67
-generated: "2025-07-20T17:56:50.1785639+09:00"
+- name: curl-cronjob
+  repository: file://./curl-cronjob
+  version: 0.1.0
+digest: sha256:75a64a4ced90fdd67d182095258027931397f1486b5694898b1eef94b6ff63d8
+generated: "2025-08-01T21:25:23.9978592+09:00"

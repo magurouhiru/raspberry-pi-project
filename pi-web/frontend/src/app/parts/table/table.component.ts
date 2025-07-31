@@ -1,4 +1,4 @@
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
 import { Component, input, OnDestroy } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import {
@@ -42,6 +42,7 @@ import {
     AsyncPipe,
     LabelsPipe,
     DataSourcePipe,
+    JsonPipe,
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',

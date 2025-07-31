@@ -11,16 +11,30 @@ import cats.data.EitherT
 
 import api.DeviceAllInfoResponse
 import services.DeviceApiService
+import services.DeviceDBService
+import services.WithTotal
 
 @Singleton
 class DeviceController @Inject() (
     cc: ControllerComponents,
-    service: DeviceApiService,
+    apiService: DeviceApiService,
+    dbService: DeviceDBService,
 )(implicit ec: ExecutionContext)
     extends AbstractController(cc) {
 
+  def getDBTemp(offset: Option[Int], limit: Option[Int]): Action[AnyContent] =
+    Action.async(
+      dbService
+        .readTemp(offset.getOrElse(0), limit.getOrElse(5))
+        .map {
+          case Right(WithTotal(size, items)) => Ok(Json.toJson(items))
+              .withHeaders("X-Total-Count" -> size.toString)
+          case Left(error) => Status(error.status)(error.error)
+        },
+    )
+
   def getTemp: Action[AnyContent] = Action.async(
-    service
+    apiService
       .getTempInfo
       .map {
         case Right(value) => Ok(Json.toJson(value))
@@ -28,8 +42,19 @@ class DeviceController @Inject() (
       },
   )
 
+  def getDBFreq(offset: Option[Int], limit: Option[Int]): Action[AnyContent] =
+    Action.async(
+      dbService
+        .readFreq(offset.getOrElse(0), limit.getOrElse(5))
+        .map {
+          case Right(WithTotal(size, items)) => Ok(Json.toJson(items))
+              .withHeaders("X-Total-Count" -> size.toString)
+          case Left(error) => Status(error.status)(error.error)
+        },
+    )
+
   def getFreq: Action[AnyContent] = Action.async(
-    service
+    apiService
       .getFreqInfo
       .map {
         case Right(value) => Ok(Json.toJson(value))
@@ -37,8 +62,43 @@ class DeviceController @Inject() (
       },
   )
 
+  def getDBCpuDetailRaw(
+      offset: Option[Int],
+      limit: Option[Int],
+  ): Action[AnyContent] = Action.async(
+    dbService
+      .readCpuDetailRaw(offset.getOrElse(0), limit.getOrElse(5))
+      .map {
+        case Right(WithTotal(size, items)) =>
+          Ok(Json.toJson(items)).withHeaders("X-Total-Count" -> size.toString)
+        case Left(error) => Status(error.status)(error.error)
+      },
+  )
+
+  def getDBCpuRaw(offset: Option[Int], limit: Option[Int]): Action[AnyContent] =
+    Action.async(
+      dbService
+        .readCpuRaw(offset.getOrElse(0), limit.getOrElse(5))
+        .map {
+          case Right(WithTotal(size, items)) => Ok(Json.toJson(items))
+              .withHeaders("X-Total-Count" -> size.toString)
+          case Left(error) => Status(error.status)(error.error)
+        },
+    )
+
+  def getDBCpu(offset: Option[Int], limit: Option[Int]): Action[AnyContent] =
+    Action.async(
+      dbService
+        .readCpu(offset.getOrElse(0), limit.getOrElse(5))
+        .map {
+          case Right(WithTotal(size, items)) => Ok(Json.toJson(items))
+              .withHeaders("X-Total-Count" -> size.toString)
+          case Left(error) => Status(error.status)(error.error)
+        },
+    )
+
   def getCpu: Action[AnyContent] = Action.async(
-    service
+    apiService
       .getCpuInfo
       .map {
         case Right(value) => Ok(Json.toJson(value))
@@ -46,8 +106,19 @@ class DeviceController @Inject() (
       },
   )
 
+  def getDBMem(offset: Option[Int], limit: Option[Int]): Action[AnyContent] =
+    Action.async(
+      dbService
+        .readMem(offset.getOrElse(0), limit.getOrElse(5))
+        .map {
+          case Right(WithTotal(size, items)) => Ok(Json.toJson(items))
+              .withHeaders("X-Total-Count" -> size.toString)
+          case Left(error) => Status(error.status)(error.error)
+        },
+    )
+
   def getMem: Action[AnyContent] = Action.async(
-    service
+    apiService
       .getMemInfo
       .map {
         case Right(value) => Ok(Json.toJson(value))
@@ -57,10 +128,10 @@ class DeviceController @Inject() (
 
   def getAll: Action[AnyContent] = Action.async {
     val res = for {
-      temp <- EitherT(service.getTempInfo)
-      freq <- EitherT(service.getFreqInfo)
-      cpu <- EitherT(service.getCpuInfo)
-      mem <- EitherT(service.getMemInfo)
+      temp <- EitherT(apiService.getTempInfo)
+      freq <- EitherT(apiService.getFreqInfo)
+      cpu <- EitherT(apiService.getCpuInfo)
+      mem <- EitherT(apiService.getMemInfo)
     } yield (temp, freq, cpu, mem)
 
     res
