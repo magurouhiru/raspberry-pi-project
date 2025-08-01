@@ -6,9 +6,9 @@ on:
       - main
     paths:
       - 'pi-web/device-server/**'
-#  pull_request:
-#    paths:
-#      - 'pi-web/device-server/**'
+  pull_request:
+    paths:
+      - 'pi-web/device-server/**'
 
 jobs:
   build:
