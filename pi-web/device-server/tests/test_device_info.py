@@ -1,8 +1,7 @@
 import unittest
-from datetime import datetime
 from unittest.mock import mock_open, patch
 
-from device.device_info import RealDeviceInfo
+from device.device_info import RealDeviceInfo, now_utc
 from device.models import TempInfo, FreqInfo, CpuDetailInfo, CpuInfo, MemInfo
 
 
@@ -12,7 +11,7 @@ class MyTestCase(unittest.TestCase):
         d = RealDeviceInfo()
         m = mock_open(read_data="""55844""")
         with patch("builtins.open", m):
-            now = datetime.now().isoformat()
+            now = now_utc()
             result = d.get_temp()
             result.timestamp = now
             self.assertEqual(result, TempInfo(now, 55844))
@@ -22,7 +21,7 @@ class MyTestCase(unittest.TestCase):
         d = RealDeviceInfo()
         m = mock_open(read_data="""600000""")
         with patch("builtins.open", m):
-            now = datetime.now().isoformat()
+            now = now_utc()
             result = d.get_freq()
             result.timestamp = now
             self.assertEqual(result, FreqInfo(now, 600000))
@@ -45,7 +44,7 @@ procs_blocked 0
 softirq 1451022 25789 657457 2 24354 0 0 35270 649216 0 58934
 """)
         with patch("builtins.open", m):
-            now = datetime.now().isoformat()
+            now = now_utc()
             result = d.get_cpu()
             result.timestamp = now
             cpu = CpuDetailInfo(total=6795736, idle=6792918)
@@ -101,7 +100,7 @@ CmaTotal:         262144 kB
 CmaFree:          256744 kB
 """)
         with patch("builtins.open", m):
-            now = datetime.now().isoformat()
+            now = now_utc()
             result = d.get_mem()
             result.timestamp = now
             self.assertEqual(

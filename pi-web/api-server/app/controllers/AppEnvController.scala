@@ -27,8 +27,8 @@ class AppEnvController @Inject() (
       .getAppEnv
       .map {
         case Right(value) =>
-          Ok(Json.toJson(AppEnvResponse(apiServerAppEnv, value)))
-        case Left(error) => Status(error.status)(error.error)
+          Ok(Json.toJson(AppEnvResponse(apiServerAppEnv, Some(value))))
+        case Left(_) => Ok(Json.toJson(AppEnvResponse(apiServerAppEnv, None)))
       },
   )
 

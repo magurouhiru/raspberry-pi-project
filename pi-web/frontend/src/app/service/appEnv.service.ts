@@ -31,5 +31,5 @@ export interface DeviceServerAppEnvResponse {
 
 export interface AppEnvResponse {
   api_server: ApiServerAppEnvResponse;
-  device_server: DeviceServerAppEnvResponse;
+  device_server?: DeviceServerAppEnvResponse;
 }

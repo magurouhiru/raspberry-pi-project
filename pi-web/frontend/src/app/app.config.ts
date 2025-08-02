@@ -1,6 +1,7 @@
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import {
   ApplicationConfig,
+  LOCALE_ID,
   provideExperimentalZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
@@ -16,5 +17,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withFetch()),
     provideCharts(withDefaultRegisterables(AnnotationPlugin)),
+    { provide: LOCALE_ID, useValue: 'ja-JP' },
   ],
 };

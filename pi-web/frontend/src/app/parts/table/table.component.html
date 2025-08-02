@@ -1,0 +1,33 @@
+@if (obs() | async; as withTotal) {
+  <table mat-table [dataSource]="withTotal.items | toDataSource">
+    <caption>
+      <h3>テーブル： {{ name() }}</h3>
+    </caption>
+    @let labels = withTotal.items | toLabels;
+    @for (label of labels; track label) {
+      <ng-container [matColumnDef]="label">
+        <th mat-header-cell *matHeaderCellDef>{{ label }}</th>
+        <td mat-cell *matCellDef="let element">
+          @if (label === "timestamp") {
+            {{ element[label] | date: "short" }}
+          } @else if (typeof element[label] === "object") {
+            {{ element[label] | json }}
+          } @else {
+            {{ element[label] }}
+          }
+        </td>
+      </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="labels"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: labels"></tr>
+  </table>
+  <mat-paginator
+    [pageSizeOptions]="pageSizeOptions"
+    [length]="withTotal.total"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+    (page)="handlePageEvent($event)"
+  >
+  </mat-paginator>
+}

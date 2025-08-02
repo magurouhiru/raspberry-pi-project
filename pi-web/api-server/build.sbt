@@ -15,7 +15,7 @@ lazy val root = (project in file("."))
       javaWs,
       jdbc,
       evolutions,
-      "org.xerial" % "sqlite-jdbc" % "3.50.2.0",
+      "org.xerial" % "sqlite-jdbc" % "3.50.3.0",
       "io.getquill" %% "quill-jdbc" % "4.8.5",
       "org.typelevel" %% "cats-core" % "2.13.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test,

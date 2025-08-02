@@ -16,8 +16,8 @@
         <a mat-button routerLink="/hello" routerLinkActive="highlite">
           <mat-icon>waving_hand</mat-icon>hello
         </a>
-        <a mat-button routerLink="/show-db" routerLinkActive="highlite"
-          ><mat-icon>table_view</mat-icon>Show DB</a
+        <a mat-button routerLink="/tables" routerLinkActive="highlite"
+          ><mat-icon>table_view</mat-icon>Tables</a
         >
         <a mat-button routerLink="/device" routerLinkActive="highlite"
           ><mat-icon>developer_board</mat-icon>Device</a
@@ -41,6 +41,8 @@
           Device:
           @if (appEnv() === null) {
             sync🔄
+          } @else if (appEnv()?.device_server === undefined) {
+            disable🚫
           } @else if (appEnv()?.device_server?.APP_ENV === "dev") {
             dev🛠️
           } @else if (appEnv()?.device_server?.APP_ENV === "staging") {

@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 import { DeviceComponent } from './component/device/device.component';
 import { HelloComponent } from './component/hello/hello.component';
 import { HomeComponent } from './component/home/home.component';
-import { ShowDbComponent } from './component/show-db/show-db.component';
+import { TablesComponent } from './component/tables/tables.component';
 import { CustomData } from './routerData';
 
 export const routes: Routes = [
@@ -18,9 +18,9 @@ export const routes: Routes = [
     data: { title: 'Hello' } satisfies CustomData,
   },
   {
-    path: 'show-db',
-    component: ShowDbComponent,
-    data: { title: 'Show DB' } satisfies CustomData,
+    path: 'tables',
+    component: TablesComponent,
+    data: { title: 'Tables' } satisfies CustomData,
   },
   {
     path: 'device',

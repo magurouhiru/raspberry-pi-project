@@ -1,11 +1,11 @@
 package api
 
-import java.time.LocalDateTime
+import java.time.Instant
 
 import play.api.libs.json._
 
 case class DeviceMemInfoResponse(
-    timestamp: LocalDateTime,
+    timestamp: Instant,
     mem_total: Int,
     mem_free: Int,
     buffers: Int,

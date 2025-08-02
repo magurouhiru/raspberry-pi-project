@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, effect, inject, LOCALE_ID, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { concatMap, timer } from 'rxjs';
 
 import { ChartConfiguration } from 'chart.js';
@@ -21,6 +22,7 @@ import { BaseComponent } from '../base/base.component';
 export class DeviceComponent extends BaseComponent {
   readonly #device = inject(DeviceService);
   readonly #locale = inject(LOCALE_ID);
+  readonly #snackBar = inject(MatSnackBar);
 
   readonly #interval = 3000;
   readonly #xScale = 60;
@@ -216,7 +218,18 @@ export class DeviceComponent extends BaseComponent {
           this.cash.update((c) =>
             c.length === 0 ? [v] : [c[c.length - 1], v],
           ),
-        error: (e) => console.error(e),
+        error: (err) => {
+          console.error(err);
+          this.#snackBar.open(
+            `status: ${err.status}, message: ${err.message}`,
+            'OK',
+            {
+              duration: 5000,
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+            },
+          );
+        },
         complete: () => console.log('complete'),
       });
     effect(() => {

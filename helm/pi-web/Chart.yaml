@@ -12,3 +12,7 @@ dependencies:
   - name: device-server
     version: 0.1.0
     repository: file://./device-server
+  - name: curl-cronjob
+    alias: save-device-info
+    version: 0.1.0
+    repository: file://./curl-cronjob

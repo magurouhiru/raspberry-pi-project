@@ -5,17 +5,17 @@ import { map } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class AnyDBService {
+export class TablesService {
   client = inject(HttpClient);
-  getAnyDB() {
+  getAnyTables() {
     return this.client
-      .get<AnyDB>('/api/db')
-      .pipe(map((db) => toDataSource(db)));
+      .get<AnyTables>('/api/tables')
+      .pipe(map((at) => toDataSource(at)));
   }
 }
 
-function toDataSource(db: AnyDB) {
-  return db.tables.map((table) => {
+function toDataSource(at: AnyTables) {
+  return at.tables.map((table) => {
     return {
       name: table.name,
       label: table.label,
@@ -30,7 +30,7 @@ function toRecord(label: string[], value: string[]): Record<string, string> {
   return Object.fromEntries(label.map((l, i) => [l, value[i]]));
 }
 
-export interface AnyDB {
+export interface AnyTables {
   tables: AnyTable[];
 }
 

@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { map } from 'rxjs';
+
+import { PageParams, toWithTotal } from './shared';
 
 import { webSocket } from 'rxjs/webSocket';
 
@@ -8,12 +11,25 @@ import { webSocket } from 'rxjs/webSocket';
 })
 export class HelloService {
   client = inject(HttpClient);
-  getHello() {
-    return this.client.get<Hello>('/api/hello');
+
+  read(pp: PageParams) {
+    return this.client
+      .get<
+        Hello[]
+      >('/api/hello', { params: { limit: pp.limit, offset: pp.offset }, observe: 'response' })
+      .pipe(map(toWithTotal));
   }
-  postHello(message: string) {
-    return this.client.post<Hello>('/api/hello', { message } satisfies Hello);
+
+  getTestHello() {
+    return this.client.get<Hello>('/api/test/hello');
   }
+
+  postTestHello(message: string) {
+    return this.client.post<Hello>('/api/test/hello', {
+      message,
+    } satisfies Hello);
+  }
+
   wsHello() {
     return webSocket<MessageEvent<string>>({
       url: '/api/hello/ws',

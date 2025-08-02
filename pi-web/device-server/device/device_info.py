@@ -1,9 +1,13 @@
 import random
 import re
 from abc import abstractmethod, ABC
-from datetime import datetime
+from datetime import datetime, timezone
 
 from device.models import TempInfo, FreqInfo, mem_key_map, MemInfo, CpuDetailInfo, CpuInfo
+
+
+def now_utc():
+    return datetime.now(timezone.utc).isoformat()
 
 
 class DeviceInfoBase(ABC):
@@ -39,12 +43,12 @@ class RealDeviceInfo(DeviceInfoBase):
     def get_temp(self) -> TempInfo:
         with open("/sys/class/thermal/thermal_zone0/temp", "r") as f:
             temp_str = f.read()
-        return TempInfo(datetime.now().isoformat(), int(temp_str))
+        return TempInfo(now_utc(), int(temp_str))
 
     def get_freq(self) -> FreqInfo:
         with open("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", "r") as f:
             freq_str = f.read()
-        return FreqInfo(datetime.now().isoformat(), int(freq_str))
+        return FreqInfo(now_utc(), int(freq_str))
 
     def get_cpu(self):
         with open("/proc/stat", "r") as f:
@@ -61,7 +65,7 @@ class RealDeviceInfo(DeviceInfoBase):
         cpu1 = get_cpu_detail("cpu1", buf)
         cpu2 = get_cpu_detail("cpu2", buf)
         cpu3 = get_cpu_detail("cpu3", buf)
-        return CpuInfo(datetime.now().isoformat(), cpu, cpu0, cpu1, cpu2, cpu3)
+        return CpuInfo(now_utc(), cpu, cpu0, cpu1, cpu2, cpu3)
 
     def get_mem(self) -> MemInfo:
         with open("/proc/meminfo", "r") as f:
@@ -78,16 +82,16 @@ class RealDeviceInfo(DeviceInfoBase):
                 buff[key] = value
 
         data = {field: buff[mem_key_map[field]] for field in mem_key_map}
-        return MemInfo(datetime.now().isoformat(), **data)
+        return MemInfo(now_utc(), **data)
 
 
 class MockDeviceInfo(DeviceInfoBase):
 
     def get_temp(self) -> TempInfo:
-        return TempInfo(datetime.now().isoformat(), random.randint(60000, 80000))
+        return TempInfo(now_utc(), random.randint(60000, 80000))
 
     def get_freq(self) -> FreqInfo:
-        return FreqInfo(datetime.now().isoformat(), random.randint(600000, 1200000))
+        return FreqInfo(now_utc(), random.randint(600000, 1200000))
 
     cnt = 1
     idle_buf = [0, 0, 0, 0, 0]
@@ -104,11 +108,11 @@ class MockDeviceInfo(DeviceInfoBase):
         cpu1 = CpuDetailInfo(total=100 * self.cnt, idle=self.idle_buf[2])
         cpu2 = CpuDetailInfo(total=100 * self.cnt, idle=self.idle_buf[3])
         cpu3 = CpuDetailInfo(total=100 * self.cnt, idle=self.idle_buf[4])
-        return CpuInfo(datetime.now().isoformat(), cpu, cpu0, cpu1, cpu2, cpu3)
+        return CpuInfo(now_utc(), cpu, cpu0, cpu1, cpu2, cpu3)
 
     def get_mem(self) -> MemInfo:
         return MemInfo(
-            datetime.now().isoformat(),
+            now_utc(),
             mem_total=927976,
             mem_free=703692 + random.randint(-200000, 100000),
             buffers=19072,

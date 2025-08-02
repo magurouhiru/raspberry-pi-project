@@ -12,12 +12,15 @@ import play.libs.ws._
 
 class ApiServiceBase @Inject() (ws: WSClient)(implicit ec: ExecutionContext) {
 
-  def get[T](url: String)(implicit fjs: Reads[T]): Future[Either[ApiError, T]] =
+  def get[T](url: String)(implicit fjs: Reads[T]): Future[Either[ServiceError, T]] =
     FutureConverters
       .asScala[WSResponse](ws.url(url).get())
       .map(res =>
         if (res.getStatus == Status.OK) Right(Json.parse(res.getBody).as[T])
-        else Left(ApiError(res.getStatus, res.getBody)),
+        else Left(ServiceError(res.getStatus, res.getBody)),
       )
+      .recover { case e: Exception =>
+        Left(ServiceError(Status.INTERNAL_SERVER_ERROR, e.toString))
+      }
 
 }
