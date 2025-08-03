@@ -1,0 +1,21 @@
+# API
+## APP_ENV
+GET         /app/env                            controllers.AppEnvController.getAppEnv()
+
+## hello
+GET         /hello                              controllers.HelloController.read(offset: Option[Int], limit: Option[Int])
+GET         /test/hello                         controllers.HelloController.get()
+POST        /test/hello                         controllers.HelloController.echo()
+
+## device
+GET         /device/temp                        controllers.DeviceController.getTemp()
+GET         /device/freq                        controllers.DeviceController.getFreq()
+GET         /device/cpu                         controllers.DeviceController.getCpu()
+GET         /device/mem                         controllers.DeviceController.getMem()
+GET         /device/all                         controllers.DeviceController.getAll()
+GET         /device/db/temp                     controllers.DeviceController.getDBTemp(offset: Option[Int], limit: Option[Int])
+GET         /device/db/freq                     controllers.DeviceController.getDBFreq(offset: Option[Int], limit: Option[Int])
+GET         /device/db/cpu/raw                  controllers.DeviceController.getDBCpuRaw(offset: Option[Int], limit: Option[Int])
+GET         /device/db/cpu-detail/raw           controllers.DeviceController.getDBCpuDetailRaw(offset: Option[Int], limit: Option[Int])
+GET         /device/db/cpu                      controllers.DeviceController.getDBCpu(offset: Option[Int], limit: Option[Int])
+GET         /device/db/mem                      controllers.DeviceController.getDBMem(offset: Option[Int], limit: Option[Int])

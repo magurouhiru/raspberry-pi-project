@@ -6,31 +6,26 @@ import javax.inject.Singleton
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
-import play.api.Configuration
-import play.libs.ws._
-
 import api._
+import hardware.Device
 
 @Singleton
-class DeviceApiService @Inject() (config: Configuration, ws: WSClient)(implicit
-    ec: ExecutionContext,
-) extends ApiServiceBase(ws) {
+class DeviceApiService @Inject() (device: Device)(implicit ec: ExecutionContext) {
 
-  private val deviceUrl: String = config.get[String]("device.server.url")
+  def getTempInfo: Future[Either[ServiceError, DeviceTempInfoResponse]] = Future(
+    device.getTemp.toEither.left.map(e => ServiceError.throwableToServiceError(e)),
+  )
 
-  def getAppEnv: Future[Either[ServiceError, DeviceServerAppEnvResponse]] =
-    get[DeviceServerAppEnvResponse](s"$deviceUrl/device/app/env")
+  def getFreqInfo: Future[Either[ServiceError, DeviceFreqInfoResponse]] = Future(
+    device.getFreq.toEither.left.map(e => ServiceError.throwableToServiceError(e)),
+  )
 
-  def getTempInfo: Future[Either[ServiceError, DeviceTempInfoResponse]] =
-    get[DeviceTempInfoResponse](s"$deviceUrl/device/temp")
+  def getCpuInfo: Future[Either[ServiceError, DeviceCpuInfoResponse]] = Future(
+    device.getCpu.toEither.left.map(e => ServiceError.throwableToServiceError(e)),
+  )
 
-  def getFreqInfo: Future[Either[ServiceError, DeviceFreqInfoResponse]] =
-    get[DeviceFreqInfoResponse](s"$deviceUrl/device/freq")
-
-  def getCpuInfo: Future[Either[ServiceError, DeviceCpuInfoResponse]] =
-    get[DeviceCpuInfoResponse](s"$deviceUrl/device/cpu")
-
-  def getMemInfo: Future[Either[ServiceError, DeviceMemInfoResponse]] =
-    get[DeviceMemInfoResponse](s"$deviceUrl/device/mem")
+  def getMemInfo: Future[Either[ServiceError, DeviceMemInfoResponse]] = Future(
+    device.getMem.toEither.left.map(e => ServiceError.throwableToServiceError(e)),
+  )
 
 }

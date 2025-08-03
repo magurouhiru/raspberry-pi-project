@@ -16,20 +16,11 @@ export class AppEnvService {
   }
 
   #getAppEnvFetch() {
-    return this.client.get<AppEnvResponse>('/api/app/env');
+    return this.client.get<ApiServerAppEnvResponse>('/api/app/env');
   }
 }
 
 export interface ApiServerAppEnvResponse {
   APP_ENV: string;
-}
-
-export interface DeviceServerAppEnvResponse {
-  APP_ENV: string;
   MOCK_MODE: boolean;
-}
-
-export interface AppEnvResponse {
-  api_server: ApiServerAppEnvResponse;
-  device_server?: DeviceServerAppEnvResponse;
 }
