@@ -1,9 +1,0 @@
-{
-  "name": "pi-web_device-server_dev",
-  "dockerComposeFile": "../../pi-web_dev/docker-compose.yaml",
-  "service": "device-server",
-  "forwardPorts": [
-    8080
-  ],
-  "workspaceFolder": "/device-server"
-}

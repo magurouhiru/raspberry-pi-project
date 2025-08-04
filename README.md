@@ -13,14 +13,11 @@ Angular で作成
 [詳細はこちら](./pi-web/frontend/README.md)
 
 ### pi-web_dev
-pi-web 開発時に共通的に使用するものが入っている
+pi-web 開発時に共通的に使用するものが入っている  
+docker compose でapi-serverとfrontendのdevcontainerを定義
 
-### local-test
-作成したdocker image の確認用  
-start.bat で実行できる
-
-## 開発
-makefile でdocker build したいときは[devcontainer](./.devcontainer/devcontainer.json)を使ってください。
+### script
+Raspberry Pi 3b 上で実行するシェルスクリプトを格納  
 
 # 環境設定とか
 ## Raspberry Pi の設定
@@ -57,6 +54,15 @@ sudo apt install openjdk-17-jre-headless sqlite3 cron -y
 crontab -e
 crontab -l
 ```
+
+# 以下ボツだけど一応残している
+
+## 開発(docker使わなくなったのでボツ)
+makefile でdocker build したいときは[devcontainer](./.devcontainer/devcontainer.json)を使ってください。
+
+### local-test(docker使わなくなったのでボツ)
+作成したdocker image の確認用  
+start.bat で実行できる
 
 ### k3s(重すぎたのでボツ)
 スワップ有効化  
