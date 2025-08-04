@@ -7,6 +7,7 @@ services:
     ports:
       - "14200:4200"
     volumes:
+      - frontend-dist:/frontend/dist/frontend
       - frontend-node_modules:/frontend/node_modules
   api-server:
     build: ./api-server
@@ -21,6 +22,7 @@ services:
       DB_URL: jdbc:sqlite://var/lib/sqlite3/playdb
       DEVICE_MOCK: true
     volumes:
+      - frontend-dist:/api-server/public/frontend
       - db-data:/var/lib/sqlite3
 
 networks:
@@ -28,5 +30,6 @@ networks:
     driver: bridge
 
 volumes:
+  frontend-dist:
   frontend-node_modules:
   db-data:
