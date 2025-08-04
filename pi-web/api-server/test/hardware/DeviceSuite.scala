@@ -16,7 +16,7 @@ class DeviceSuite extends AnyFunSuite with MockitoSugar {
 
   test("getTemp") {
     val readFileMock = mock[ReadFile]
-    val mockValue = Success("""558441""".split("\\n"))
+    val mockValue = Success("""55844""".split("\\n"))
     when(readFileMock.readLines("/sys/class/thermal/thermal_zone0/temp"))
       .thenReturn(mockValue)
     val device = new DeviceDefault(readFileMock)
