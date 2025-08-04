@@ -25,16 +25,16 @@ jobs:
       - name: Setup sbt launcher
         uses: sbt/setup-sbt@v1
 
-#      - name: Cache sbt
-#        uses: actions/cache@v3
-#        with:
-#          path: |
-#            ~/.ivy2/cache
-#            ~/.sbt
-#            ~/.coursier
-#          key: ${{ runner.os }}-sbt-${{ hashFiles('**/build.sbt') }}
-#          restore-keys: |
-#            ${{ runner.os }}-sbt
+      - name: Cache sbt
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.ivy2/cache
+            ~/.sbt
+            ~/.coursier
+          key: ${{ runner.os }}-sbt-${{ hashFiles('**/build.sbt') }}
+          restore-keys: |
+            ${{ runner.os }}-sbt
 
       - name: Run scalafmt
         run: sbt scalafmtCheckAll
