@@ -36,6 +36,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-sbt
 
-      - name: Run scalafmt and test
-        run: |
-          sbt scalafmtCheckAll compile test
+      - name: Run scalafmt
+        run: sbt scalafmtCheckAll
+
+      - name: Run compile
+        run: sbt compile
+
+      - name: Run test
+        run: sbt test
