@@ -21,7 +21,7 @@ class HomeController @Inject() (
     versioned(path, Assets.Asset(name = indexFile))
 
   // メインのAction
-  def serveOrFallback( 
+  def serveOrFallback(
       path: String,
       indexFile: String,
       file: String,
