@@ -19,9 +19,9 @@ class DeviceSuite extends AnyFunSuite with MockitoSugar {
     val mockValue = Success("""55844""".split("\\n"))
     when(readFileMock.readLines("/sys/class/thermal/thermal_zone0/temp"))
       .thenReturn(mockValue)
-    val device = new Device(readFileMock)
+    val device = new DeviceDefault(readFileMock)
 
-    val result = device.getTmep()
+    val result = device.getTemp
 
     assert(result.map(_.temp) == Success(55844))
   }
@@ -32,9 +32,9 @@ class DeviceSuite extends AnyFunSuite with MockitoSugar {
     when(readFileMock.readLines(
       "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq",
     )).thenReturn(mockValue)
-    val device = new Device(readFileMock)
+    val device = new DeviceDefault(readFileMock)
 
-    val result = device.getFreq()
+    val result = device.getFreq
 
     assert(result.map(_.freq) == Success(600000))
   }
@@ -58,9 +58,9 @@ softirq 1451022 25789 657457 2 24354 0 0 35270 649216 0 58934""".split("\\n")
     }
     when(readFileMock.readLines("/proc/stat")).thenReturn(mockValue)
     val now = Instant.now
-    val device = new Device(readFileMock)
+    val device = new DeviceDefault(readFileMock)
 
-    val result = device.getCpu()
+    val result = device.getCpu
     val resultNow = result.map(r =>
       DeviceCpuInfoResponse(now, r.cpu, r.cpu0, r.cpu1, r.cpu2, r.cpu3),
     )
@@ -123,10 +123,10 @@ CmaTotal:         262144 kB
 CmaFree:          256744 kB""".split("\\n")
     }
     when(readFileMock.readLines("/proc/meminfo")).thenReturn(mockValue)
-    val device = new Device(readFileMock)
+    val device = new DeviceDefault(readFileMock)
     val now = Instant.now
 
-    val result = device.getMem()
+    val result = device.getMem
     val resultNow = result.map(r =>
       DeviceMemInfoResponse(
         now,

@@ -1,8 +1,8 @@
 package services
 
-import play.api.http.Status
-
 import scala.language.implicitConversions
+
+import play.api.http.Status
 
 case class ServiceError(status: Int, error: String)
 
