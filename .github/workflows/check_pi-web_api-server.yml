@@ -6,8 +6,8 @@ on:
       - 'pi-web/api-server/**'
 
 jobs:
-  build:
-    name: Build & (optionally) Push pi-web/api-server
+  test:
+    name: Pull Request check pi-web/api-server
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -21,6 +21,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      - name: Setup sbt launcher
+        uses: sbt/setup-sbt@v1
 
       - name: Cache sbt
         uses: actions/cache@v3

@@ -6,8 +6,8 @@ on:
       - 'pi-web/frontend/**'
 
 jobs:
-  build:
-    name: Build & (optionally) Push pi-web/frontend
+  test:
+    name: Pull Request check pi-web/frontend
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -21,6 +21,7 @@ jobs:
         with:
           node-version: 22
           cache: 'npm'
+        working-directory: pi-web/frontend
 
       - name: Cache npm
         uses: actions/cache@v3
