@@ -29,28 +29,14 @@
           API:
           @if (appEnv() === null) {
             sync🔄
-          } @else if (appEnv()?.api_server?.APP_ENV === "dev") {
+          } @else if (appEnv()?.APP_ENV === "dev") {
             dev🛠️
-          } @else if (appEnv()?.api_server?.APP_ENV === "staging") {
+          } @else if (appEnv()?.APP_ENV === "staging") {
             staging🧪
           } @else {
             OK🚀
           }
-        </mat-chip>
-        <mat-chip>
-          Device:
-          @if (appEnv() === null) {
-            sync🔄
-          } @else if (appEnv()?.device_server === undefined) {
-            disable🚫
-          } @else if (appEnv()?.device_server?.APP_ENV === "dev") {
-            dev🛠️
-          } @else if (appEnv()?.device_server?.APP_ENV === "staging") {
-            staging🧪
-          } @else {
-            OK🚀
-          }
-          @if (appEnv()?.device_server?.MOCK_MODE) {
+          @if (appEnv()?.MOCK_MODE) {
             Mock: true🧪
           }
         </mat-chip>

@@ -18,6 +18,7 @@ lazy val root = (project in file("."))
       "org.xerial" % "sqlite-jdbc" % "3.50.3.0",
       "io.getquill" %% "quill-jdbc" % "4.8.5",
       "org.typelevel" %% "cats-core" % "2.13.0",
+      "org.scalatest" %% "scalatest" % "3.2.19" % "test",
       "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test,
     ),
     scalacOptions ++= Seq("-feature", "-Werror"),

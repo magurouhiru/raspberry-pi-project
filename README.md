@@ -49,9 +49,16 @@ To                         Action      From
 ```
 enabled
 ```
-LIMIT はデフォルトで30秒に6回らしい。  
+LIMIT はデフォルトで30秒に6回らしい。
 
-### k3s
+### jre sqlite3 cron
+```
+sudo apt install openjdk-17-jre-headless sqlite3 cron -y
+crontab -e
+crontab -l
+```
+
+### k3s(重すぎたのでボツ)
 スワップ有効化  
 `sudo dphys-swapfile swapoff`  
 `sudo nano /etc/dphys-swapfile`  

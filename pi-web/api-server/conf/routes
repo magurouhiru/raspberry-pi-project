@@ -1,10 +1,3 @@
-# health
-GET         /health                                 controllers.HealthController.health()
-GET         /ready                                  controllers.HealthController.ready()
-
-# batch
-GET         /batch/device-all                       controllers.BatchController.deviceAll()
-
 # API
 ## APP_ENV
 GET         /api/app/env                            controllers.AppEnvController.getAppEnv()
@@ -26,3 +19,17 @@ GET         /api/device/db/cpu/raw                  controllers.DeviceController
 GET         /api/device/db/cpu-detail/raw           controllers.DeviceController.getDBCpuDetailRaw(offset: Option[Int], limit: Option[Int])
 GET         /api/device/db/cpu                      controllers.DeviceController.getDBCpu(offset: Option[Int], limit: Option[Int])
 GET         /api/device/db/mem                      controllers.DeviceController.getDBMem(offset: Option[Int], limit: Option[Int])
+
+## api 404
+GET         /api/*path                              controllers.Api404Controller.error404(path)
+
+# health
+GET         /health                                 controllers.HealthController.health()
+GET         /ready                                  controllers.HealthController.ready()
+
+# batch
+GET         /batch/device-all                       controllers.BatchController.deviceAll()
+
+# public
+GET         /                                       controllers.HomeController.index(path="/public/frontend/browser", indexFile = "index.html")
+GET         /*file                                  controllers.HomeController.serveOrFallback(path="/public/frontend/browser", indexFile = "index.html", file)

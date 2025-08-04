@@ -1,0 +1,46 @@
+name: Pull Request check pi-web/api-server
+
+on:
+  pull_request:
+    paths:
+      - 'pi-web/api-server/**'
+
+jobs:
+  test:
+    name: Pull Request check pi-web/api-server
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pi-web/api-server
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup sbt launcher
+        uses: sbt/setup-sbt@v1
+
+      - name: Cache sbt
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.ivy2/cache
+            ~/.sbt
+            ~/.coursier
+          key: ${{ runner.os }}-sbt-${{ hashFiles('**/build.sbt') }}
+          restore-keys: |
+            ${{ runner.os }}-sbt
+
+      - name: Run scalafmt
+        run: sbt scalafmtCheckAll
+
+      - name: Run compile
+        run: sbt compile
+
+      - name: Run test
+        run: sbt test

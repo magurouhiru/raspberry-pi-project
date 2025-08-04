@@ -1,0 +1,33 @@
+name: Pull Request check pi-web/frontend
+
+on:
+  pull_request:
+    paths:
+      - 'pi-web/frontend/**'
+
+jobs:
+  test:
+    name: Pull Request check pi-web/frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pi-web/frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: 'pi-web/frontend/package-lock.json'
+
+      - name: Install Node package
+        run: npm ci
+
+      - name: Check Format
+        run: npm run fmt
+
+      - name: Check Lint
+        run: npm run lint
