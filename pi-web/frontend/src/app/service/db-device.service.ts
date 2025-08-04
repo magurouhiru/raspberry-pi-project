@@ -25,7 +25,7 @@ export class DBDeviceService {
         params: { offset: pp.offset, limit: pp.limit },
         observe: 'response',
       })
-      .pipe      (map(toWithTotal));
+      .pipe(map(toWithTotal));
   }
 
   readCpuDetailRaw(pp: PageParams) {

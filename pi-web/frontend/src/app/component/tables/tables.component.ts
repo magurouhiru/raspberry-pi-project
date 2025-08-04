@@ -18,7 +18,11 @@ export class TablesComponent {
 
   temp = toInput(this.#dbDeviceService.readTemp.bind(this.#dbDeviceService));
   freq = toInput(this.#dbDeviceService.readFreq.bind(this.#dbDeviceService));
-  cpuDetailRaw = toInput(this.#dbDeviceService.readCpuDetailRaw.bind(this.#dbDeviceService));
-  cpuRaw = toInput(this.#dbDeviceService.readCpuRaw.bind(this.#dbDeviceService));
+  cpuDetailRaw = toInput(
+    this.#dbDeviceService.readCpuDetailRaw.bind(this.#dbDeviceService),
+  );
+  cpuRaw = toInput(
+    this.#dbDeviceService.readCpuRaw.bind(this.#dbDeviceService),
+  );
   mem = toInput(this.#dbDeviceService.readMem.bind(this.#dbDeviceService));
 }
